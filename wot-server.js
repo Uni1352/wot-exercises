@@ -10,7 +10,7 @@ pirPlugin.start({
 });
 
 dht22Plugin.start({
-  'simulate': true,
+  'simulate': false,
   'frequency': 3000
 });
 
