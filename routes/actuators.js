@@ -4,21 +4,18 @@ const resources = require('../resources/model');
 const router = express.Router();
 
 router.route('/').get((req, res, next) => {
-  res.send(resources.pi.actuators);
-  // req.result = resources.pi.actuators;
-  // next();
+  req.result = resources.pi.actuators;
+  next();
 });
 
 router.route('/leds').get((req, res, next) => {
-  res.send(resources.pi.actuators.leds);
-  // req.result = resources.pi.actuators.leds;
-  // next();
+  req.result = resources.pi.actuators.leds;
+  next();
 });
 
 router.route('/leds/:id').get((req, res, next) => {
-  res.send(resources.pi.actuators.leds[req.params.id]);
-  // req.result = resources.pi.actuators.led[req.params.id];
-  // next();
+  req.result = resources.pi.actuators.led[req.params.id];
+  next();
 });
 // .put((req, res, next) => {
 //   let selectedLed = resources.pi.actuators.leds[req.params.id];

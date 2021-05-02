@@ -4,10 +4,10 @@ const pirPlugin = require('./plugins/internal/pirPlugin');
 const dht22Plugin = require('./plugins/internal/dht22Plugin');
 // const ledsPlugin = require('./plugins/internal/ledsPlugin');
 
-pirPlugin.start({
-  'simulate': true,
-  'frequency': 3000
-});
+// pirPlugin.start({
+//   'simulate': true,
+//   'frequency': 3000
+// });
 
 dht22Plugin.start({
   'simulate': false,
