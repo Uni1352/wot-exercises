@@ -1,9 +1,10 @@
 const events = require('events');
+let resources = require('../../resources/model');
+
 const emitter = new events.EventEmitter();
 const model = resources.pi.actuators.leds['1']; // focus on LED 1
 const pluginName = model.name;
 
-let resources = require('../../resources/model');
 let interval;
 let actuator;
 let localParams = {
