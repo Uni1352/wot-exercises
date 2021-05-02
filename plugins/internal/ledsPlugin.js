@@ -1,4 +1,7 @@
-const objectObserver = require('object-observer');
+import {
+  Observable
+} from 'https://libs.gullerya.com/object-observer/x.y.z/object-observer.min.js';
+
 const model = resources.pi.actuators.leds['1']; // focus on LED 1
 const pluginName = model.name;
 
