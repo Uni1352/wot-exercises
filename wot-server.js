@@ -1,7 +1,7 @@
 const httpServer = require('./servers/http');
 const resources = require('./resources/model');
-const pirPlugin = require('./plugins/internal/pirPlugin');
-const dht22Plugin = require('./plugins/internal/dht22Plugin');
+// const pirPlugin = require('./plugins/internal/pirPlugin');
+// const dht22Plugin = require('./plugins/internal/dht22Plugin');
 // const ledsPlugin = require('./plugins/internal/ledsPlugin');
 
 // pirPlugin.start({
@@ -9,10 +9,10 @@ const dht22Plugin = require('./plugins/internal/dht22Plugin');
 //   'frequency': 3000
 // });
 
-dht22Plugin.start({
-  'simulate': false,
-  'frequency': 3000
-});
+// dht22Plugin.start({
+//   'simulate': false,
+//   'frequency': 3000
+// });
 
 // ledsPlugin.start({
 //   'simulate': false,

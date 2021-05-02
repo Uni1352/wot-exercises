@@ -7,8 +7,8 @@ const converter = require('../middleware/converter');
 
 const app = express();
 
-// CORS support
-app.use(cors());
+app.use(express.bodyParser());
+app.use(cors()); // CORS support
 
 // bind route to Express program
 app.use('/pi/sensors', sensorRoutes);
