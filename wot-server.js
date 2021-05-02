@@ -15,7 +15,7 @@ const ledsPlugin = require('./plugins/internal/ledsPlugin');
 // });
 
 ledsPlugin.start({
-  'simulate': false,
+  'simulate': true,
   'frequency': 10000
 })
 
