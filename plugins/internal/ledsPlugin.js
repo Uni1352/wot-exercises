@@ -1,8 +1,8 @@
-let resources = require('../../resources/model');
-
+const objectObserver = require('object-observer');
 const model = resources.pi.actuators.leds['1']; // focus on LED 1
 const pluginName = model.name;
 
+let resources = require('../../resources/model');
 let interval;
 let actuator;
 let localParams = {
@@ -11,7 +11,9 @@ let localParams = {
 };
 
 function observe(what) {
-  Object.observe(what, (changes) => {
+  const observableObject = objectObserver.Observable.from(what);
+
+  observableObject.observe((changes) => {
     console.info(`Change detected by plugin for ${pluginName}...`);
     switchOnOff(model.value);
   });
