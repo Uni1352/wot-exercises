@@ -17,7 +17,7 @@ module.exports = () => {
       if (req.accepts('html')) {
         console.info('HTML representation selected!');
 
-        let transform = {
+        var transform = {
           'tag': 'div',
           'html': '${name} : ${value}'
         };
