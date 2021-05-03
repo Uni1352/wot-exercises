@@ -1,4 +1,5 @@
 var httpServer = require('./servers/http');
+var wsServer = require('./servers/websockets');
 var resources = require('./resources/model');
 var pirPlugin = require('./plugins/internal/pirPlugin');
 var dht22Plugin = require('./plugins/internal/dht22Plugin');
@@ -21,6 +22,6 @@ ledsPlugin.start({
 
 server = httpServer.listen(resources.pi.port, () => {
   console.info('HTTP server started...');
-  // wsServer.listen(server);
+  wsServer.listen(server);
   console.info(`Your WoT Pi is up and running on port ${resources.pi.port}`);
 });
