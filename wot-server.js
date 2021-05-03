@@ -6,14 +6,14 @@ var ledsPlugin = require('./plugins/internal/ledsPlugin');
 
 var server;
 
-pirPlugin.start({
-  'simulate': true,
-  'frequency': 3000
-});
-dht22Plugin.start({
-  'simulate': true,
-  'frequency': 3000
-});
+// pirPlugin.start({
+//   'simulate': true,
+//   'frequency': 3000
+// });
+// dht22Plugin.start({
+//   'simulate': true,
+//   'frequency': 3000
+// });
 // ledsPlugin.start({
 //   'simulate': true,
 //   'frequency': 10000
