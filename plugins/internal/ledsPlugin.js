@@ -1,7 +1,5 @@
-const events = require('events');
 let resources = require('../../resources/model');
 
-const emitter = new events.EventEmitter();
 const model = resources.pi.actuators.leds['1']; // focus on LED 1
 const pluginName = model.name;
 
@@ -12,12 +10,12 @@ let localParams = {
   'frequency': 2000
 };
 
-// function observe(what) {
-//   Object.observe(what, (changes) => {
-//     console.info(`Change detected by plugin for ${pluginName}...`);
-//     switchOnOff(model.value);
-//   });
-// }
+function observe(what) {
+  Object.observe(what, (changes) => {
+    console.info(`Change detected by plugin for ${pluginName}...`);
+    switchOnOff(model.value);
+  });
+}
 
 function switchOnOff(val) {
   if (!localParams.simulate) {
@@ -42,7 +40,7 @@ function simulate() {
 
 exports.start = (params) => {
   localParams = params;
-  // observe(model);
+  observe(model);
 
   if (localParams.simulate) {
     simulate();
