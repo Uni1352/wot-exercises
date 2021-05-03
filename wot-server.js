@@ -14,10 +14,10 @@ var server;
 //   'simulate': true,
 //   'frequency': 3000
 // });
-// ledsPlugin.start({
-//   'simulate': true,
-//   'frequency': 10000
-// })
+ledsPlugin.start({
+  'simulate': false,
+  'frequency': 10000
+})
 
 server = httpServer.listen(resources.pi.port, () => {
   console.info('HTTP server started...');
