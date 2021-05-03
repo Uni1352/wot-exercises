@@ -18,7 +18,7 @@ router.route('/leds/:id').get((req, res, next) => {
   req.result = resources.pi.actuators.led[req.params.id];
   next();
 }).put((req, res, next) => {
-  let selectedLed = resources.pi.actuators.leds[req.params.id];
+  var selectedLed = resources.pi.actuators.leds[req.params.id];
 
   console.info(`Origin Value: ${selectedLed.value}`);
   console.info(`Request Value: ${req.body.value}`);
