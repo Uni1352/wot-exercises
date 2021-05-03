@@ -4,7 +4,7 @@ var cors = require('cors');
 var resources = require('../resources/model');
 var sensorRoutes = require('../routes/sensors');
 var actuatorRoutes = require('../routes/actuators');
-// var converter = require('../middleware/converter');
+var converter = require('../middleware/converter');
 
 var app = express();
 
@@ -20,6 +20,6 @@ app.get('/pi', (req, res) => {
   res.send('This is the WoT-Pi');
 });
 
-// app.use(converter());
+app.use(converter());
 
 module.exports = app;
