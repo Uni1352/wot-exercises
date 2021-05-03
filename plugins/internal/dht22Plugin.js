@@ -14,7 +14,7 @@ function connectHardware() {
   sensor = {
     initialize: () => (sensorLib.initialize(22, temperature.gpio)),
     read: () => {
-      let readout = sensorLib.read();
+      var readout = sensorLib.read();
 
       temperature.value = parseFloat(readout.temperature.toFixed(2));
       humidity.value = parseFloat(readout.humidity.toFixed(2));
