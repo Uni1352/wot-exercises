@@ -1,11 +1,10 @@
-let resources = require('../../resources/model');
+var resources = require('../../resources/model');
 
-const model = resources.pi.actuators.leds['1']; // focus on LED 1
-const pluginName = model.name;
-
-let interval;
-let actuator;
-let localParams = {
+var interval;
+var actuator;
+var model = resources.pi.actuators.leds['1']; // focus on LED 1
+var pluginName = model.name;
+var localParams = {
   'simulate': false,
   'frequency': 2000
 };

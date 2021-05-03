@@ -1,7 +1,7 @@
-const msgpack = require('msgpack5')();
-const json2html = require('node-json2html');
+var msgpack = require('msgpack5')();
+var json2html = require('node-json2html');
 
-const encode = msgpack.encode;
+var encode = msgpack.encode;
 
 module.exports = () => {
   return (req, res, next) => {

@@ -1,7 +1,7 @@
-const express = require('express');
-const resources = require('../resources/model');
+var express = require('express');
+var resources = require('../resources/model');
 
-const router = express.Router();
+var router = express.Router();
 
 router.route('/').get((req, res, next) => {
   req.result = resources.pi.sensors;

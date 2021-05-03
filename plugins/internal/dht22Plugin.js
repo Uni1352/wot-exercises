@@ -1,12 +1,11 @@
-const sensorLib = require('node-dht-sensor');
-const resources = require('../../resources/model');
+var sensorLib = require('node-dht-sensor');
+var resources = require('../../resources/model');
 
-const temperature = resources.pi.sensors.temperature;
-const humidity = resources.pi.sensors.humidity;
-
-let interval;
-let sensor;
-let localParams = {
+var interval;
+var sensor;
+var temperature = resources.pi.sensors.temperature;
+var humidity = resources.pi.sensors.humidity;
+var localParams = {
   'simulate': false,
   'frequency': 2000
 }

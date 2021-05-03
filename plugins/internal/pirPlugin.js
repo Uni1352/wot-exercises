@@ -1,12 +1,11 @@
-const onoff = require('onoff');
-const resources = require('../../resources/model');
+var onoff = require('onoff');
+var resources = require('../../resources/model');
 
-const gpio = onoff.Gpio;
-const pir = resources.pi.sensors.pir;
-
-let interval;
-let sensor;
-let localParams = {
+var interval;
+var sensor;
+var gpio = onoff.Gpio;
+var pir = resources.pi.sensors.pir;
+var localParams = {
   'simulate': false,
   'frequency': 2000
 };

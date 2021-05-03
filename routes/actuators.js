@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
+var express = require('express');
+var resources = require('../resources/model');
 
-let resources = require('../resources/model');
+var router = express.Router();
+
 
 router.route('/').get((req, res, next) => {
   req.result = resources.pi.actuators;
