@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLUG STATUS</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+
+<body>
+  <h3>Actions</h3>
+  <input type="checkbox" name="" id="toggle-status" />
+  <h3>Response</h3>
+  <div id="response" class="panel-body">
+    <pre></pre>
+  </div>
+  <h3>Properties</h3>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <span id="value-status" class="badge">false</span>
+      status
+    </li>
+    <li class="list-group-item">
+      <span id="value-voltage" class="badge">0</span>
+      voltage
+    </li>
+    <li class="list-group-item">
+      <span id="value-current" class="badge">0</span>
+      current
+    </li>
+    <li class="list-group-item">
+      <span id="value-power" class="badge">0</span>
+      power
+    </li>
+  </ul>
+  <script src="./client.js"></script>
+  <script src="./button.js"></script>
+</body>
+
+</html>
