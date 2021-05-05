@@ -1,5 +1,7 @@
 {
-  "name": "_setStatus",
-  "description": "Changes the Status of the Thng",
-  "tags": ["WoT", "device"]
+  "type": "_setStatus",
+  "thng": "VwGbCWDWtVHGPmByfyeG8Bes",
+  "customFields": {
+    "status": false
+  }
 }
