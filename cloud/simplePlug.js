@@ -24,7 +24,7 @@ function updateProperties() {
 
 console.log(`Using Thng #${thngID} with API key: ${thngApiKey}`);
 
-client = mqtt.connect('mqtts://mqtt.evrythng.com:8833', {
+client = mqtt.connect('mqtts://mqtt.evrythng.com:8883', {
   username: 'authorization',
   password: thngApiKey
 });
