@@ -1,0 +1,5 @@
+{
+  "name": "_setStatus",
+  "description": "Changes the Status of the Thng",
+  "tags": ["WoT", "device"]
+}
