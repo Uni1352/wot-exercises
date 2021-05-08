@@ -1,3 +1,3 @@
-var resources = require('./piNoLd.json');
+var resources = require('./piJsonLd.json');
 
 module.exports = resources;
