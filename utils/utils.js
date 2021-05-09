@@ -1,3 +1,5 @@
+var crypto = require('crypto');
+
 var model = require('../resources/model');
 
 exports.addDevice = function (id, name, description, sensors, actuators) {
@@ -38,4 +40,20 @@ exports.modelToResources = function (subModel, withValue) {
 exports.isoTimestamp = function () {
   var date = new Date();
   return date.toISOString();
+};
+
+exports.generateApiToken = (length, chars) => {
+  if (!length) length = 32;
+  if (!chars) chars = 'abcdefghijklmnopqrstuvwxyz';
+
+  var randomBytes = crypto.randomBytes(length);
+  var result = new Array(length);
+  var cursor = 0;
+
+  for (var i = 0; i < length; i++) {
+    cursor += randomBytes[i];
+    result[i] = chars[cursor % chars.length];
+  }
+
+  return result.join('');
 };
