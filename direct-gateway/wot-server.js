@@ -16,10 +16,10 @@ dht22Plugin.start({
   'simulate': false,
   'frequency': 3000
 });
-ledsPlugin.start({
-  'simulate': false,
-  'frequency': 5000
-});
+// ledsPlugin.start({
+//   'simulate': false,
+//   'frequency': 5000
+// });
 
 // coapPlugin.start({
 //   'simulate': false,
