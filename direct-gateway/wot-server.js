@@ -12,14 +12,14 @@ var server;
 //   'simulate': true,
 //   'frequency': 3000
 // });
-dht22Plugin.start({
-  'simulate': true,
-  'frequency': 3000
-});
-// ledsPlugin.start({
-//   'simulate': false,
-//   'frequency': 5000
+// dht22Plugin.start({
+//   'simulate': true,
+//   'frequency': 3000
 // });
+ledsPlugin.start({
+  'simulate': false,
+  'frequency': 5000
+});
 
 // coapPlugin.start({
 //   'simulate': false,
