@@ -13,8 +13,8 @@ var server;
 //   'frequency': 3000
 // });
 dht22Plugin.start({
-  'simulate': false,
-  'frequency': 5000
+  'simulate': true,
+  'frequency': 3000
 });
 // ledsPlugin.start({
 //   'simulate': false,

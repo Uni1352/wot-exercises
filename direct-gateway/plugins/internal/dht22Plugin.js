@@ -1,23 +1,24 @@
-var sensorLib = require('node-dht-sensor');
 var resources = require('../../resources/model');
 
 var interval;
-var sensor;
-var temperature = resources.pi.sensors.temperature;
-var humidity = resources.pi.sensors.humidity;
+var model = resources.pi.sensors;
+// var temperature = resources.pi.sensors.temperature;
+// var humidity = resources.pi.sensors.humidity;
 var localParams = {
   'simulate': false,
   'frequency': 2000
 }
 
 function connectHardware() {
-  sensor = {
-    initialize: () => (sensorLib.initialize(22, temperature.gpio)),
+  var sensorLib = require('node-dht-sensor');
+
+  var sensor = {
+    initialize: () => (sensorLib.initialize(22, model.temperature.gpio)),
     read: () => {
       var readout = sensorLib.read();
 
-      temperature.value = parseFloat(readout.temperature.toFixed(2));
-      humidity.value = parseFloat(readout.humidity.toFixed(2));
+      model.temperature.value = parseFloat(readout.temperature.toFixed(2));
+      model.humidity.value = parseFloat(readout.humidity.toFixed(2));
 
       showValue();
       setTimeout(() => (sensor.read()), localParams.frequency);
@@ -42,7 +43,7 @@ function simulate() {
 }
 
 function showValue() {
-  console.info(`Temperature: ${temperature.value} C, Humidity: ${humidity.value} %`);
+  console.info(`Temperature: ${model.temperature.value} C, Humidity: ${model.humidity.value} %`);
 }
 
 exports.start = (params) => {
