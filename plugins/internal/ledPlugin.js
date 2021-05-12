@@ -21,6 +21,8 @@ function simulate() {
     Object.keys(leds).forEach((key) => {
       if (leds[key].value) leds[key].value = false;
       else leds[key].value = true;
+
+      console.info(`Change value of ${leds[key].name} to ${leds[key].value}`);
     });
   }, localParams.frequency);
 
