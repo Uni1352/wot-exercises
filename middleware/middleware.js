@@ -1,7 +1,7 @@
 const msgpack = require('msgpack5');
 const json2html = require('node-json2html');
 
-const msgpackEncoder = msgpack.encode;
+const msgpackEncoder = msgpack.encode();
 
 function generateRepresentationForm(req, res, next) {
   console.info('Representation Converter Middleware Called!');
