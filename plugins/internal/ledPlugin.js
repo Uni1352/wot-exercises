@@ -35,10 +35,10 @@ function createProxy(target) {
       if (!localParams.simulate && prop === 'value') switchOnOff(obj, val);
     }
   }
+  const proxy = [];
 
   Object.keys(target).forEach((key) => {
-    // target[key] = new Proxy(target[key], handler);
-    new Proxy(target[key], handler);
+    proxy.push(new Proxy(target[key], handler));
     console.info(`${target[key].name} proxy created!`);
   });
 }
