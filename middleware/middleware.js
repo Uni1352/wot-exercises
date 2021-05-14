@@ -1,7 +1,7 @@
 const msgpack = require('msgpack5');
 const json2html = require('node-json2html');
 
-let msgpackEncoder = msgpack.encode;
+const encode = msgpack.encode;
 
 function generateRepresentationForm(req, res, next) {
   console.info('Representation Converter Middleware Called!');
@@ -24,7 +24,7 @@ function generateRepresentationForm(req, res, next) {
       case 'application/x-msgpack':
         console.info('MessagePack Representation Selected!');
         res.type('application/x-msgpack');
-        res.send(msgpackEncoder(req.result));
+        res.send(encode(req.result));
         break;
       default:
         console.info('Defaulting to JSON Representation!');
