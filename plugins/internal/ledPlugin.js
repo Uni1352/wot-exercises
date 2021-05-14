@@ -34,16 +34,18 @@ function simulate() {
 function createProxy(target) {
   const handler = {
     set: (obj, prop, val) => {
-      if (!localParams.simulate && prop === 'value') {
-        actuators[obj.name].write(val === true ? 1 : 0,
-          () => console.info(`Change value of ${obj.name} to ${val}`));
-      }
+      if (!localParams.simulate && prop === 'value') switchOnOff(obj, val);
     }
   }
 
   Object.keys(target).forEach((key) => {
     target[key] = new Proxy(target[key], handler);
   });
+}
+
+function switchOnOff(obj, val) {
+  actuators[obj.name].write(val === true ? 1 : 0,
+    () => console.info(`Change value of ${obj.name} to ${val}`));
 }
 
 module.exports = {

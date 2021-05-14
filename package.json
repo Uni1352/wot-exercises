@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Uni1352/wot-exercises#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "msgpack5": "^5.3.2",
     "node-json2html": "^2.1.0"
