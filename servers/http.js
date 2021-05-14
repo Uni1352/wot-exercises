@@ -4,7 +4,7 @@ const cors = require('cors');
 const model = require('../resources/model');
 const sensorRoute = require('../routes/sensors');
 const actuatorRoute = require('../routes/actuators');
-const converter = require('../middleware/middleware');
+const converter = require('../middleware/middleware').representationConverter;
 
 const app = express();
 
