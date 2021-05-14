@@ -19,7 +19,7 @@ dht22Plugin.startPlugin({
 });
 
 ledPlugin.startPlugin({
-  'simulate': false,
+  'simulate': true,
   'frequency': 3000
 });
 
