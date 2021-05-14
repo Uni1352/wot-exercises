@@ -1,4 +1,4 @@
-const model = require('../../resources/model');
+let model = require('../../resources/model');
 
 let interval;
 let actuators = {};
