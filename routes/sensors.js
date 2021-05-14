@@ -3,7 +3,14 @@ const model = require('../resources/model');
 
 const router = express.Router();
 
-router.route('/').get((req, res, next) => res.send(model.pi.sensors));
-router.route('/:deviceName').get((req, res, next) => res.send(model.pi.sensors[req.params.deviceName]));
+router.route('/').get((req, res, next) => {
+  req.result = model.pi.sensors;
+  next();
+});
+
+router.route('/:deviceName').get((req, res, next) => {
+  req.result = model.pi.sensors[req.params.deviceName];
+  next();
+});
 
 module.exports = router;
