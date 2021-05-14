@@ -40,11 +40,7 @@ module.exports = () => {
     console.info('Representation Converter Middleware Called!');
 
     if (req.result) {
-      switch (req.accepts) {
-        case 'json':
-          console.info('JSON Representation Selected!');
-          res.send(req.result);
-          break;
+      switch (req.accepts(['json', 'html', 'application/x-msgpack'])) {
         case 'html':
           const transform = {
             'tag': 'div',
