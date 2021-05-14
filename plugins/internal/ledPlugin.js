@@ -37,7 +37,9 @@ function createProxy(target) {
   }
 
   Object.keys(target).forEach((key) => {
-    target[key] = new Proxy(target[key], handler);
+    // target[key] = new Proxy(target[key], handler);
+    new Proxy(target[key], handler);
+    console.info(`${target[key].name} proxy created!`);
   });
 }
 
@@ -49,7 +51,7 @@ function switchOnOff(obj, val) {
 module.exports = {
   startPlugin: (params) => {
     localParams = params;
-    // createProxy(leds);
+    createProxy(leds);
 
     if (localParams.simulate) simulate();
     else connectHardware();
