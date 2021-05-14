@@ -9,17 +9,17 @@ const port = model.pi.port;
 let server;
 
 pirPlugin.startPlugin({
-  'simulate': true,
+  'simulate': false,
   'frequency': 3000
 });
 
 dht22Plugin.startPlugin({
-  'simulate': true,
+  'simulate': false,
   'frequency': 3000
 });
 
 ledPlugin.startPlugin({
-  'simulate': true,
+  'simulate': false,
   'frequency': 3000
 });
 
