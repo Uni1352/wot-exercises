@@ -53,7 +53,7 @@ module.exports = () => {
         case 'application/x-msgpack':
           console.info('MessagePack Representation Selected!');
           res.type('application/x-msgpack');
-          res.send(msgpackEncoder(req.result));
+          res.send(encode(req.result));
           break;
         default:
           console.info('Defaulting to JSON Representation!');
