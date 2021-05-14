@@ -19,11 +19,7 @@ function connectHardware() {
 function simulate() {
   interval = setInterval(() => {
     Object.keys(leds).forEach((key) => {
-      // if (leds[key].value) leds[key].value = false;
-      // else leds[key].value = true;
-
       leds[key].value = !leds[key].value;
-
       console.info(`Change value of ${leds[key].name} to ${leds[key].value}`);
     });
   }, localParams.frequency);
@@ -53,7 +49,7 @@ function switchOnOff(obj, val) {
 module.exports = {
   startPlugin: (params) => {
     localParams = params;
-    createProxy(leds);
+    // createProxy(leds);
 
     if (localParams.simulate) simulate();
     else connectHardware();
