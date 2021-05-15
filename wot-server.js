@@ -3,6 +3,7 @@ const httpServer = require('./servers/http');
 const pirPlugin = require('./plugins/internal/pirPlugin');
 const dht22Plugin = require('./plugins/internal/dht22Plugin');
 const ledPlugin = require('./plugins/internal/ledPlugin');
+const coapPlugin = require('./plugins/external/coapPlugin');
 
 const port = model.pi.port;
 
@@ -21,6 +22,11 @@ dht22Plugin.startPlugin({
 ledPlugin.startPlugin({
   'simulate': true,
   'frequency': 3000
+});
+
+coapPlugin.startPlugin({
+  'simulate': false,
+  'frequency': 10000
 });
 
 server = httpServer.listen(port, () => {
