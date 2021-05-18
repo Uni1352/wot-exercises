@@ -14,11 +14,13 @@ function initPlugins() {
 function createServer(port, secure) {
   const http = require('http');
 
+  let server;
+
   if (port === undefined) port = model.customFields.port;
 
   initPlugins();
 
-  if (!secure) const server = http.createServer(httpServer).listen(port, () => {
+  if (!secure) server = http.createServer(httpServer).listen(port, () => {
     console.info(`Your WoT Pi is up and running on port ${port}`);
   });
 
