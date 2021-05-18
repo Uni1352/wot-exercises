@@ -96,7 +96,7 @@ function createActionsRoute(model) {
 
   // POST {WT}/actions/{actionId}
   router.route(`${actions.link}/:actionId`).post((req, res, next) => {
-    const action = {};
+    let action = {};
 
     action.id = uuid.v1();
     action.status = 'pending';
