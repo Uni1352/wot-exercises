@@ -1,6 +1,3 @@
-const model = require('../../resources/model');
-const utils = require('../../utils/utils');
-
 const temperature = model.pi.sensors.temperature;
 const humidity = model.pi.sensors.humidity;
 

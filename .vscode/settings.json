@@ -6,6 +6,7 @@
     "livenow",
     "msgpack",
     "thng",
-    "thngs"
+    "thngs",
+    "unexport"
   ]
 }

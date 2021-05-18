@@ -34,5 +34,15 @@ module.exports = {
     });
 
     return resources;
+  },
+  findProperty: (propId) => model.links.properties.resources[propId],
+  cappedPush: (array, entry) => {
+    if (array.length >= model.customFields.dataArraySize) {
+      array.shift();
+      array.push(entry);
+    } else {
+      array.push(entry);
+    }
+    return array;
   }
 }

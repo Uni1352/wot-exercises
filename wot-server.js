@@ -1,34 +1,28 @@
 const model = require('./resources/model');
 const httpServer = require('./servers/http');
-// const pirPlugin = require('./plugins/internal/pirPlugin');
-// const dht22Plugin = require('./plugins/internal/dht22Plugin');
-// const ledPlugin = require('./plugins/internal/ledPlugin');
-// const coapPlugin = require('./plugins/external/coapPlugin');
 
-const port = model.customFields.port;
+function initPlugins() {
+  const PirPlugin = require('./plugins/internal/pirPlugin');
 
-let server;
+  pirPlugin = new PirPlugin({
+    'simulate': true,
+    'frequency': 3000
+  });
+  pirPlugin.startPlugin();
+}
 
-// pirPlugin.startPlugin({
-//   'simulate': false,
-//   'frequency': 3000
-// });
+function createServer(port, secure) {
+  const http = require('http');
 
-// dht22Plugin.startPlugin({
-//   'simulate': false,
-//   'frequency': 3000
-// });
+  if (port === undefined) port = model.customFields.port;
 
-// ledPlugin.startPlugin({
-//   'simulate': true,
-//   'frequency': 3000
-// });
+  initPlugins();
 
-// coapPlugin.startPlugin({
-//   'simulate': false,
-//   'frequency': 10000
-// });
+  if (!secure) const server = http.createServer(httpServer).listen(port, () => {
+    console.info(`Your WoT Pi is up and running on port ${port}`);
+  });
 
-server = httpServer.listen(port, () => {
-  console.info(`Your WoT Pi is up and running on port ${port}`);
-});
+  return server;
+}
+
+module.exports = createServer;
