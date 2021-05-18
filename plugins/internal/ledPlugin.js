@@ -24,7 +24,9 @@ class LedPlugin extends CorePlugin {
 
   simulate() {
     super.simulate(() => {
-      for (let val of this.simulateVal) val = !val;
+      for (let i = 0; i < this.simulateVal.length; i++) {
+        this.simulateVal[i] = !this.simulateVal[i];
+      }
 
       this.addValue(this.simulateVal);
     });
