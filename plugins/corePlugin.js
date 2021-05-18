@@ -42,12 +42,13 @@ class CorePlugin {
     console.info(`${this.model.name}: ${util.inspect(this.model.data[this.model.data.length-1])}`);
   }
 
-  observeActions(doActions) {
+  observeActions() {
     const proxy = [];
     const handler = {
-      set: (obj, prop) => {
+      set: (obj, prop, val) => {
         console.info(`[plugin action detected] ${this.actionId}`);
-        doActions(obj);
+        console.info(obj, val);
+        // doActions(obj, val);
       }
     };
 

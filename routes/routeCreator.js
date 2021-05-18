@@ -99,9 +99,9 @@ function createActionsRoute(model) {
     let action = {};
 
     action.id = uuid.v1();
+    action.values = req.body;
     action.status = 'pending';
     action.timestamp = new Date().toISOString();
-    action.values = req.body;
 
     cappedPush(actions.resources[req.params.actionId].data, action);
     res.location(`${req.originalUrl}/${action.id}`);
