@@ -41,6 +41,6 @@ module.exports = {
 
     arr.push(entry);
 
-    return array;
+    return arr;
   }
 }
