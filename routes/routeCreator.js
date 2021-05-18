@@ -43,6 +43,7 @@ function createPropertiesRoute(model) {
 
   // GET {WT}/properties
   router.route(properties.link).get((req, res, next) => {
+    req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
     req.result = moduleToResource(properties.resources, true);
@@ -115,7 +116,7 @@ function reverseResults(array) {
 module.exports = (model) => {
   createRootRoute(model);
   createModelRoute(model);
-  // createPropertiesRoute(model);
+  createPropertiesRoute(model);
   // createActionsRoute(model);
 
   return router;
