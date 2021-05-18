@@ -53,7 +53,7 @@ class CorePlugin {
     };
 
     this.actions.forEach((actionId) => {
-      proxy.push(new Proxy(model.links.actions.resources[actionId].data), handler);
+      proxy.push(new Proxy(model.links.actions.resources[actionId].data, handler));
       console.info(`${actionId} proxy created!`);
     });
   }
