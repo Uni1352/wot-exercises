@@ -37,8 +37,8 @@ function createServer(port, secure) {
 }
 
 process.on('SIGINT', () => {
-  pirPlugin.stop();
-  ledsPlugin.stop();
+  pirPlugin.stopPlugin();
+  ledsPlugin.stopPlugin();
   console.log('Bye, bye!');
   process.exit();
 });
