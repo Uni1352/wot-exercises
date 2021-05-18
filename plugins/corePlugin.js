@@ -4,7 +4,7 @@ const findProperty = require('../utils/utils').findProperty;
 const cappedPush = require('../utils/utils').cappedPush;
 
 class CorePlugin {
-  constructor(params, propId, actionsIds, doActions) {
+  constructor(params, propId, actionsIds, doSimulate, doStop, doActions) {
     if (params) this.params = params;
     else this.params = {
       'simulate': false,
@@ -12,8 +12,8 @@ class CorePlugin {
     };
 
     this.interval;
-    this.doSimulate;
-    this.doStop;
+    this.doSimulate = doSimulate;
+    this.doStop = doStop;
     this.doActions = doActions;
     this.actionsIds = actionsIds;
     this.model = findProperty(propId);
@@ -31,7 +31,7 @@ class CorePlugin {
     throw new Error('connectedHardware() should be implemented by Plugin');
   }
 
-  createValue(val) {
+  createValue() {
     throw new Error('createValue() should be implemented by Plugin');
   }
 
