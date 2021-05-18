@@ -96,11 +96,12 @@ function createActionsRoute(model) {
 
   // POST {WT}/actions/{actionId}
   router.route(`${actions.link}/:actionId`).post((req, res, next) => {
-    let action = req.body;
+    let action = {};
 
     action.id = uuid.v1();
     action.status = 'pending';
     action.timestamp = new Date().toISOString();
+    action.values = req.body;
 
     cappedPush(actions.resources[req.params.actionId].data, action);
     res.location(`${req.originalUrl}/${action.id}`);
