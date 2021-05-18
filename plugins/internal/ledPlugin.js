@@ -58,6 +58,8 @@ module.exports = {
   },
   stopPlugin: () => {
     if (localParams.simulate) clearInterval();
-    else actuator.unexport();
+    else Object.keys(leds).forEach((key) => {
+      actuators[`${leds[key].name}`].unexport();
+    });
   }
 }

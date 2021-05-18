@@ -3,6 +3,7 @@ const router = require('express').Router();
 
 const extractFields = require('../utils/utils').extractFields;
 const moduleToResource = require('../utils/utils').modelToResource;
+const cappedPush = require('../utils/utils').cappedPush;
 
 function createRootRoute(model) {
   // GET {WT}
@@ -81,11 +82,11 @@ function createActionsRoute(model) {
     next();
   });
 
-  // GET {WT}/actions/{actionType}
-  router.route(`${actions.link}/:actionType`).get((req, res, next) => {
+  // GET {WT}/actions/{actionId}
+  router.route(`${actions.link}/:actionId`).get((req, res, next) => {
     req.type = 'action';
-    req.entityId = req.params.actionType;
-    req.result = reverseResults(actions.resources[req.params.actionType].data);
+    req.entityId = req.params.actionId;
+    req.result = reverseResults(actions.resources[req.params.actionId].data);
     res.links({
       type: 'http://model.webofthings.io/#actions-resource'
     });
@@ -93,15 +94,15 @@ function createActionsRoute(model) {
     next();
   });
 
-  // POST {WT}/actions/{id}
-  router.route(`${actions.link}/:id`).post((req, res, next) => {
+  // POST {WT}/actions/{actionId}
+  router.route(`${actions.link}/:actionId`).post((req, res, next) => {
     const action = req.body;
 
     action.id = uuid.v1();
     action.status = 'pending';
     action.timestamp = new Date().toISOString();
 
-    actions.resources[req.params.id].data.push(action);
+    cappedPush(actions.resources[req.params.actionId].data, action);
     res.location(`${req.originalUrl}/${action.id}`);
 
     next();

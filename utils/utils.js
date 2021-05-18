@@ -36,13 +36,11 @@ module.exports = {
     return resources;
   },
   findProperty: (propId) => model.links.properties.resources[propId],
-  cappedPush: (array, entry) => {
-    if (array.length >= model.customFields.dataArraySize) {
-      array.shift();
-      array.push(entry);
-    } else {
-      array.push(entry);
-    }
+  cappedPush: (arr, entry) => {
+    if (arr.length >= model.customFields.dataArraySize) arr.shift();
+
+    arr.push(entry);
+
     return array;
   }
 }
