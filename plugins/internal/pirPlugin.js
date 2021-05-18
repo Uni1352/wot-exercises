@@ -2,7 +2,7 @@ const CorePlugin = require('../corePlugin');
 
 class PirPlugin extends CorePlugin {
   constructor(params) {
-    super(params, 'pir', simulate, stop);
+    super(params, 'pir');
 
     this.sensor;
     this.addValue(true);
@@ -21,7 +21,11 @@ class PirPlugin extends CorePlugin {
   }
 
   simulate() {
-    this.addValue(false);
+    this.interval = setInterval(() => {
+      this.addValue(false);
+      this.showValue();
+    }, this.params.frequency);
+    console.info(`[simulator started] ${this.model.name}`);
   }
 
   createValue(val) {
@@ -31,8 +35,11 @@ class PirPlugin extends CorePlugin {
     };
   }
 
-  stop() {
-    this.sensor.unexport();
+  stopPlugin() {
+    if (this.params.simulate) clearInterval(this.interval);
+    else this.sensor.unexport();
+
+    console.info(`[plugin stopped] ${this.model.name}`);
   }
 }
 
