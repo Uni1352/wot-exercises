@@ -112,9 +112,32 @@ function reverseResults(array) {
   return array.slice(0).reverse();
 }
 
-module.exports = (model) => {
-  createRootRoute(model);
-  createModelRoute(model);
-  createPropertiesRoute(model);
-  createActionsRoute(model);
-};
+// module.exports = (model) => {
+//   createRootRoute(model);
+//   createModelRoute(model);
+//   createPropertiesRoute(model);
+//   createActionsRoute(model);
+// };
+
+module.exports = {
+  createRootRoute: (model) => {
+    // GET {WT}
+    router.route('/').get((req, res, next) => {
+      const fields = ['id', 'name', 'description', 'tags', 'customFields'];
+
+      req.type = 'root';
+      req.result = extractFields(fields, model);
+      res.links({
+        model: '/model/',
+        properties: '/properties/',
+        actions: '/actions/',
+        things: '/things/',
+        help: '/help/',
+        ui: '/',
+        type: 'http://model.webofthings.io/'
+      });
+
+      next();
+    });
+  }
+}
