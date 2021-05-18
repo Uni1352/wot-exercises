@@ -1,9 +1,9 @@
 const model = require('./resources/model');
 const httpServer = require('./servers/http');
-const pirPlugin = require('./plugins/internal/pirPlugin');
-const dht22Plugin = require('./plugins/internal/dht22Plugin');
-const ledPlugin = require('./plugins/internal/ledPlugin');
-const coapPlugin = require('./plugins/external/coapPlugin');
+// const pirPlugin = require('./plugins/internal/pirPlugin');
+// const dht22Plugin = require('./plugins/internal/dht22Plugin');
+// const ledPlugin = require('./plugins/internal/ledPlugin');
+// const coapPlugin = require('./plugins/external/coapPlugin');
 
 const port = model.pi.port;
 
