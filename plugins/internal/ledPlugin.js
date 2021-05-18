@@ -6,7 +6,7 @@ class LedPlugin extends CorePlugin {
   constructor(params) {
     super(params, 'leds', ['ledState']);
 
-    this.actuators;
+    this.actuators = {};
     this.leds = this.model.values;
     this.simulateVal = [true, true];
     this.addValue(this.simulateVal);
