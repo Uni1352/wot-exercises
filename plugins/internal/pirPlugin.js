@@ -21,12 +21,7 @@ class PirPlugin extends CorePlugin {
   }
 
   simulate() {
-    // this.interval = setInterval(() => {
-    //   this.addValue(false);
-    //   this.showValue();
-    // }, this.params.frequency);
-    // console.info(`[simulator started] ${this.model.name}`);
-    super.simulate(() => this.addValue(false));
+    super.simulate(this.simulator);
   }
 
   createValue(val) {
@@ -37,10 +32,15 @@ class PirPlugin extends CorePlugin {
   }
 
   stopPlugin() {
-    if (this.params.simulate) clearInterval(this.interval);
-    else this.sensor.unexport();
+    super.stopPlugin(this.stop);
+  }
 
-    console.info(`[plugin stopped] ${this.model.name}`);
+  simulator() {
+    this.addValue(false);
+  }
+
+  stop() {
+    this.sensor.unexport();
   }
 }
 

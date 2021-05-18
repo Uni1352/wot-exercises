@@ -4,7 +4,7 @@ const findProperty = require('../utils/utils').findProperty;
 const cappedPush = require('../utils/utils').cappedPush;
 
 class CorePlugin {
-  constructor(params, propId, actionsIds, doSimulate, doStop, doActions) {
+  constructor(params, propId, actionsIds, doActions) {
     if (params) this.params = params;
     else this.params = {
       'simulate': false,
@@ -12,16 +12,14 @@ class CorePlugin {
     };
 
     this.interval;
-    this.doSimulate = doSimulate;
-    this.doStop = doStop;
     this.doActions = doActions;
     this.actionsIds = actionsIds;
     this.model = findProperty(propId);
   }
 
-  simulate(simulator) {
+  simulate(doSimulate) {
     this.interval = setInterval(() => {
-      simulator();
+      doSimulate();
       this.showValue();
     }, this.params.frequency);
     console.info(`[simulator started] ${this.model.name}`);
@@ -50,9 +48,9 @@ class CorePlugin {
     console.info(`[plugin started] ${this.model.name}`);
   }
 
-  stopPlugin() {
+  stopPlugin(doStop) {
     if (this.params.simulate) clearInterval(this.interval);
-    else if (this.doStop) this.doStop();
+    else if (doStop) doStop();
 
     console.info(`[plugin stopped] ${this.model.name}`);
   }
