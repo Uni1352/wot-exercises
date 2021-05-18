@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 // bind routes
-app.use('/', createRootRoute(model));
+app.use(createRootRoute(model));
 // app.use('/pi/sensors', sensorRoute);
 // app.use('/pi/actuators', actuatorRoute);
 // app.use('/things', thingRoute);
