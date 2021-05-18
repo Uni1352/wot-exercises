@@ -4,7 +4,7 @@ const findProperty = require('../utils/utils').findProperty;
 const cappedPush = require('../utils/utils').cappedPush;
 
 class CorePlugin {
-  constructor(params, propId, doSimulate, doStop, actionsIds, doActions) {
+  constructor(params, propId, actionsIds, doActions) {
     if (params) this.params = params;
     else this.params = {
       'simulate': false,
@@ -12,8 +12,8 @@ class CorePlugin {
     };
 
     this.interval;
-    this.doSimulate = doSimulate;
-    this.doStop = doStop;
+    this.doSimulate;
+    this.doStop;
     this.doActions = doActions;
     this.actionsIds = actionsIds;
     this.model = findProperty(propId);
