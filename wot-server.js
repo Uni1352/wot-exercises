@@ -5,7 +5,7 @@ const httpServer = require('./servers/http');
 // const ledPlugin = require('./plugins/internal/ledPlugin');
 // const coapPlugin = require('./plugins/external/coapPlugin');
 
-const port = model.pi.port;
+const port = model.customFields.port;
 
 let server;
 
