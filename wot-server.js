@@ -1,14 +1,23 @@
 const model = require('./resources/model');
 const httpServer = require('./servers/http');
 
+let pirPlugin, ledsPlugin;
+
 function initPlugins() {
   const PirPlugin = require('./plugins/internal/pirPlugin');
+  const LedPlugin = require('./plugins/internal/ledPlugin');
 
   pirPlugin = new PirPlugin({
-    'simulate': true,
-    'frequency': 3000
+    'simulate': false,
+    'frequency': 5000
   });
   pirPlugin.startPlugin();
+
+  ledsPlugin = new LedPlugin({
+    'simulate': true,
+    'frequency': 5000
+  });
+  ledsPlugin.startPlugin();
 }
 
 function createServer(port, secure) {
@@ -26,5 +35,12 @@ function createServer(port, secure) {
 
   return server;
 }
+
+process.on('SIGINT', () => {
+  pirPlugin.stop();
+  ledsPlugin.stop();
+  console.log('Bye, bye!');
+  process.exit();
+});
 
 module.exports = createServer;
