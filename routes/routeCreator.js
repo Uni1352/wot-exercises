@@ -108,15 +108,25 @@ function createActionsRoute(model) {
   });
 }
 
+function createDefaultData(resources) {
+  Object.keys(resources).forEach(function (resKey) {
+    var resource = resources[resKey];
+    resource.data = [];
+  });
+}
+
 function reverseResults(array) {
   return array.slice(0).reverse();
 }
 
 module.exports = (model) => {
+  createDefaultData(model.links.properties.resources);
+  createDefaultData(model.links.actions.resources);
+
   createRootRoute(model);
   createModelRoute(model);
   createPropertiesRoute(model);
-  // createActionsRoute(model);
+  createActionsRoute(model);
 
   return router;
 };
