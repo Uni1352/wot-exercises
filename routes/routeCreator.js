@@ -103,7 +103,8 @@ function createActionsRoute(model) {
     action.status = 'pending';
     action.timestamp = new Date().toISOString();
 
-    cappedPush(actions.resources[req.params.actionId].data, action);
+    actions.resources[req.params.actionId].data.push(action);
+    // cappedPush(actions.resources[req.params.actionId].data, action);
     // res.location(`${req.originalUrl}/${action.id}`);
 
     next();

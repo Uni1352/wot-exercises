@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 
-const model = require('../resources/model');
 const routeCreator = require('../routes/routeCreator');
 const converter = require('../middleware/middleware').representationConverter;
+
+let model = require('../resources/model');
 
 const app = express();
 
