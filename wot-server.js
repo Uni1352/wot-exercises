@@ -14,7 +14,7 @@ function initPlugins() {
   pirPlugin.startPlugin();
 
   ledsPlugin = new LedPlugin({
-    'simulate': true,
+    'simulate': false,
     'frequency': 5000
   });
   ledsPlugin.startPlugin();

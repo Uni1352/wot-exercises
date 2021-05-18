@@ -104,7 +104,7 @@ function createActionsRoute(model) {
     action.timestamp = new Date().toISOString();
 
     cappedPush(actions.resources[req.params.actionId].data, action);
-    res.location(`${req.originalUrl}/${action.id}`);
+    // res.location(`${req.originalUrl}/${action.id}`);
 
     next();
   });
