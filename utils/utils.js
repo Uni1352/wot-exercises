@@ -28,7 +28,10 @@ module.exports = {
       resource.id = key;
       resource.name = val['name'];
 
-      if (withValue) resource.values = val.data[val.data.length - 1];
+      console.info(resource);
+      console.info(val.data);
+
+      // if (withValue) resource.values = val.data[val.data.length - 1];
 
       resources.push(resource);
     });

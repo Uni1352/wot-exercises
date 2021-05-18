@@ -43,7 +43,6 @@ function createPropertiesRoute(model) {
 
   // GET {WT}/properties
   router.route(properties.link).get((req, res, next) => {
-    req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
     req.result = moduleToResource(properties.resources, true);
