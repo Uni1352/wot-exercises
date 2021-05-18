@@ -1,0 +1,6 @@
+[
+  { "id": "temperature", "name": "Temperature Sensor" },
+  { "id": "humidity", "name": "Humidity Sensor" },
+  { "id": "pir", "name": "Passive Infrared" },
+  { "id": "leds", "name": "LEDs" }
+]

@@ -29,7 +29,7 @@ module.exports = {
       resource.name = val['name'];
 
       console.info(resource);
-      console.info(val.data);
+      console.info(val);
 
       // if (withValue) resource.values = val.data[val.data.length - 1];
 
