@@ -115,6 +115,6 @@ function reverseResults(array) {
 module.exports = (model) => {
   createRootRoute(model);
   createModelRoute(model);
-  createPropertiesRoute(model);
-  createActionsRoute(model);
+  // createPropertiesRoute(model);
+  // createActionsRoute(model);
 };
