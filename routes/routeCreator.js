@@ -112,9 +112,11 @@ function reverseResults(array) {
   return array.slice(0).reverse();
 }
 
-module.exports = (model) => {
-  createRootRoute(model);
-  createModelRoute(model);
-  // createPropertiesRoute(model);
-  // createActionsRoute(model);
-};
+// module.exports = (model) => {
+//   createRootRoute(model);
+//   createModelRoute(model);
+//   createPropertiesRoute(model);
+//   createActionsRoute(model);
+// };
+
+model.exports = createRootRoute;
