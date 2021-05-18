@@ -36,11 +36,11 @@ class PirPlugin extends CorePlugin {
   }
 
   simulator() {
-    this.addValue(false);
+    return this.addValue(false);
   }
 
   stop() {
-    this.sensor.unexport();
+    return this.sensor.unexport();
   }
 }
 
