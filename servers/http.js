@@ -5,7 +5,7 @@ const model = require('../resources/model');
 const sensorRoute = require('../routes/sensors');
 const actuatorRoute = require('../routes/actuators');
 const thingRoute = require('../routes/things');
-const createRootRoute = require('../routes/routeCreator').createRootRoute;
+const routeCreator = require('../routes/routeCreator');
 const converter = require('../middleware/middleware').representationConverter;
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cors());
 
 // bind routes
-app.use(createRootRoute(model));
+app.use('/', routeCreator(model));
 // app.use('/pi/sensors', sensorRoute);
 // app.use('/pi/actuators', actuatorRoute);
 // app.use('/things', thingRoute);
