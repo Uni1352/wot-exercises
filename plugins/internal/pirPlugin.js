@@ -2,7 +2,7 @@ const CorePlugin = require('../corePlugin');
 
 class PirPlugin extends CorePlugin {
   constructor(params) {
-    super(params, 'pir', this.simulate, this.stop);
+    super(params, 'pir', simulate, stop);
 
     this.sensor;
     this.addValue(true);
@@ -20,7 +20,7 @@ class PirPlugin extends CorePlugin {
     });
   }
 
-  simulator() {
+  simulate() {
     this.addValue(false);
   }
 
