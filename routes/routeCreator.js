@@ -7,7 +7,7 @@ const moduleToResource = require('../utils/utils').modelToResource;
 function createRootRoute(model) {
   // GET {WT}
   router.route('/').get((req, res, next) => {
-    const fields = ['id', 'name', 'description', 'tags', 'customFields'];
+    let fields = ['id', 'name', 'description', 'tags', 'customFields'];
 
     req.type = 'root';
     req.result = extractFields(fields, model);
@@ -115,8 +115,8 @@ function reverseResults(array) {
 module.exports = (model) => {
   createRootRoute(model);
   createModelRoute(model);
-  createPropertiesRoute(model);
-  createActionsRoute(model);
+  // createPropertiesRoute(model);
+  // createActionsRoute(model);
 
   return router;
 };

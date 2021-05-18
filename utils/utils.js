@@ -14,7 +14,7 @@ module.exports = {
   },
   extractFields: (fields, object, target) => {
     if (!target) target = {};
-    for (let field in fields) target[field] = object[field];
+    for (let field of fields) target[field] = object[field];
 
     return target;
   },
