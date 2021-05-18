@@ -21,7 +21,7 @@ class PirPlugin extends CorePlugin {
   }
 
   simulate() {
-    super.simulate(this.simulator);
+    super.simulate(() => this.addValue(false));
   }
 
   createValue(val) {
@@ -32,15 +32,7 @@ class PirPlugin extends CorePlugin {
   }
 
   stopPlugin() {
-    super.stopPlugin(this.stop);
-  }
-
-  simulator() {
-    return this.addValue(false);
-  }
-
-  stop() {
-    return this.sensor.unexport();
+    super.stopPlugin(() => this.sensor.unexport());
   }
 }
 
