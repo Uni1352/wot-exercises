@@ -19,9 +19,9 @@ class CorePlugin {
     this.model = findProperty(propId);
   }
 
-  simulate() {
+  simulate(simulator) {
     this.interval = setInterval(() => {
-      this.doSimulate();
+      simulator();
       this.showValue();
     }, this.params.frequency);
     console.info(`[simulator started] ${this.model.name}`);

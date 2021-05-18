@@ -21,11 +21,12 @@ class PirPlugin extends CorePlugin {
   }
 
   simulate() {
-    this.interval = setInterval(() => {
-      this.addValue(false);
-      this.showValue();
-    }, this.params.frequency);
-    console.info(`[simulator started] ${this.model.name}`);
+    // this.interval = setInterval(() => {
+    //   this.addValue(false);
+    //   this.showValue();
+    // }, this.params.frequency);
+    // console.info(`[simulator started] ${this.model.name}`);
+    super.simulate(() => this.addValue(false));
   }
 
   createValue(val) {
