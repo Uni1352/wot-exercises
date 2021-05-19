@@ -12,9 +12,9 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     const url = req.url;
+    console.info(selectResource(url), typeof selectResource(url));
 
     try {
-      console.info(selectResource(url), typeof selectResource(url));
       // new Proxy(selectResource(url), {
       //   set: (target, prop, val) => {
       //     console.info(target);
