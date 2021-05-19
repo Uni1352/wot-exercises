@@ -18,7 +18,7 @@ function createSocketServer(server) {
       new Proxy(urlWrapper, {
         set: (target, prop, val) => {
           if (prop === 'url') {
-            console.info(val);
+            console.info(target);
           }
         }
       })
