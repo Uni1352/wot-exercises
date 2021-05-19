@@ -90,7 +90,6 @@ function createActionsRoute(model) {
     res.links({
       type: 'http://model.webofthings.io/#actions-resource'
     });
-    console.info(actions.resources[req.params.id]);
 
     next();
   });
@@ -114,7 +113,7 @@ function createActionsRoute(model) {
   //   next();
   // });
 
-  router.route(actions.link + '/:actionType').post(function (req, res, next) {
+  router.route('/actions/:actionType').post(function (req, res, next) {
     var action = req.body;
     action.id = uuid.v1();
     action.status = "pending";
