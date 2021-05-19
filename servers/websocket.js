@@ -19,9 +19,12 @@ function createSocketServer(server) {
         set: (target, prop, val) => {
           if (prop === 'url') {
             console.info(target);
+            console.info(val);
           }
         }
-      })
+      });
+
+      urlWrapper.url = '/properties';
     } catch (err) {
       console.info(`Unable to observe ${url} resource`)
     }
