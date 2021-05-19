@@ -83,11 +83,11 @@ function createActionsRoute(model) {
   });
 
   // {WT}/actions/{id}
-  router.route(`${actions.link}/:id`)
+  router.route(`/actions/:actionType`)
     .get((req, res, next) => {
       req.type = 'action';
-      req.entityId = req.params.id;
-      req.result = reverseResults(actions.resources[req.params.id].data);
+      req.entityId = req.params.actionType;
+      req.result = reverseResults(actions.resources[req.params.actionType].data);
       res.links({
         type: 'http://model.webofthings.io/#actions-resource'
       });
@@ -102,10 +102,7 @@ function createActionsRoute(model) {
       action.status = 'pending';
       action.timestamp = new Date().toISOString();
 
-      console.info(req.params.id);
-      console.info(action);
-
-      cappedPush(actions.resources[req.params.id].data, action);
+      cappedPush(actions.resources[req.params.actionType].data, action);
       res.location(`${req.originalUrl}/${action.id}`);
 
       next();
