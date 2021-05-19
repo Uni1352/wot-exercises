@@ -14,11 +14,7 @@ function createSocketServer(server) {
     const url = req.url;
 
     try {
-      let result = selectResource(req.url);
-      console.info(`result=${result}`);
-      console.info(`typeof=${typeof result}`);
-
-      result = new Proxy(selectResource(req.url), {
+      let result = new Proxy(selectResource(req.url), {
         set: (target, prop, val) => {
           console.info(target);
           console.info(prop);
