@@ -16,13 +16,8 @@ function createSocketServer(server) {
     };
 
     try {
-      console.info(urlWrapper.url);
-
       urlWrapper = new Proxy(urlWrapper, {
-        set: (target, prop, val) => {
-          console.info(target);
-          console.info(val);
-        }
+        set: (target, prop, val) => ws.send(val)
       });
 
       urlWrapper.url = '/properties';
