@@ -39,7 +39,7 @@ function selectResource(url) {
     case 'actions':
       return model.links.actions.resources[parts[1]].data;
     default:
-      return;
+      return [];
   }
 }
 
