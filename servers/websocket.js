@@ -14,17 +14,16 @@ function createSocketServer(server) {
     const reqURL = req.url;
 
     try {
-      let target = new Proxy(target, {
-        set: (target, prop, val) => {
-          console.info(target);
-          console.info(prop);
-          console.info(val);
-          ws.send('test');
+      let result = selectResource(reqURL);
+
+      result = new Proxy(selectResource(reqURL), {
+        set: (target) => {
+          ws.send(target[0]);
         }
       });
 
-      setInterval(() => {
-        target = selectResource(reqURL)
+      setTimeout(() => {
+        result = selectResource(reqURL);
       }, 5000);
     } catch (err) {
       console.info(`Unable to observe ${reqURL} resource`);
