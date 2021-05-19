@@ -8,14 +8,10 @@ function generateRepresentationForm(req, res, next) {
   console.info('Representation Converter Middleware Called!');
 
   if (req.result) {
-    switch (req.accepts(['json', 'ld+json', 'html', 'application/x-msgpack'])) {
+    switch (req.accepts(['json', 'html', 'application/ld+json', 'application/x-msgpack'])) {
       case 'json':
         console.info('JSON Representation Selected!');
         res.send(req.result);
-        break;
-      case 'ld+json':
-        console.info('JSON-LD Representation Selected!');
-        res.send(jsonld);
         break;
       case 'html':
         let helpers = {
@@ -31,6 +27,10 @@ function generateRepresentationForm(req, res, next) {
           req: req,
           helpers: helpers
         });
+        break;
+      case 'application/ld+json':
+        console.info('JSON-LD Representation Selected!');
+        res.send(jsonld);
         break;
       case 'application/x-msgpack':
         console.info('MessagePack Representation Selected!');
