@@ -10,22 +10,20 @@ function createSocketServer(server) {
 
   console.info('WebSocket server started...');
 
-  wss.on('connection', (ws) => {
+  wss.on('connection', (ws, req) => {
     const reqURL = req.url;
 
     try {
       let target = selectResource(reqURL);
 
-      console.info(target);
-
-      // target = new Proxy(selectResource(reqURL), {
-      //   set: (target, prop, val) => {
-      //     console.info(target);
-      //     console.info(prop);
-      //     console.info(val);
-      //     ws.send('test');
-      //   }
-      // });
+      target = new Proxy(selectResource(reqURL), {
+        set: (target, prop, val) => {
+          console.info(target);
+          console.info(prop);
+          console.info(val);
+          ws.send('test');
+        }
+      });
     } catch (err) {
       console.info(`Unable to observe ${reqURL} resource`);
     }
