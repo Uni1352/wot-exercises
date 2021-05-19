@@ -90,25 +90,37 @@ function createActionsRoute(model) {
     res.links({
       type: 'http://model.webofthings.io/#actions-resource'
     });
+    console.info(actions.resources[req.params.id]);
 
     next();
   });
 
   // POST {WT}/actions/{id}
-  router.route(`${actions.link}/:id`).post((req, res, next) => {
-    let action = {};
+  // router.route(`${actions.link}/:id`).post((req, res, next) => {
+  //   let action = {};
 
+  //   action.id = uuid.v1();
+  //   action.values = req.body;
+  //   action.status = 'pending';
+  //   action.timestamp = new Date().toISOString();
+
+  //   console.info(req.params.id);
+  //   console.info(action);
+
+  //   actions.resources[req.params.id].data.push(action);
+  //   // cappedPush(actions.resources[req.params.id].data, action);
+  //   res.location(`${req.originalUrl}/${action.id}`);
+
+  //   next();
+  // });
+
+  router.route(actions.link + '/:actionType').post(function (req, res, next) {
+    var action = req.body;
     action.id = uuid.v1();
-    action.values = req.body;
-    action.status = 'pending';
-    action.timestamp = new Date().toISOString();
-
-    console.info(req.params.id);
-    console.info(action);
-
-    actions.resources[req.params.id].data.push(action);
-    // cappedPush(actions.resources[req.params.id].data, action);
-    res.location(`${req.originalUrl}/${action.id}`);
+    action.status = "pending";
+    action.timestamp = utils.isoTimestamp();
+    cappedPush(actions.resources[req.params.actionType].data, action);
+    res.location(req.originalUrl + '/' + action.id);
 
     next();
   });
