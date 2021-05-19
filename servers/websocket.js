@@ -9,10 +9,10 @@ function createSocketServer(server) {
 
   console.info('WebSocket server started...');
 
-  wss.on('connection', (ws) => {
-    const url = ws.upgradeReq.url;
+  wss.on('connection', (ws, req) => {
+    const reqUrl = req.socket.remoteAddress;
 
-    console.info(url);
+    console.info(reqUrl);
   });
 }
 
