@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>WoT Controller</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+</head>
+
+
+<body>
+
+  <!-- Docs page layout -->
+  <div class="bs-docs-header" id="content" tabindex="-1">
+    <div class="container">
+      <h1><a href="/{{req.qp}}">{{req.rooturl}}</a> {{req.originalUrl}}</h1>
+      <p>Details - Web Thing</p>
+    </div>
+  </div>
+
+  <div class="container bs-docs-container">
+    <div class="row">
+      <div class="col-md-9" role="main">
+        <div class="bs-docs-section">
+
+          <h2>Result</h2>
+
+          {{json req.result}}
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="bs-docs-footer" role="contentinfo">
+    <div class="container">
+
+      <p>Check the WoT Book.</p>
+
+    </div>
+  </footer>
+
+
+</body>
+
+</html>

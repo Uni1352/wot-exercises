@@ -1,5 +1,4 @@
 const msgpack = require('msgpack5')();
-const json2html = require('node-json2html');
 
 const msgpackEncoder = msgpack.encode;
 
@@ -13,13 +12,19 @@ function generateRepresentationForm(req, res, next) {
         res.send(req.result);
         break;
       case 'html':
-        const transform = {
-          'tag': 'div',
-          'html': '${name}:${value}'
-        };
+        let helpers = {
+          json: (obj) => JSON.stringify(obj),
+          getById: (obj, id) => obj[id]
+        }
 
-        console.info('HTML Representation Selected!');
-        res.send(json2html.transform(req.result, transform));
+        if (req.type) res.render(req.type, {
+          req: req,
+          helpers: helpers
+        });
+        else res.render('default', {
+          req: req,
+          helpers: helpers
+        });
         break;
       case 'application/x-msgpack':
         console.info('MessagePack Representation Selected!');
