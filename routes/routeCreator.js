@@ -83,26 +83,28 @@ function createActionsRoute(model) {
   });
 
   // {WT}/actions/{id}
-  router.route(`${actions.link}/:id`).get((req, res, next) => {
-    req.type = 'action';
-    req.entityId = req.params.id;
-    req.result = reverseResults(actions.resources[req.params.id].data);
-    res.links({
-      type: 'http://model.webofthings.io/#actions-resource'
+  router.route(`${actions.link}/:id`)
+    .post(function (req, res, next) {
+      var action = req.body;
+      action.id = uuid.v1();
+      action.status = "pending";
+      action.timestamp = new Date().toISOString();
+      console.info(actions.resources[req.params.id].data);
+      cappedPush(actions.resources[req.params.id].data, action);
+      res.location(req.originalUrl + '/' + action.id);
+
+      next();
+    })
+    .get((req, res, next) => {
+      req.type = 'action';
+      req.entityId = req.params.id;
+      req.result = reverseResults(actions.resources[req.params.id].data);
+      res.links({
+        type: 'http://model.webofthings.io/#actions-resource'
+      });
+
+      next();
     });
-
-    next();
-  }).post(function (req, res, next) {
-    var action = req.body;
-    action.id = uuid.v1();
-    action.status = "pending";
-    action.timestamp = new Date().toISOString();
-    console.info(actions.resources[req.params.id].data);
-    // cappedPush(actions.resources[req.params.actionType].data, action);
-    res.location(req.originalUrl + '/' + action.id);
-
-    next();
-  });
 
   // POST {WT}/actions/{id}
   // router.route(`${actions.link}/:id`).post((req, res, next) => {
