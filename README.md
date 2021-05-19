@@ -2,10 +2,19 @@
 
 ## Introduction
 
-door with access control
+Simulate a door with access control
 
-## 設備
+## Device
 
 - sensor: PIR
 - actuator: LED
 - switch: web application
+
+## Design
+
+- Structure: Figure
+- Pattern: Direct Integration Pattern
+
+### Resource Tree
+
+> figure
