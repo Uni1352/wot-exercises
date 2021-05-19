@@ -43,7 +43,7 @@ function createPropertiesRoute(model) {
   router.route(properties.link).get((req, res, next) => {
     req.type = 'properties';
     req.entityId = 'properties';
-    req.result = utils.moduleToResource(properties.resources, true);
+    req.result = utils.modelToResource(properties.resources, true);
     res.links({
       type: 'http://model.webofthings.io/#properties-resource'
     });
@@ -71,7 +71,7 @@ function createActionsRoute(model) {
   router.route(actions.link).get((req, res, next) => {
     req.type = 'actions';
     req.entityId = 'actions';
-    req.result = utils.moduleToResource(actions.resources, true);
+    req.result = utils.modelToResource(actions.resources, true);
     res.links({
       type: 'http://model.webofthings.io/#actions-resource'
     });
