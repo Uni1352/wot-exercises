@@ -17,13 +17,15 @@ function createSocketServer(server) {
     console.info(typeof urlWrapper);
     console.info(urlWrapper);
 
-    // try {
-    //   new Proxy(url, {
-    //     set: (target) => ws.send(target)
-    //   })
-    // } catch (err) {
-    //   console.info(`Unable to observe ${url} resource`)
-    // }
+    try {
+      new Proxy(urlWrapper, {
+        set: (target, prop, val) => {
+          if (prop === 'url') ws.send(val);
+        }
+      })
+    } catch (err) {
+      console.info(`Unable to observe ${url} resource`)
+    }
   });
 }
 
