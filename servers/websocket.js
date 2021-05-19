@@ -1,4 +1,5 @@
 const socketServer = require('ws').Server;
+const url = require('url');
 
 const model = require('../resources/model');
 
@@ -18,10 +19,8 @@ function createSocketServer(server) {
       console.info(urlWrapper.url);
       new Proxy(urlWrapper, {
         set: (target, prop, val) => {
-          if (prop === 'url') {
-            console.info(target);
-            console.info(val);
-          }
+          console.info(target);
+          console.info(val);
         }
       });
 
