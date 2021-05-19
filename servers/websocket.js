@@ -10,9 +10,17 @@ function createSocketServer(server) {
   console.info('WebSocket server started...');
 
   wss.on('connection', (ws, req) => {
-    const reqUrl = req.url;
+    const url = req.url;
 
-    console.info(reqUrl);
+    console.info(url);
+
+    try {
+      new Proxy(url, {
+        set: (target) => ws.send(target)
+      })
+    } catch (err) {
+      console.info(`Unable to observe ${url} resource`)
+    }
   });
 }
 
