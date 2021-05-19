@@ -97,12 +97,12 @@ function createActionsRoute(model) {
     action.id = uuid.v1();
     action.status = "pending";
     action.timestamp = new Date().toISOString();
-    console.info(actions.resources[req.params.actionType].data);
+    console.info(actions.resources[req.params.id].data);
     // cappedPush(actions.resources[req.params.actionType].data, action);
     res.location(req.originalUrl + '/' + action.id);
 
     next();
-  });;
+  });
 
   // POST {WT}/actions/{id}
   // router.route(`${actions.link}/:id`).post((req, res, next) => {
