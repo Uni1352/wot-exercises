@@ -31,7 +31,7 @@ function createSocketServer(server) {
 
 function selectResource(url) {
   let parts = url.split('/');
-  let result;
+  let result = [];
 
   parts.shift();
   console.info(`parts=${parts}`);
