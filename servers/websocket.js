@@ -1,5 +1,4 @@
 const socketServer = require('ws').Server;
-const url = require('url');
 
 const model = require('../resources/model');
 
@@ -11,23 +10,12 @@ function createSocketServer(server) {
   console.info('WebSocket server started...');
 
   wss.on('connection', (ws, req) => {
-    const reqURL = req.url;
-
     try {
-      let result = selectResource(reqURL);
-
-      result = new Proxy(result, {
-        set: (target) => {
-          ws.send(target[0]);
-        }
+      new Proxy(selectResource(req.url), {
+        set: (target) => ws.send(JSON.stringify(target[0]))
       });
-
-      setInterval(() => {
-        result = selectResource(reqURL);
-        console.info(result);
-      }, 5000);
     } catch (err) {
-      console.info(`Unable to observe ${reqURL} resource`);
+      console.info(`Unable to observe ${req.url} resource`);
     }
   });
 }
