@@ -91,33 +91,29 @@ router.route(actions.link).get((req, res, next) => {
 });
 
 // {WT}/actions/{id}
-router.route(`${actions.link}/:actionType`)
-  .get((req, res, next) => {
-    req.type = 'action';
-    req.entityId = req.params.actionType;
-    req.result = reverseResults(actions.resources[req.params.actionType].data);
-    res.links({
-      type: 'http://model.webofthings.io/#actions-resource'
-    });
-
-    next();
-  })
-  .post((req, res, next) => {
-    let action = {};
-
-    action.id = uuid.v1();
-    action.values = req.body;
-    action.status = 'pending';
-    action.timestamp = new Date().toISOString();
-
-    cappedPush(actions.resources[req.params.actionType].data, action);
-    res.location(`${req.originalUrl}/${action.id}`);
-
-    next();
+router.route(`${actions.link}/:actionType`).get((req, res, next) => {
+  req.type = 'action';
+  req.entityId = req.params.actionType;
+  req.result = reverseResults(actions.resources[req.params.actionType].data);
+  res.links({
+    type: 'http://model.webofthings.io/#actions-resource'
   });
 
+  next();
+});
 
-module.exports = {
-  router,
-  createDefaultData
-};
+router.post(`${actions.link}/:actionType`, (req, res, next) => {
+  let action = {};
+
+  action.id = uuid.v1();
+  action.values = req.body;
+  action.status = 'pending';
+  action.timestamp = new Date().toISOString();
+
+  cappedPush(actions.resources[req.params.actionType].data, action);
+  res.location(`${req.originalUrl}/${action.id}`);
+
+  next();
+});
+
+module.exports = router;
