@@ -9,7 +9,7 @@ function initPlugins() {
   const LedPlugin = require('./plugins/internal/ledPlugin');
 
   pirPlugin = new PirPlugin({
-    'simulate': false,
+    'simulate': true,
     'frequency': 5000
   });
   pirPlugin.startPlugin();
@@ -28,7 +28,7 @@ function createServer(port, secure) {
 
   if (port === undefined) port = model.customFields.port;
 
-  // initPlugins();
+  initPlugins();
 
   if (!secure) server = http.createServer(httpServer).listen(port, () => {
     console.info('HTTP server started...');
@@ -40,8 +40,8 @@ function createServer(port, secure) {
 }
 
 process.on('SIGINT', () => {
-  // pirPlugin.stopPlugin();
-  // ledsPlugin.stopPlugin();
+  pirPlugin.stopPlugin();
+  ledsPlugin.stopPlugin();
   console.log('Bye, bye!');
   process.exit();
 });

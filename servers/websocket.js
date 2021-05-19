@@ -21,7 +21,7 @@ function createSocketServer(server) {
           console.info(val);
         }
       });
-      ws.send(req.url);
+      ws.send(result);
     } catch (err) {
       console.info(`Unable to observe ${url} resource`);
     }
