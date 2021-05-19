@@ -22,8 +22,9 @@ function createSocketServer(server) {
         }
       });
 
-      setTimeout(() => {
+      setInterval(() => {
         result = selectResource(reqURL);
+        console.info(result);
       }, 5000);
     } catch (err) {
       console.info(`Unable to observe ${reqURL} resource`);
