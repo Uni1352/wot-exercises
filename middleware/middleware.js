@@ -1,15 +1,21 @@
 const msgpack = require('msgpack5')();
 
+const jsonld = require('../resources/piJsonLd.json');
+
 const msgpackEncoder = msgpack.encode;
 
 function generateRepresentationForm(req, res, next) {
   console.info('Representation Converter Middleware Called!');
 
   if (req.result) {
-    switch (req.accepts(['json', 'html', 'application/x-msgpack'])) {
+    switch (req.accepts(['json', 'ld+json', 'html', 'application/x-msgpack'])) {
       case 'json':
         console.info('JSON Representation Selected!');
         res.send(req.result);
+        break;
+      case 'ld+json':
+        console.info('JSON-LD Representation Selected!');
+        res.send(jsonld);
         break;
       case 'html':
         let helpers = {
@@ -35,6 +41,7 @@ function generateRepresentationForm(req, res, next) {
         console.info('Defaulting to JSON Representation!');
         res.send(req.result);
     }
+    return;
   } else {
     next();
   }
