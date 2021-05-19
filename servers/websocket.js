@@ -17,7 +17,8 @@ function createSocketServer(server) {
 
     try {
       console.info(urlWrapper.url);
-      new Proxy(urlWrapper, {
+
+      urlWrapper = new Proxy(urlWrapper, {
         set: (target, prop, val) => {
           console.info(target);
           console.info(val);
@@ -25,7 +26,6 @@ function createSocketServer(server) {
       });
 
       urlWrapper.url = '/properties';
-      console.info(urlWrapper.url);
     } catch (err) {
       console.info(`Unable to observe ${url} resource`)
     }
