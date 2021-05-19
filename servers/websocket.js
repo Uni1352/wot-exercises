@@ -10,7 +10,7 @@ function createSocketServer(server) {
   console.info('WebSocket server started...');
 
   wss.on('connection', (ws, req) => {
-    const reqUrl = req.socket.remoteAddress;
+    const reqUrl = req.url;
 
     console.info(reqUrl);
   });
