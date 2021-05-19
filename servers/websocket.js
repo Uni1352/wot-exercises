@@ -25,6 +25,7 @@ function createSocketServer(server) {
       });
 
       urlWrapper.url = '/properties';
+      console.info(urlWrapper.url);
     } catch (err) {
       console.info(`Unable to observe ${url} resource`)
     }
