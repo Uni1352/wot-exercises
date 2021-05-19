@@ -1,10 +1,10 @@
 {
-  "id": "http://192.168.0.17:8484",
+  "id": "http://localhost:8484",
   "name": "My WoT Raspberry PI",
   "description": "A simple WoT-connected Raspberry Pi for the WoT book.",
   "tags": ["raspberry", "pi", "WoT"],
   "customFields": {
-    "host": "192.168.0.17",
+    "host": "localhost",
     "port": 8484,
     "secure": false,
     "dataArraySize": 30
