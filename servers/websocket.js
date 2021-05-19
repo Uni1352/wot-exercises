@@ -12,7 +12,7 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     const url = req.url;
-    console.info(selectResource(req.url));
+    console.info(`result=${selectResource(req.url)}`);
 
     try {
       // new Proxy(selectResource(url), {
@@ -34,7 +34,7 @@ function selectResource(url) {
   let result;
 
   parts.shift();
-  console.info(parts);
+  console.info(`parts=${parts}`);
 
   switch (parts[0]) {
     case 'properties':
