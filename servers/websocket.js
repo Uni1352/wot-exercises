@@ -11,20 +11,33 @@ function createSocketServer(server) {
   console.info('WebSocket server started...');
 
   wss.on('connection', (ws, req) => {
-    let urlWrapper = {
-      url: req.url
-    };
+    const url = req.url;
 
     try {
-      urlWrapper = new Proxy(urlWrapper, {
-        set: (target, prop, val) => ws.send(val)
+      new Proxy(selectResource(url), {
+        set: (target, prop, val) => {
+          console.info(target);
+          console.info(prop);
+          console.info(val);
+        }
       });
-
-      urlWrapper.url = '/properties';
     } catch (err) {
-      console.info(`Unable to observe ${url} resource`)
+      console.info(`Unable to observe ${url} resource`);
     }
   });
+}
+
+function selectResource(url) {
+  const parts = url.spilt('/').shift();
+
+  console.info(parts);
+
+  switch (parts[0]) {
+    case 'properties':
+      return model.links.properties.resources[parts[1]].data;
+    case 'actions':
+      return model.links.actions.resources[parts[1]].data;
+  }
 }
 
 module.exports = createSocketServer;
