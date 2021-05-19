@@ -16,12 +16,9 @@ function createSocketServer(server) {
     try {
       let result = new Proxy(selectResource(req.url), {
         set: (target, prop, val) => {
-          console.info(target);
-          console.info(prop);
-          console.info(val);
+          ws.send(target);
         }
       });
-      ws.send(result);
     } catch (err) {
       console.info(`Unable to observe ${url} resource`);
     }
