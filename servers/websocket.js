@@ -12,7 +12,7 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     const url = req.url;
-    console.info(selectResource(url), typeof selectResource(url));
+    console.info(selectResource(req.url));
 
     try {
       // new Proxy(selectResource(url), {
@@ -22,6 +22,7 @@ function createSocketServer(server) {
       //     console.info(val);
       //   }
       // });
+      ws.send(req.url);
     } catch (err) {
       console.info(`Unable to observe ${url} resource`);
     }
@@ -29,16 +30,21 @@ function createSocketServer(server) {
 }
 
 function selectResource(url) {
-  const parts = url.split('/').shift();
+  let parts = url.split('/');
+  let result;
 
+  parts.shift();
   console.info(parts);
 
   switch (parts[0]) {
     case 'properties':
-      return model.links.properties.resources[parts[1]].data;
+      result = model.links.properties.resources[parts[1]].data;
+      break;
     case 'actions':
-      return model.links.actions.resources[parts[1]].data;
+      result = model.links.actions.resources[parts[1]].data;
   }
+
+  return result;
 }
 
 module.exports = createSocketServer;

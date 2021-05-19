@@ -40,8 +40,8 @@ function createServer(port, secure) {
 }
 
 process.on('SIGINT', () => {
-  pirPlugin.stopPlugin();
-  ledsPlugin.stopPlugin();
+  // pirPlugin.stopPlugin();
+  // ledsPlugin.stopPlugin();
   console.log('Bye, bye!');
   process.exit();
 });
