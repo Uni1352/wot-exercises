@@ -14,7 +14,7 @@ function createSocketServer(server) {
     const reqURL = req.url;
 
     try {
-      let target = new Proxy(selectResource(reqURL), {
+      let target = new Proxy(target, {
         set: (target, prop, val) => {
           console.info(target);
           console.info(prop);
