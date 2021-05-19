@@ -82,7 +82,7 @@ function createActionsRoute(model) {
     next();
   });
 
-  // GET {WT}/actions/{id}
+  // {WT}/actions/{id}
   router.route(`${actions.link}/:id`).get((req, res, next) => {
     req.type = 'action';
     req.entityId = req.params.id;
@@ -92,7 +92,16 @@ function createActionsRoute(model) {
     });
 
     next();
-  });
+  }).post(function (req, res, next) {
+    var action = req.body;
+    action.id = uuid.v1();
+    action.status = "pending";
+    action.timestamp = new Date().toISOString();
+    cappedPush(actions.resources[req.params.actionType].data, action);
+    res.location(req.originalUrl + '/' + action.id);
+
+    next();
+  });;
 
   // POST {WT}/actions/{id}
   // router.route(`${actions.link}/:id`).post((req, res, next) => {
@@ -112,17 +121,6 @@ function createActionsRoute(model) {
 
   //   next();
   // });
-
-  router.route('/actions/:actionType').post(function (req, res, next) {
-    var action = req.body;
-    action.id = uuid.v1();
-    action.status = "pending";
-    action.timestamp = new Date().toISOString();
-    cappedPush(actions.resources[req.params.actionType].data, action);
-    res.location(req.originalUrl + '/' + action.id);
-
-    next();
-  });
 }
 
 function createDefaultData(resources) {
