@@ -10,9 +10,9 @@ function createSocketServer(server) {
   console.info('WebSocket server started...');
 
   wss.on('connection', (ws, req) => {
-    const url = req.url;
+    const url = new URL(req.url);
 
-    console.info(typeof url);
+    console.info(url);
 
     // try {
     //   new Proxy(url, {
