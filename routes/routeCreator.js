@@ -43,7 +43,7 @@ function createPropertiesRoute(model) {
   const properties = model.links.properties;
 
   // GET {WT}/properties
-  router.route(properties.link).get((req, res, next) => {
+  router.route(`/${properties.link}`).get((req, res, next) => {
     req.type = 'properties';
     req.entityId = 'properties';
     req.result = moduleToResource(properties.resources, true);
@@ -55,7 +55,7 @@ function createPropertiesRoute(model) {
   });
 
   // GET {WT}/properties/{id}
-  router.route(`${properties.link}/:id`).get((req, res, next) => {
+  router.route(`/${properties.link}/:id`).get((req, res, next) => {
     req.type = 'property';
     req.entityId = req.params.id;
     req.result = reverseResults(properties.resources[req.params.id].data);
@@ -71,7 +71,7 @@ function createActionsRoute(model) {
   const actions = model.links.actions;
 
   // GET {WT}/actions
-  router.route(actions.link).get((req, res, next) => {
+  router.route(`/${actions.link}`).get((req, res, next) => {
     req.type = 'actions';
     req.entityId = 'actions';
     req.result = moduleToResource(actions.resources, true);
@@ -82,11 +82,11 @@ function createActionsRoute(model) {
     next();
   });
 
-  // GET {WT}/actions/{actionId}
-  router.route(`${actions.link}/:actionId`).get((req, res, next) => {
+  // GET {WT}/actions/{id}
+  router.route(`/${actions.link}/:id`).get((req, res, next) => {
     req.type = 'action';
-    req.entityId = req.params.actionId;
-    req.result = reverseResults(actions.resources[req.params.actionId].data);
+    req.entityId = req.params.id;
+    req.result = reverseResults(actions.resources[req.params.id].data);
     res.links({
       type: 'http://model.webofthings.io/#actions-resource'
     });
@@ -94,8 +94,8 @@ function createActionsRoute(model) {
     next();
   });
 
-  // POST {WT}/actions/{actionId}
-  router.route(`${actions.link}/:actionId`).post((req, res, next) => {
+  // POST {WT}/actions/{id}
+  router.route(`/${actions.link}/:id`).post((req, res, next) => {
     let action = {};
 
     action.id = uuid.v1();
@@ -103,9 +103,12 @@ function createActionsRoute(model) {
     action.status = 'pending';
     action.timestamp = new Date().toISOString();
 
-    actions.resources[req.params.actionId].data.push(action);
-    // cappedPush(actions.resources[req.params.actionId].data, action);
-    // res.location(`${req.originalUrl}/${action.id}`);
+    console.info(req.params.id);
+    console.info(action);
+
+    actions.resources[req.params.id].data.push(action);
+    // cappedPush(actions.resources[req.params.id].data, action);
+    res.location(`${req.originalUrl}/${action.id}`);
 
     next();
   });

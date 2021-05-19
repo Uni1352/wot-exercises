@@ -44,16 +44,14 @@ class CorePlugin {
 
   observeActions() {
     const proxy = [];
-    const handler = {
-      set: (obj, prop, val) => {
-        console.info(`[plugin action detected] ${this.actionId}`);
-        console.info(obj, val);
-        // doActions(obj, val);
-      }
-    };
 
     this.actions.forEach((actionId) => {
-      proxy.push(new Proxy(model.links.actions.resources[actionId].data, handler));
+      proxy.push(new Proxy(model.links.actions.resources[actionId].data, {
+        set: (arr, prop, val) => {
+          console.info(`[plugin action detected] ${actionId}`);
+          console.info(arr, val);
+        }
+      }));
       console.info(`${actionId} proxy created!`);
     });
   }
