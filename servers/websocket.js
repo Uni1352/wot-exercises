@@ -10,16 +10,24 @@ function createSocketServer(server) {
 
   console.info('WebSocket server started...');
 
-  wss.on('connection', (ws, req) => {
+  wss.on('connection', (ws) => {
+    // try {
+    //   new Proxy(selectResource(req.url), {
+    //     set: (target, prop, val) => {
+    //       ws.send('test');
+    //     }
+    //   });
+    // } catch (err) {
+    //   console.info(`Unable to observe ${url} resource`);
+    // }
     try {
-      new Proxy(selectResource(req.url), {
-        set: (target, prop, val) => {
-          ws.send('test');
-        }
-      });
-    } catch (err) {
-      console.info(`Unable to observe ${url} resource`);
+      Array.observe(selectResource(ws.upgradeReq.url), function (changes) { //#C
+        ws.send(JSON.stringify(changes[0].object[changes[0].object.length - 1]), function () {});
+      }, ['add'])
+    } catch (e) { //#D
+      console.log('Unable to observe %s resource!', url);
     }
+
   });
 }
 
