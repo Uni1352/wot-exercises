@@ -1,18 +1,15 @@
 const CorePlugin = require('../corePlugin');
 
-let model = require('../../resources/model');
-
 class LedPlugin extends CorePlugin {
   constructor(params) {
     super(params, 'leds', ['ledState']);
+    super.doActions = this.switchOnOff;
 
     this.actuators = {};
     this.leds = this.model.values;
     this.simulateVal = [true, true];
     this.addValue(this.simulateVal);
   }
-
-  switchOnOff() {}
 
   connectHardware() {
     const Gpio = require('onoff').Gpio;
@@ -44,6 +41,18 @@ class LedPlugin extends CorePlugin {
     super.stopPlugin(() => {
       Object.keys(this.leds).forEach((led) => this.actuators[`${led}`].unexport());
     });
+  }
+
+  switchOnOff(obj) {
+    let val = this.model.data[0];
+
+    this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
+      val[`${obj.ledId}`] = obj.values.state;
+      this.addValue(val);
+    });
+
+    obj.status = 'completed';
+    console.info(`Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
   }
 }
 

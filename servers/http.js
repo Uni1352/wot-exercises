@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 
 // bind routes
-app.use('/', routeCreator.create(model));
+app.use('/', routeCreator(model));
 
 // representation converter
 app.use(converter());

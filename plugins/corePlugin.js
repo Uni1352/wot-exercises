@@ -14,6 +14,7 @@ class CorePlugin {
     };
 
     this.interval;
+    this.doActions;
     this.actions = actionsIds;
     this.model = findProperty(propId);
   }
@@ -50,11 +51,13 @@ class CorePlugin {
         set: (arr, prop, val) => {
           console.info(`[plugin action detected] ${actionId}`);
           console.info(arr, val);
+          this.doActions(val);
         }
       }));
       console.info(`${actionId} proxy created!`);
     });
   }
+
 
   startPlugin() {
     if (this.actions) this.observeActions();
