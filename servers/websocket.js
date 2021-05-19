@@ -12,9 +12,9 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     const url = req.url;
-    console.info(`result=${selectResource(req.url)}`);
 
     try {
+      console.info(`result=${selectResource(req.url)}`);
       // new Proxy(selectResource(url), {
       //   set: (target, prop, val) => {
       //     console.info(target);
@@ -31,19 +31,16 @@ function createSocketServer(server) {
 
 function selectResource(url) {
   let parts = url.split('/');
-  let result = [];
+  let result;
 
   parts.shift();
   console.info(`parts=${parts}`);
 
-  switch (parts[0]) {
-    case 'properties':
-      result = model.links.properties.resources[parts[1]].data;
-      break;
-    case 'actions':
-      result = model.links.actions.resources[parts[1]].data;
+  if (parts[0] === 'actions') {
+    result = model.links.actions.resources[parts[1]].data;
+  } else {
+    result = model.links.properties.resources[parts[1]].data;
   }
-
   return result;
 }
 
