@@ -14,16 +14,17 @@ function createSocketServer(server) {
     const url = req.url;
 
     try {
-      const result = selectResource(req.url);
+      let result = selectResource(req.url);
       console.info(`result=${result}`);
       console.info(`typeof=${typeof result}`);
-      // new Proxy(selectResource(url), {
-      //   set: (target, prop, val) => {
-      //     console.info(target);
-      //     console.info(prop);
-      //     console.info(val);
-      //   }
-      // });
+
+      result = new Proxy(selectResource(req.url), {
+        set: (target, prop, val) => {
+          console.info(target);
+          console.info(prop);
+          console.info(val);
+        }
+      });
       ws.send(req.url);
     } catch (err) {
       console.info(`Unable to observe ${url} resource`);
