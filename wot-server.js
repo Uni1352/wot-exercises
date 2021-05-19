@@ -28,7 +28,7 @@ function createServer(port, secure) {
 
   if (port === undefined) port = model.customFields.port;
 
-  initPlugins();
+  // initPlugins();
 
   if (!secure) server = http.createServer(httpServer).listen(port, () => {
     console.info('HTTP server started...');

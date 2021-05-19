@@ -29,7 +29,7 @@ function createSocketServer(server) {
 }
 
 function selectResource(url) {
-  const parts = url.spilt('/').shift();
+  const parts = url.split('/').shift();
 
   console.info(parts);
 
