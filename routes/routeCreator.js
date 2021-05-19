@@ -135,11 +135,7 @@ function createActionsRoutes(model) {
     res.location(req.originalUrl + '/' + action.id);
 
     next();
-  });
-
-
-  // GET /actions/{actionType}
-  router.route(actions.link + '/:actionType').get(function (req, res, next) {
+  }).get(function (req, res, next) {
 
     req.result = reverseResults(actions.resources[req.params.actionType].data);
     req.actionModel = actions.resources[req.params.actionType];
