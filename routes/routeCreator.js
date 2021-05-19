@@ -43,7 +43,7 @@ function createPropertiesRoute(model) {
   const properties = model.links.properties;
 
   // GET {WT}/properties
-  router.route(`/${properties.link}`).get((req, res, next) => {
+  router.route(properties.link).get((req, res, next) => {
     req.type = 'properties';
     req.entityId = 'properties';
     req.result = moduleToResource(properties.resources, true);
@@ -55,7 +55,7 @@ function createPropertiesRoute(model) {
   });
 
   // GET {WT}/properties/{id}
-  router.route(`/${properties.link}/:id`).get((req, res, next) => {
+  router.route(`${properties.link}/:id`).get((req, res, next) => {
     req.type = 'property';
     req.entityId = req.params.id;
     req.result = reverseResults(properties.resources[req.params.id].data);
@@ -71,7 +71,7 @@ function createActionsRoute(model) {
   const actions = model.links.actions;
 
   // GET {WT}/actions
-  router.route(`/${actions.link}`).get((req, res, next) => {
+  router.route(actions.link).get((req, res, next) => {
     req.type = 'actions';
     req.entityId = 'actions';
     req.result = moduleToResource(actions.resources, true);
@@ -83,7 +83,7 @@ function createActionsRoute(model) {
   });
 
   // GET {WT}/actions/{id}
-  router.route(`/${actions.link}/:id`).get((req, res, next) => {
+  router.route(`${actions.link}/:id`).get((req, res, next) => {
     req.type = 'action';
     req.entityId = req.params.id;
     req.result = reverseResults(actions.resources[req.params.id].data);
@@ -95,7 +95,7 @@ function createActionsRoute(model) {
   });
 
   // POST {WT}/actions/{id}
-  router.route(`/${actions.link}/:id`).post((req, res, next) => {
+  router.route(`${actions.link}/:id`).post((req, res, next) => {
     let action = {};
 
     action.id = uuid.v1();
