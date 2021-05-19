@@ -16,7 +16,7 @@ function createSocketServer(server) {
     try {
       let result = selectResource(reqURL);
 
-      result = new Proxy(selectResource(reqURL), {
+      result = new Proxy(result, {
         set: (target) => {
           ws.send(target[0]);
         }
