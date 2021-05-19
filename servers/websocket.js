@@ -12,15 +12,15 @@ function createSocketServer(server) {
   wss.on('connection', (ws, req) => {
     const url = req.url;
 
-    console.info(url);
+    console.info(typeof url);
 
-    try {
-      new Proxy(url, {
-        set: (target) => ws.send(target)
-      })
-    } catch (err) {
-      console.info(`Unable to observe ${url} resource`)
-    }
+    // try {
+    //   new Proxy(url, {
+    //     set: (target) => ws.send(target)
+    //   })
+    // } catch (err) {
+    //   console.info(`Unable to observe ${url} resource`)
+    // }
   });
 }
 
