@@ -14,14 +14,14 @@ function createSocketServer(server) {
     const url = req.url;
 
     try {
-      console.info(typeof selectResource(url));
-      new Proxy(selectResource(url), {
-        set: (target, prop, val) => {
-          console.info(target);
-          console.info(prop);
-          console.info(val);
-        }
-      });
+      console.info(selectResource(url), typeof selectResource(url));
+      // new Proxy(selectResource(url), {
+      //   set: (target, prop, val) => {
+      //     console.info(target);
+      //     console.info(prop);
+      //     console.info(val);
+      //   }
+      // });
     } catch (err) {
       console.info(`Unable to observe ${url} resource`);
     }
@@ -38,8 +38,6 @@ function selectResource(url) {
       return model.links.properties.resources[parts[1]].data;
     case 'actions':
       return model.links.actions.resources[parts[1]].data;
-    default:
-      return [];
   }
 }
 
