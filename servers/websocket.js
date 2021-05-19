@@ -12,6 +12,7 @@ function createSocketServer(server) {
   wss.on('connection', (ws, req) => {
     const url = new URL(req.url);
 
+    console.info(typeof url);
     console.info(url);
 
     // try {
