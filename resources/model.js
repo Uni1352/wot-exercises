@@ -1,3 +1,3 @@
-const model = require('./pi.json');
+let model = require('./pi.json');
 
 module.exports = model;

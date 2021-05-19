@@ -1,5 +1,6 @@
-const model = require('./resources/model');
 const httpServer = require('./servers/http');
+
+let model = require('./resources/model');
 
 function createServer(port, secure) {
   let server;
