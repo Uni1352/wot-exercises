@@ -14,13 +14,12 @@ function createSocketServer(server) {
       url: req.url
     };
 
-    console.info(typeof urlWrapper);
-    console.info(urlWrapper);
-
     try {
       new Proxy(urlWrapper, {
         set: (target, prop, val) => {
-          if (prop === 'url') ws.send(val);
+          if (prop === 'url') {
+            console.info(val);
+          }
         }
       })
     } catch (err) {

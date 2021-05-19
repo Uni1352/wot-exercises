@@ -1,4 +1,4 @@
-let ws = new WebSocket('ws://192.168.0.17:8484');
+let ws = new WebSocket('ws://192.168.0.17:8484/properties');
 
 
 ws.onopen = () => console.log('open connection');
