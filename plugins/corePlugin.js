@@ -50,8 +50,7 @@ class CorePlugin {
         get: (target) => target,
         set: (arr, prop, val) => {
           console.info(`[proxy] plugin action detected: ${actionId}`);
-          arr.push(val);
-          console.info(arr);
+          console.info(arr, prop, val);
           console.info(model.links.actions.resources[actionId].data);
           // this.doActions(val);
           return true;
@@ -60,10 +59,10 @@ class CorePlugin {
       console.info(`[proxy] ${actionId} proxy created!`);
     });
 
-    // setTimeout(() => model.links.actions.resources[this.actions[0]].data.push({
-    //   'ledId': '1',
-    //   'state': true
-    // }), 5000);
+    setTimeout(() => Object.assign(model.links.actions.resources[this.actions[0]].data, [{
+      'ledId': '1',
+      'state': true
+    }]), 5000);
   }
 
   startPlugin() {
