@@ -46,13 +46,15 @@ class CorePlugin {
 
   createProxy(target) {
     this.actions.forEach((actionId) => {
-      new Proxy(model.links.actions.resources[actionId].data, {
+      model.links.actions.resources[actionId].data = new Proxy(model.links.actions.resources[actionId].data, {
         get: (target) => target,
         set: (arr, prop, val) => {
           console.info(`[proxy] plugin action detected: ${actionId}`);
-          console.info(arr, prop, val);
+          arr.push(val);
+          console.info(arr);
           console.info(model.links.actions.resources[actionId].data);
           // this.doActions(val);
+          return true;
         }
       });
       console.info(`[proxy] ${actionId} proxy created!`);
