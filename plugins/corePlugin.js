@@ -19,7 +19,7 @@ class CorePlugin {
     this.model = utils.findProperty(propId);
   }
 
-  simulator() {
+  simulate() {
     this.interval = setInterval(() => {
       this.doSimulate();
       this.showValue();
@@ -62,7 +62,7 @@ class CorePlugin {
   startPlugin() {
     if (this.actions) this.observeActions();
 
-    if (this.params.simulate) this.simulator();
+    if (this.params.simulate) this.simulate();
     else this.connectHardware();
 
     console.info(`[plugin started] ${this.model.name}`);

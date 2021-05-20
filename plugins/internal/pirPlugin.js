@@ -22,11 +22,6 @@ class PirPlugin extends CorePlugin {
     });
   }
 
-  simulate() {
-    this.simulateVal = !this.simulateVal;
-    this.addValue(this.simulateVal);
-  }
-
   createValue(val) {
     return {
       "presence": val,
@@ -35,12 +30,11 @@ class PirPlugin extends CorePlugin {
   }
 
   setActions() {
-    this.doSimulate = this.simulate();
-    this.doStop = this.stop();
-  }
-
-  stop() {
-    this.sensor.unexport();
+    this.doSimulate = () => {
+      this.simulateVal = !this.simulateVal;
+      this.addValue(this.simulateVal);
+    };
+    this.doStop = () => this.sensor.unexport();
   }
 }
 
