@@ -22,14 +22,8 @@ app.use(cors());
 // app.use('/actions', actionsRoute);
 app.use('/', routeCreator(model));
 
-// app.get('*', function (req, res) {
-//   res.send('what???', 404);
-// });
-
-app.use(function (req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.get('*', function (req, res) {
+  res.send('what???', 404);
 });
 
 // representation converter
