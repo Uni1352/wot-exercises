@@ -2,7 +2,7 @@ const CorePlugin = require('../corePlugin');
 
 class PirPlugin extends CorePlugin {
   constructor(params) {
-    super(params, 'pir', simulate(), stop());
+    super(params, 'pir');
 
     this.sensor;
     this.simulateVal = true;
@@ -31,6 +31,10 @@ class PirPlugin extends CorePlugin {
       "presence": val,
       "timestamp": new Date().toISOString()
     };
+  }
+
+  print() {
+    console.info(this.doSimulate);
   }
 
   stop() {
