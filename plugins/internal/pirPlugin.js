@@ -32,7 +32,6 @@ class PirPlugin extends CorePlugin {
   setActions() {
     this.doSimulate = () => this.addValue(false);
     this.doStop = () => this.sensor.unexport();
-    console.info('test');
   }
 }
 
