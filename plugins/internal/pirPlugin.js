@@ -7,6 +7,7 @@ class PirPlugin extends CorePlugin {
     this.sensor;
     this.simulateVal = true;
     this.addValue(this.simulateVal);
+    this.print();
   }
 
   connectHardware() {
