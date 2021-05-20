@@ -5,8 +5,7 @@ class PirPlugin extends CorePlugin {
     super(params, 'pir');
 
     this.sensor;
-    this.simulateVal = true;
-    this.addValue(this.simulateVal);
+    this.addValue(true);
     this.setActions();
   }
 
@@ -17,7 +16,6 @@ class PirPlugin extends CorePlugin {
     this.sensor.watch((err, val) => {
       if (err) exit(err);
 
-      console.info('test');
       this.addValue(!!val);
       this.showValue();
     });
@@ -32,10 +30,7 @@ class PirPlugin extends CorePlugin {
   }
 
   setActions() {
-    this.doSimulate = () => {
-      this.simulateVal = !this.simulateVal;
-      this.addValue(this.simulateVal);
-    };
+    this.doSimulate = () => this.addValue(false);
     this.doStop = () => this.sensor.unexport();
   }
 }
