@@ -10,7 +10,6 @@ class LedPlugin extends CorePlugin {
     this.actuators = {};
     this.leds = this.model.values;
     this.simulateVal = [false, true];
-    // this.doActions = this.switchOnOff();
     this.setActions();
   }
 
@@ -39,6 +38,7 @@ class LedPlugin extends CorePlugin {
     this.doStop = () => {
       Object.keys(this.leds).forEach((led) => this.actuators[`${led}`].unexport());
     };
+    this.doActions = this.switchOnOff;
   }
 
   switchOnOff(obj) {
@@ -46,6 +46,7 @@ class LedPlugin extends CorePlugin {
 
     this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
       val[`${obj.ledId}`] = obj.values.state;
+      console.info(val);
       this.addValue(val);
     });
 
