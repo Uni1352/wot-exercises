@@ -21,12 +21,19 @@ function createServer(port, secure) {
 
 function initPlugins() {
   const PirPlugin = require('./plugins/internal/pirPlugin');
+  const LedPlugin = require('./plugins/internal/ledPlugin');
 
   pirPlugin = new PirPlugin({
     'simulate': false,
     'frequency': 3000
   });
   pirPlugin.startPlugin();
+
+  ledsPlugin = new LedPlugin({
+    'simulate': true,
+    'frequency': 5000
+  });
+  ledsPlugin.startPlugin();
 }
 
 process.on('SIGINT', () => {
