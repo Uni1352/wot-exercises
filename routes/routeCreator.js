@@ -94,8 +94,8 @@ function createActionsRoute(model) {
     action.timestamp = utils.isoTimestamp();
 
     utils.cappedPush(actions.resources[req.params.actionType].data, action);
-    console.info(actions.resources[req.params.actionType].data);
-    console.info(req.url);
+    // console.info(actions.resources[req.params.actionType].data);
+    // console.info(req.url);
     res.location(`${req.originalUrl}/${action.id}`);
 
     next();
@@ -114,7 +114,6 @@ function createActionsRoute(model) {
 
     next();
   });
-
 
   // GET /actions/{id}/{actionId}
   router.route(`${actions.link}/:actionType/:actionId`).get((req, res, next) => {
