@@ -3,6 +3,7 @@ const msgpackEncoder = msgpack.encode;
 
 function generateRepresentationForm(req, res, next) {
   console.info('Representation Converter Middleware Called!');
+  console.info(req.result);
 
   if (req.result) {
     switch (req.accepts(['json', 'application/x-msgpack'])) {
@@ -19,10 +20,9 @@ function generateRepresentationForm(req, res, next) {
         console.info('Defaulting to JSON Representation!');
         res.send(req.result);
     }
-    return;
-  } else {
-    next();
   }
+
+  next();
 }
 
 module.exports = {
