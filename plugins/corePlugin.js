@@ -45,10 +45,13 @@ class CorePlugin {
   }
 
   createProxy() {
+    let actionData = [];
+
+    console.info(typeof actionData);
     this.actions.forEach((actionId) => {
       // let actionData = model.links.actions.resources[actionId].data;
 
-      model.links.actions.resources[actionId].data = new Proxy(model.links.actions.resources[actionId].data, {
+      new Proxy(model.links.actions.resources[actionId].data, {
         get: (target) => target,
         set: (arr, prop, val) => {
           console.info(`[proxy] plugin action detected: ${actionId}`);
@@ -66,7 +69,7 @@ class CorePlugin {
           'state': true
         }
         console.log(model.links.actions.resources[actionId].data);
-        Object.assign(model.links.actions.resources[actionId].data, inputData);
+        model.links.actions.resources[actionId].data.push(inputData);
       }, 5000);
     });
   }
