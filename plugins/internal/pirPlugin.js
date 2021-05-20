@@ -2,9 +2,7 @@ const CorePlugin = require('../corePlugin');
 
 class PirPlugin extends CorePlugin {
   constructor(params) {
-    super(params, 'pir');
-    super.doSimulate = simulate();
-    super.doStop = stop();
+    super(params, 'pir', simulate(), stop());
 
     this.sensor;
     this.simulateVal = true;

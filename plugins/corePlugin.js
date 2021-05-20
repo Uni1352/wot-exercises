@@ -4,7 +4,7 @@ const utils = require('../utils/utils');
 let model = require('../resources/model');
 
 class CorePlugin {
-  constructor(params, propId, actionsIds) {
+  constructor(params, propId, doSimulate, doStop, actionsIds) {
     if (params) this.params = params;
     else this.params = {
       'simulate': false,
@@ -12,8 +12,8 @@ class CorePlugin {
     };
 
     this.interval;
-    this.doSimulate;
-    this.doStop;
+    this.doSimulate = doSimulate;
+    this.doStop = doStop;
     this.doActions;
     this.actions = actionsIds;
     this.model = utils.findProperty(propId);
