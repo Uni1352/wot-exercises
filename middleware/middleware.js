@@ -20,8 +20,6 @@ function generateRepresentationForm(req, res, next) {
         res.send(req.result);
     }
   }
-
-  next();
 }
 
 module.exports = {

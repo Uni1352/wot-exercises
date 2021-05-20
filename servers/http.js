@@ -22,11 +22,17 @@ app.use(cors());
 // app.use('/actions', actionsRoute);
 app.use('/', routeCreator(model));
 
-// representation converter
-app.use(converter());
+// app.get('*', function (req, res) {
+//   res.send('what???', 404);
+// });
 
 app.use(function (req, res, next) {
-  res.status(404).send('Unable to find the requested resource!');
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
+
+// representation converter
+app.use(converter());
 
 module.exports = app;
