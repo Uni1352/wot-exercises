@@ -39,5 +39,6 @@ module.exports = {
     });
   },
   reverseResults: (arr) => arr.slice(0).reverse(),
-  isoTimestamp: () => new Date().toISOString()
+  isoTimestamp: () => new Date().toISOString(),
+  findProperty: (propId) => model.links.properties.resources[propId]
 };
