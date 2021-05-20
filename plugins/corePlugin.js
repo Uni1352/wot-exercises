@@ -19,9 +19,9 @@ class CorePlugin {
     this.model = utils.findProperty(propId);
   }
 
-  simulate(doSimulate) {
+  simulator() {
     this.interval = setInterval(() => {
-      doSimulate();
+      this.doSimulate();
       this.showValue();
     }, this.params.frequency);
     console.info(`[simulator started] ${this.model.name}`);
@@ -62,15 +62,15 @@ class CorePlugin {
   startPlugin() {
     if (this.actions) this.observeActions();
 
-    if (this.params.simulate) this.simulate();
+    if (this.params.simulate) this.simulator();
     else this.connectHardware();
 
     console.info(`[plugin started] ${this.model.name}`);
   }
 
-  stopPlugin(doStop) {
+  stopPlugin() {
     if (this.params.simulate) clearInterval(this.interval);
-    else if (doStop) doStop();
+    else if (this.doStop) this.doStop();
 
     console.info(`[plugin stopped] ${this.model.name}`);
   }
