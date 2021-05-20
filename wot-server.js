@@ -1,9 +1,13 @@
 const httpServer = require('./servers/http');
 
 let model = require('./resources/model');
+let pirPlugin, ledsPlugin;
+
 
 function createServer(port, secure) {
   let server;
+
+  initPlugins();
 
   if (port === undefined) port = model.customFields.port;
 
@@ -15,7 +19,18 @@ function createServer(port, secure) {
   return server;
 }
 
+function initPlugins() {
+  const PirPlugin = require('./plugins/internal/pirPlugin');
+
+  pirPlugin = new PirPlugin({
+    'simulate': true,
+    'frequency': 5000
+  });
+  pirPlugin.startPlugin();
+}
+
 process.on('SIGINT', () => {
+  pirPlugin.stopPlugin();
   console.info('BYE!');
   process.exit();
 });
