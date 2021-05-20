@@ -1,5 +1,7 @@
 const CorePlugin = require('../corePlugin');
 
+let model = require('../../resources/model');
+
 class LedPlugin extends CorePlugin {
   constructor(params) {
     super(params, 'leds', ['ledState']);
