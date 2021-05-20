@@ -8,6 +8,7 @@ class LedPlugin extends CorePlugin {
     this.actuators = {};
     this.leds = this.model.values;
     this.simulateVal = [true, true];
+    this.doActions = this.switchOnOff();
     this.addValue(this.simulateVal);
     this.setActions();
   }
@@ -17,6 +18,7 @@ class LedPlugin extends CorePlugin {
 
     Object.keys(this.leds).forEach((led) => {
       this.actuators[`${led}`] = new Gpio(this.leds[led].customFields.gpio, 'out');
+      console.info(`Hardware ${this.leds[led].name} actuator started!`);
     });
   }
 
