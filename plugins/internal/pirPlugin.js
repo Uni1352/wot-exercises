@@ -5,7 +5,7 @@ class PirPlugin extends CorePlugin {
     super(params, 'pir');
 
     this.sensor;
-    // this.addValue(true);
+    this.addValue(true);
     this.setActions();
   }
 
