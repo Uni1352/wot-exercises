@@ -5,6 +5,8 @@ const utils = require('../utils/utils');
 let model = require('../resources/model');
 let actions = model.links.actions;
 
+utils.createDefaultData(actions.resources);
+
 // GET {WT}/actions
 router.route('/').get((req, res, next) => {
   req.type = 'actions';

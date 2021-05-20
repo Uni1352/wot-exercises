@@ -4,6 +4,8 @@ const utils = require('../utils/utils');
 let model = require('../resources/model');
 let properties = model.links.properties;
 
+utils.createDefaultData(properties.resources);
+
 // GET {WT}/properties
 router.route('/').get((req, res, next) => {
   req.type = 'properties';
