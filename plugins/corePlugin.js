@@ -59,7 +59,7 @@ class CorePlugin {
       console.info(`[proxy] ${actionId} proxy created!`);
     });
 
-    setTimeout(() => Object.assign(target[actionId].data, [{
+    setTimeout(() => Object.assign(target[this.actions[0]].data, [{
       'ledId': '1',
       'state': true
     }]), 5000);
