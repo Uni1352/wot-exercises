@@ -47,6 +47,7 @@ class CorePlugin {
   observeActions() {
     this.actions.forEach((actionId) => {
       let actionData = model.links.actions.resources[actionId].data;
+      console.log(typeof actionData);
 
       actionData = new Proxy(actionData, {
         get: (target) => target,
