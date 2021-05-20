@@ -60,10 +60,10 @@ class CorePlugin {
       console.info(`[proxy] ${actionId} proxy created!`);
     });
 
-    setTimeout(() => model.links.actions.resources[this.actions[0]].data.push({
-      'ledId': '1',
-      'state': true
-    }), 5000);
+    // setTimeout(() => model.links.actions.resources[this.actions[0]].data.push({
+    //   'ledId': '1',
+    //   'state': true
+    // }), 5000);
   }
 
   startPlugin() {
