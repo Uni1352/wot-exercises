@@ -39,23 +39,20 @@ class LedPlugin extends CorePlugin {
     this.doStop = () => {
       Object.keys(this.leds).forEach((led) => this.actuators[`${led}`].unexport());
     };
-    // TODO: write value
-    this.doActions = (obj) => {
-      let latestVal = this.model.data[this.model.data.length - 1];
+    this.doActions = this.switchOnOff;
+  }
 
-      console.info(`actionData: ${obj.values.state}`);
-      console.info(`latestVal: ${latestVal['1']}`);
+  switchOnOff(obj) {
+    let latestVal = this.model.data[this.model.data.length - 1];
 
+    this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
+      latestVal[`${obj.ledId}`] = obj.values.state;
+      console.info(val);
+      this.addValue(val);
+    });
 
-      // this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
-      //   val[`${obj.ledId}`] = obj.values.state;
-      //   console.info(val);
-      //   this.addValue(val);
-      // });
-
-      // obj.status = 'completed';
-      // console.info(`Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
-    };
+    obj.status = 'completed';
+    console.info(`Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
   }
 }
 
