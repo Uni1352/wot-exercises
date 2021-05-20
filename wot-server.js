@@ -23,8 +23,8 @@ function initPlugins() {
   const PirPlugin = require('./plugins/internal/pirPlugin');
 
   pirPlugin = new PirPlugin({
-    'simulate': true,
-    'frequency': 5000
+    'simulate': false,
+    'frequency': 3000
   });
   pirPlugin.startPlugin();
 }

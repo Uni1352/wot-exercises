@@ -12,9 +12,9 @@ class CorePlugin {
     };
 
     this.interval;
-    this.doActions;
     this.doSimulate;
     this.doStop;
+    this.doActions;
     this.actions = actionsIds;
     this.model = utils.findProperty(propId);
   }
@@ -57,7 +57,6 @@ class CorePlugin {
       console.info(`${actionId} proxy created!`);
     });
   }
-
 
   startPlugin() {
     if (this.actions) this.observeActions();
