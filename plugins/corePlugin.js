@@ -13,7 +13,8 @@ class CorePlugin {
 
     this.interval;
     this.doActions;
-    this.doSimulate = 'test';
+    this.doSimulate;
+    this.doStop;
     this.actions = actionsIds;
     this.model = utils.findProperty(propId);
   }
