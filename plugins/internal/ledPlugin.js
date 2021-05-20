@@ -46,7 +46,7 @@ class LedPlugin extends CorePlugin {
     let latestVal = this.model.data[this.model.data.length - 1];
 
     this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
-      latestVal[`${obj.ledId}`] = obj.values.state;
+      latestVal[`${obj.values.ledId}`] = obj.values.state;
       console.info(latestVal);
       this.addValue(latestVal);
     });
