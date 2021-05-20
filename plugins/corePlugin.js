@@ -61,11 +61,12 @@ class CorePlugin {
       console.info(`[proxy] ${actionId} proxy created!`);
 
       setTimeout(() => {
-        console.log(model.links.actions.resources[actionId].data);
-        Object.assign(model.links.actions.resources[actionId].data, {
+        let inputData = {
           'ledId': '1',
           'state': true
-        });
+        }
+        console.log(model.links.actions.resources[actionId].data);
+        Object.assign(model.links.actions.resources[actionId].data, inputData);
       }, 5000);
     });
   }
