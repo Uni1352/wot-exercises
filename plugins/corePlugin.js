@@ -53,8 +53,8 @@ class CorePlugin {
           console.info(`[proxy] plugin action detected: ${actionId}`);
           arr[prop] = val;
           console.info(arr, prop, val);
-          console.info(actionsData);
-          console.info(model.links.actions.resources[actionId].data);
+          console.info(actionsDataProxy);
+          console.info(target[actionId].data);
           // this.doActions(val);
           return true;
         }
