@@ -30,7 +30,7 @@ function initPlugins() {
   pirPlugin.startPlugin();
 
   ledsPlugin = new LedPlugin({
-    'simulate': true,
+    'simulate': false,
     'frequency': 8000
   });
   ledsPlugin.startPlugin();
