@@ -68,7 +68,7 @@ class CorePlugin {
           'state': true
         }
         console.log(model.links.actions.resources[actionId].data);
-        model.links.actions.resources[actionId].data.push(inputData);
+        proxy[0].push(inputData);
       }, 5000);
     });
   }
