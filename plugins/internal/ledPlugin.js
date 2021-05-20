@@ -44,7 +44,7 @@ class LedPlugin extends CorePlugin {
       let latestVal = this.model.data[this.model.data.length - 1];
 
       console.info(`actionData: ${Object.keys(obj)}`);
-      console.info(`latestVal: ${Object.keys(latestVal)}`);
+      console.info(`latestVal: ${latestVal['1']}`);
 
 
       // this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
