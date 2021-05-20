@@ -38,5 +38,6 @@ module.exports = {
       resource.data = [];
     });
   },
-  reverseResults: (arr) => arr.slice(0).reverse()
+  reverseResults: (arr) => arr.slice(0).reverse(),
+  isoTimestamp: () => new Date().toISOString()
 };
