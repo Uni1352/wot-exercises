@@ -7,7 +7,7 @@ class LedPlugin extends CorePlugin {
 
     this.actuators = {};
     this.leds = this.model.values;
-    this.simulateVal = [true, true];
+    this.simulateVal = [false, true];
     // this.doActions = this.switchOnOff();
     this.addValue(this.simulateVal);
     this.setActions();
@@ -32,9 +32,9 @@ class LedPlugin extends CorePlugin {
 
   setActions() {
     this.doSimulate = () => {
-      for (let i = 0; i < this.simulateVal.length; i++) {
-        this.simulateVal[i] = !this.simulateVal[i];
-      }
+      // for (let i = 0; i < this.simulateVal.length; i++) {
+      //   this.simulateVal[i] = !this.simulateVal[i];
+      // }
       this.addValue(this.simulateVal);
     };
     this.doStop = () => {
