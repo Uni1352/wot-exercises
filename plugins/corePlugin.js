@@ -46,7 +46,7 @@ class CorePlugin {
 
   createProxy(target) {
     this.actions.forEach((actionId) => {
-      target[actionId].data = new Proxy(target[actionId].data, {
+      new Proxy(target[actionId].data, {
         set: (arr, index, val) => {
           if (!isNaN(parseInt(index))) {
             console.info(`[proxy] plugin action detected: ${actionId}`);
