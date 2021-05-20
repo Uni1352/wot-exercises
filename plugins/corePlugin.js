@@ -53,6 +53,7 @@ class CorePlugin {
           console.info(`[proxy] plugin action detected: ${actionId}`);
           arr[prop] = val;
           console.info(arr, prop, val);
+          console.info(actionsData);
           console.info(model.links.actions.resources[actionId].data);
           // this.doActions(val);
           return true;
@@ -61,7 +62,7 @@ class CorePlugin {
       console.info(`[proxy] ${actionId} proxy created!`);
     });
 
-    setInterval(() => Object.assign(model.links.actions.resources[this.actions[0]].data, [{
+    setInterval(() => Object.assign(actionsData, [{
       'ledId': '1',
       'state': true
     }]), 5000);
