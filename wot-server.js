@@ -38,6 +38,7 @@ function initPlugins() {
 
 process.on('SIGINT', () => {
   pirPlugin.stopPlugin();
+  ledsPlugin.stopPlugin();
   console.info('BYE!');
   process.exit();
 });
