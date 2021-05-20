@@ -22,18 +22,6 @@ app.use(cors());
 // app.use('/actions', actionsRoute);
 app.use('/', routeCreator(model));
 
-// app.get('*', function (req, res) {
-//   res.status(404).send('what???');
-// });
-
-// handle errors
-app.use((err, req, res, next) => {
-  if (err) {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-  }
-})
-
 // representation converter
 app.use(converter());
 
