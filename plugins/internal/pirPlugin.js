@@ -6,7 +6,8 @@ class PirPlugin extends CorePlugin {
 
     this.sensor;
     this.addValue(true);
-    this.setActions();
+    this.doSimulate = this.simulate();
+    this.doStop = () => this.sensor.unexport();
   }
 
   connectHardware() {
@@ -29,9 +30,8 @@ class PirPlugin extends CorePlugin {
     };
   }
 
-  setActions() {
-    this.doSimulate = () => this.addValue(false);
-    this.doStop = () => this.sensor.unexport();
+  simulate() {
+    this.addValue(false);
   }
 }
 
