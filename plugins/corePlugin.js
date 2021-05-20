@@ -48,14 +48,11 @@ class CorePlugin {
     this.actions.forEach((actionId) => {
       target[actionId].data = new Proxy(target[actionId].data, {
         set: (arr, index, val) => {
-          // if (typeof index === ) {
-          console.info(`[proxy] plugin action detected: ${actionId}`);
-          console.info(`array: ${typeof arr}`);
-          console.info(`index: ${typeof index}`);
-          arr[index] = val;
-          console.info(target[actionId].data);
-          // this.doActions(val);
-          // }
+          if (!isNaN(parseInt(index))) {
+            console.info(`[proxy] plugin action detected: ${actionId}`);
+            arr[index] = val;
+            // this.doActions(val);
+          }
           return true;
         }
       });
