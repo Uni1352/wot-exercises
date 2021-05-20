@@ -45,11 +45,8 @@ class CorePlugin {
   }
 
   observeActions() {
-    let actionData = [];
-
     this.actions.forEach((actionId) => {
-      actionData = model.links.actions.resources[actionId].data;
-      console.log(typeof actionData);
+      let actionData = model.links.actions.resources[actionId].data;
 
       actionData = new Proxy(actionData, {
         get: (target) => target,
@@ -64,6 +61,10 @@ class CorePlugin {
 
       setTimeout(() => {
         console.log(typeof actionData);
+        Object.assign(actionData, {
+          'ledId': '1',
+          'state': true
+        });
       }, 5000);
     });
   }
