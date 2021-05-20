@@ -35,7 +35,7 @@ class CorePlugin {
   }
 
   addValue(val) {
-    cappedPush(this.model.data, this.createValue(val));
+    utils.cappedPush(this.model.data, this.createValue(val));
   }
 
   showValue() {
