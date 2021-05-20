@@ -84,34 +84,33 @@ function createActionsRoute(model) {
     next();
   });
 
-  // POST {WT}/actions/{id}
-  router.route(`/actions/:actionType`).post((req, res, next) => {
-    let action = {};
+  // GET & POST{WT}/actions/{id}
+  router.route(`/actions/:actionType`)
+    .get((req, res, next) => {
+      req.model = model;
+      req.actionModel = actions.resources[req.params.actionType];
+      req.type = 'action';
+      req.entityId = req.params.actionType;
+      req.result = reverseResults(actions.resources[req.params.actionType].data);
+      res.links({
+        type: 'http://model.webofthings.io/#actions-resource'
+      });
 
-    action.id = uuid.v1();
-    action.values = req.body;
-    action.status = 'pending';
-    action.timestamp = utils.isoTimestamp();
+      next();
+    })
+    .post((req, res, next) => {
+      let action = {};
 
-    utils.cappedPush(actions.resources[req.params.actionType].data, action);
-    res.location(`${req.originalUrl}/${action.id}`);
+      action.id = uuid.v1();
+      action.values = req.body;
+      action.status = 'pending';
+      action.timestamp = utils.isoTimestamp();
 
-    next();
-  });
+      utils.cappedPush(actions.resources[req.params.actionType].data, action);
+      res.location(`${req.originalUrl}/${action.id}`);
 
-  // GET {WT}/actions/{id}
-  router.route(`/actions/:actionType`).get((req, res, next) => {
-    req.model = model;
-    req.actionModel = actions.resources[req.params.actionType];
-    req.type = 'action';
-    req.entityId = req.params.actionType;
-    req.result = reverseResults(actions.resources[req.params.actionType].data);
-    res.links({
-      type: 'http://model.webofthings.io/#actions-resource'
+      next();
     });
-
-    next();
-  });
 
   // GET /actions/{id}/{actionId}
   router.route(`${actions.link}/:actionType/:actionId`).get((req, res, next) => {
