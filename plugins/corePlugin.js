@@ -45,10 +45,9 @@ class CorePlugin {
   }
 
   observeActions() {
-    let actionData;
-
     this.actions.forEach((actionId) => {
-      actionData = model.links.actions.resources[actionId].data;
+      let actionData = model.links.actions.resources[actionId].data;
+
       actionData = new Proxy(actionData, {
         get: (target) => target,
         set: (arr, prop, val) => {
@@ -59,15 +58,15 @@ class CorePlugin {
         }
       });
       console.info(`[proxy] ${actionId} proxy created!`);
-    });
 
-    setTimeout(() => {
-      console.log(actionData);
-      actionData.push({
-        'ledId': '1',
-        'state': true
-      });
-    }, 5000);
+      setTimeout(() => {
+        console.log(actionData);
+        actionData.push({
+          'ledId': '1',
+          'state': true
+        });
+      }, 5000);
+    });
   }
 
   startPlugin() {
