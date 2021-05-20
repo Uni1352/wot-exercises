@@ -23,7 +23,7 @@ app.use(cors());
 app.use('/', routeCreator(model));
 
 app.get('*', function (req, res) {
-  res.send('what???', 404);
+  res.status(404).send('what???');
 });
 
 // representation converter
