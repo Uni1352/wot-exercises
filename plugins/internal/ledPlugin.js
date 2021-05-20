@@ -42,13 +42,16 @@ class LedPlugin extends CorePlugin {
     this.doActions = this.switchOnOff;
   }
 
+  // TODO: led change state
   switchOnOff(obj) {
     let latestVal = this.model.data[this.model.data.length - 1];
 
     this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
-      latestVal[`${obj.values.ledId}`] = obj.values.state;
-      console.info(latestVal);
-      this.addValue(latestVal);
+      let newVal = latestVal;
+
+      newVal[`${obj.values.ledId}`] = obj.values.state;
+      console.info(newVal);
+      this.addValue(newVal);
     });
 
     obj.status = 'completed';
