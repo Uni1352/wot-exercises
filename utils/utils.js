@@ -31,5 +31,12 @@ module.exports = {
   },
   findObjInArr: (arr, filter) => {
     return arr.find((obj) => obj.id === filter.id);
-  }
+  },
+  createDefaultData: (resources) => {
+    Object.keys(resources).forEach(function (resKey) {
+      var resource = resources[resKey];
+      resource.data = [];
+    });
+  },
+  reverseResults: (arr) => arr.slice(0).reverse()
 };

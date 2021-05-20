@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const routeCreator = require('../routes/routeCreator');
+const rootRoute = require('../routes/root');
+const propertiesRoute = require('../routes/properties');
+const actionsRoute = require('../routes/actions');
 const converter = require('../middleware/middleware').representationConverter;
 
 let model = require('../resources/model');
@@ -14,7 +16,9 @@ app.use(express.json());
 app.use(cors());
 
 // bind routes
-app.use('/', routeCreator(model));
+app.use('/', rootRoute);
+app.use('/properties', propertiesRoute);
+app.use('/actions', actionsRoute);
 
 // representation converter
 app.use(converter());

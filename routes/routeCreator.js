@@ -91,7 +91,7 @@ function createActionsRoute(model) {
 
       next();
     })
-    .put((req, res, next) => {
+    .post((req, res, next) => {
       let action = {};
 
       action.id = uuid.v1();
