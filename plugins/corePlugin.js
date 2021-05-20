@@ -54,6 +54,7 @@ class CorePlugin {
             console.info(val);
             this.doActions(val);
           }
+          return true;
         }
       });
       console.info(`[proxy] ${actionId} proxy created!`);
