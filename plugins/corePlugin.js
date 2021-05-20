@@ -12,6 +12,7 @@ class CorePlugin {
     };
 
     this.interval;
+    this.simulateVal;
     this.doSimulate;
     this.doStop;
     this.doActions;
@@ -44,20 +45,28 @@ class CorePlugin {
   }
 
   observeActions() {
-    const proxy = [];
-
     this.actions.forEach((actionId) => {
-      console.info(actionId);
-      proxy.push(new Proxy(model.links.actions.resources[actionId].data, {
+      let actionData = model.links.actions.resources[actionId].data;
+
+      actionData = new Proxy(actionData, {
+        get: (target) => target,
         set: (arr, prop, val) => {
           console.info(`[proxy] plugin action detected: ${actionId}`);
           console.info(arr, prop, val);
-          console.info(model.links.actions.resources[actionId].data);
+          console.info(actionData);
           // this.doActions(val);
         }
-      }));
+      });
       console.info(`[proxy] ${actionId} proxy created!`);
     });
+
+    setTimeout(() => {
+      console.log(actionData);
+      actionData.push({
+        'ledId': '1',
+        'state': true
+      });
+    }, 5000);
   }
 
   startPlugin() {
