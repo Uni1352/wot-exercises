@@ -49,7 +49,6 @@ class CorePlugin {
       target[actionId].data = new Proxy(target[actionId].data, {
         set: (arr, prop, val) => {
           console.info(`[proxy] plugin action detected: ${actionId}`);
-          arr[prop] = val;
           console.info(arr, prop, val);
           console.info(target[actionId].data);
           // this.doActions(val);
@@ -58,11 +57,6 @@ class CorePlugin {
       });
       console.info(`[proxy] ${actionId} proxy created!`);
     });
-
-    setTimeout(() => Object.assign(target[this.actions[0]].data, [{
-      'ledId': '1',
-      'state': true
-    }]), 5000);
   }
 
   startPlugin() {
