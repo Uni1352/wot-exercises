@@ -8,7 +8,7 @@ class LedPlugin extends CorePlugin {
     this.actuators = {};
     this.leds = this.model.values;
     this.simulateVal = [true, true];
-    this.doActions = this.switchOnOff();
+    // this.doActions = this.switchOnOff();
     this.addValue(this.simulateVal);
     this.setActions();
   }
