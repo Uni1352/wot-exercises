@@ -44,24 +44,25 @@ class CorePlugin {
     console.info(`${this.model.name}: ${util.inspect(this.model.data[this.model.data.length-1])}`);
   }
 
-  observeActions() {
+  createProxy() {
     this.actions.forEach((actionId) => {
-      let actionData = model.links.actions.resources[actionId].data;
+      // let actionData = model.links.actions.resources[actionId].data;
 
-      actionData = new Proxy(actionData, {
+      model.links.actions.resources[actionId].data = new Proxy(model.links.actions.resources[actionId].data, {
         get: (target) => target,
         set: (arr, prop, val) => {
           console.info(`[proxy] plugin action detected: ${actionId}`);
           console.info(arr, prop, val);
           console.info(actionData);
           // this.doActions(val);
+          return true;
         }
       });
       console.info(`[proxy] ${actionId} proxy created!`);
 
       setTimeout(() => {
-        console.log(typeof actionData);
-        Object.assign(actionData, {
+        console.log(model.links.actions.resources[actionId].data);
+        model.links.actions.resources[actionId].data.push({
           'ledId': '1',
           'state': true
         });
@@ -70,7 +71,7 @@ class CorePlugin {
   }
 
   startPlugin() {
-    if (this.actions) this.observeActions();
+    if (this.actions) this.createProxy();
 
     if (this.params.simulate) this.simulate();
     else this.connectHardware();
