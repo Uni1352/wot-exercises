@@ -62,7 +62,7 @@ class CorePlugin {
 
       setTimeout(() => {
         console.log(model.links.actions.resources[actionId].data);
-        model.links.actions.resources[actionId].data.push({
+        Object.assign(model.links.actions.resources[actionId].data, {
           'ledId': '1',
           'state': true
         });
