@@ -60,11 +60,7 @@ class CorePlugin {
       console.info(`[proxy] ${actionId} proxy created!`);
 
       setTimeout(() => {
-        console.log(actionData);
-        actionData.push({
-          'ledId': '1',
-          'state': true
-        });
+        console.log(typeof actionData);
       }, 5000);
     });
   }
