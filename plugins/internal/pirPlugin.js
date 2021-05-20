@@ -3,10 +3,10 @@ const CorePlugin = require('../corePlugin');
 class PirPlugin extends CorePlugin {
   constructor(params) {
     super(params, 'pir');
+    super.doSimulate = simulate();
+    super.doStop = stop();
 
     this.sensor;
-    this.doSimulate = simulate();
-    this.doStop = stop();
     this.simulateVal = true;
     this.addValue(this.simulateVal);
   }
