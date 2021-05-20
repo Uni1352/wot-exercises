@@ -17,6 +17,7 @@ class PirPlugin extends CorePlugin {
     this.sensor.watch((err, val) => {
       if (err) exit(err);
 
+      console.info('test');
       this.addValue(!!val);
       this.showValue();
     });
