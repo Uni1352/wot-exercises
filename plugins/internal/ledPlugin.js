@@ -32,10 +32,15 @@ class LedPlugin extends CorePlugin {
 
   setActions() {
     this.doSimulate = () => {
-      // for (let i = 0; i < this.simulateVal.length; i++) {
-      //   this.simulateVal[i] = !this.simulateVal[i];
-      // }
+      for (let val of this.simulateVal) val = !val;
       this.addValue(this.simulateVal);
+
+      setTimeout(() => {
+        model.links.actions.resources['ledState'].data.push({
+          'ledId': '1',
+          'state': true
+        });
+      }, 5000)
     };
     this.doStop = () => {
       Object.keys(this.leds).forEach((led) => this.actuators[`${led}`].unexport());
