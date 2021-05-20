@@ -1,7 +1,5 @@
 const CorePlugin = require('../corePlugin');
 
-const CorePlugin = require('../corePlugin');
-
 class LedPlugin extends CorePlugin {
   constructor(params) {
     super(params, 'leds', ['ledState']);
