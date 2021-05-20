@@ -16,7 +16,7 @@ class CorePlugin {
     this.doStop;
     this.doActions;
     this.actions = actionsIds;
-    this.model = findProperty(propId);
+    this.model = utils.findProperty(propId);
   }
 
   simulate() {
