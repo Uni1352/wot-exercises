@@ -1,5 +1,6 @@
 const socketServer = require('ws').Server;
-const model = require('../resources/model');
+
+let model = require('../resources/model');
 
 function createSocketServer(server) {
   const wss = new socketServer({
@@ -28,7 +29,7 @@ function createProxy(target) {
       ws.send('msg from ws server!');
       return true;
     }
-  })
+  });
 }
 
 function selectResource(pathname) {
