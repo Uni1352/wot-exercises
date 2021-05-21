@@ -1,4 +1,5 @@
 const httpServer = require('./servers/http');
+const wsServer = require('./servers/websocket');
 
 let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
@@ -13,6 +14,7 @@ function createServer(port, secure) {
 
   if (!secure) server = httpServer.listen(port, () => {
     console.info('HTTP server started...');
+    wsServer(server);
     console.info(`Your WoT Pi server is up and running on port ${port}`);
   });
 
