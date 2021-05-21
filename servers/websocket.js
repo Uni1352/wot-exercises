@@ -10,7 +10,7 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     try {
-      let parts = selectResource(req.url).shift();
+      let parts = selectResource(req.url);
 
       console.info(parts);
       if (parts[0] && parts[1]) {
@@ -32,7 +32,10 @@ function createSocketServer(server) {
 }
 
 function selectResource(pathname) {
-  return pathname.split('/');
+  let parts = pathname.split('/');
+
+  return parts.shift();
+
 
 
   // if (parts[0] === 'actions')
