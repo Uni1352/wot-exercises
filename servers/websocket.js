@@ -11,16 +11,19 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     try {
-      let parts = selectResource(req.url);
+      let parts = getPathnameParts(req.url);
 
       console.info(parts);
 
       if (parts[0] && parts[1]) {
         model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
           set: (arr, index, val) => {
-            console.info(arr, index, val);
+            if (!isNaN(parseInt(index))) {
+              console.info(arr, index, val);
+              arr[index] = val;
+              ws.send('msg from ws server!');
+            }
             // ws.send([arr, index, val]);
-            ws.send('msg from ws server!');
             return true;
           }
         });
@@ -31,8 +34,12 @@ function createSocketServer(server) {
   });
 }
 
-function selectResource(pathname) {
-  return (pathname.split('/')).shift();
+function getPathnameParts(pathname) {
+  let parts = pathname.split('/');
+
+  parts.shift();
+
+  return parts;
 }
 
 module.exports = createSocketServer;
