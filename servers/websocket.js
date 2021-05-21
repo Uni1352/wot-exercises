@@ -11,9 +11,7 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     try {
-      let parts = getPathnameParts(req.url.split('/'));
-
-      console.info(parts);
+      let parts = getPathnameParts(req.url);
 
       if (parts[0] && parts[1]) {
         model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
@@ -34,7 +32,9 @@ function createSocketServer(server) {
 }
 
 function getPathnameParts(pathname) {
-  return pathname.shift();
+  let parts = pathname.split('/');
+  parts.shift();
+  return parts;
 }
 
 module.exports = createSocketServer;
