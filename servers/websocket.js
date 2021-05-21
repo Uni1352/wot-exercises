@@ -11,7 +11,17 @@ function createSocketServer(server) {
   wss.on('connection', (ws, req) => {
     const pathname = req.url;
 
-    ws.send(pathname);
+    try {
+      let target = selectResource(pathname);
+
+      target = new Proxy(selectResource(pathname), {
+        set: (arr, index, val) => {
+          ws.send([arr, index, val]);
+        }
+      });
+    } catch (err) {
+      console.info(`Unable to observe ${req.url} resource`);
+    }
   });
 }
 
