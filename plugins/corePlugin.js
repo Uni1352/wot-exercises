@@ -51,7 +51,7 @@ class CorePlugin {
           if (!isNaN(parseInt(index))) {
             console.info(`[proxy] plugin action detected: ${actionId}`);
             arr[index] = val;
-            this.doActions(val);
+            if (this.doActions) this.doActions(val);
           }
           return true;
         }
