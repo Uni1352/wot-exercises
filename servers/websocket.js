@@ -10,7 +10,7 @@ function createSocketServer(server) {
 
   wss.on('connection', (ws, req) => {
     try {
-      let parts = (req.url.split('/')).shift();
+      let parts = ((req.url).split('/')).shift();
 
       console.info(parts);
       if (parts[0] && parts[1]) {
