@@ -13,10 +13,10 @@ function createSocketServer(server) {
     try {
       let parts = selectResource(req.url);
 
-      if (parts[0] && parts[1]) {
-        let resources = model.links[parts[0]].resource;
+      console.info(parts);
 
-        resources[parts[1]].data = new Proxy(resources[parts[1]].data, {
+      if (parts[0] && parts[1]) {
+        model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
           set: (arr, index, val) => {
             console.info(arr, index, val);
             // ws.send([arr, index, val]);
@@ -31,31 +31,8 @@ function createSocketServer(server) {
   });
 }
 
-function createProxy(target) {
-  target = new Proxy(target, {
-    set: (arr, index, val) => {
-      console.info(arr, index, val);
-      // ws.send([arr, index, val]);
-      ws.send('msg from ws server!');
-      return true;
-    }
-  });
-}
-
 function selectResource(pathname) {
-  let parts = pathname.split('/');
-
-  parts.shift();
-
-  return parts;
-
-
-
-  // if (parts[0] === 'actions')
-  //   return model.links.actions.resources[parts[1]].data;
-  // else if (parts[0] === 'properties')
-  //   return model.links.properties.resources[parts[1]].data;
-  // else return;
+  return (pathname.split('/')).shift();
 }
 
 module.exports = createSocketServer;
