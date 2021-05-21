@@ -12,25 +12,23 @@ function createSocketServer(server) {
     try {
       let parts = selectResource(req.url);
 
-      console.info(parts);
-      if (parts[0] && parts[1]) {
-        let resourceData = model.links[parts[0]].resources[parts[1]].data;
-
-        console.info(resourceData);
-
-        resourceData = new Proxy(resourceData, {
-          set: (arr, index, val) => {
-            console.info(arr, index, val);
-            // ws.send([arr, index, val]);
-            ws.send('msg from ws server!');
-            return true;
-          }
-        });
-      }
+      if (parts[0] && parts[1])
+        createProxy(model.links[parts[0]].resources[parts[1]].data);
     } catch (err) {
       console.info(`Unable to observe ${req.url} resource`);
     }
   });
+}
+
+function createProxy(target) {
+  target = new Proxy(target, {
+    set: (arr, index, val) => {
+      console.info(arr, index, val);
+      // ws.send([arr, index, val]);
+      ws.send('msg from ws server!');
+      return true;
+    }
+  })
 }
 
 function selectResource(pathname) {
