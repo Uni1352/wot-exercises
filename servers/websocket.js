@@ -12,20 +12,26 @@ function createSocketServer(server) {
     const pathname = req.url;
 
     try {
-      let target = selectResource(pathname);
-      console.info(target);
+      let resourceData = selectResource(pathname);
 
-      new Proxy(selectResource(pathname), {
-        set: (arr, index, val) => {
-          console.info(arr, index, val);
-          // ws.send([arr, index, val]);
-          ws.send('msg from ws server!')
-        }
-      });
+      createProxy(resourceData);
     } catch (err) {
       console.info(`Unable to observe ${req.url} resource`);
     }
   });
+}
+
+function createProxy(target) {
+  console.info(target);
+
+  target = new Proxy(target, {
+    set: (arr, index, val) => {
+      console.info(arr, index, val);
+      // ws.send([arr, index, val]);
+      ws.send('msg from ws server!')
+    }
+  });
+
 }
 
 function selectResource(pathname) {
