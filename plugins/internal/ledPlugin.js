@@ -45,15 +45,17 @@ class LedPlugin extends CorePlugin {
 
   // TODO: led change state: data missing
   switchOnOff(obj) {
-    let latestVal = this.model.data[this.model.data.length - 1];
+    const target = this.model.data[this.model.data.length - 1];
+    const latestVal = [target['1'], target['2']];
 
-    this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
-      let newVal = latestVal;
+    latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
+    console.info(latestVal);
 
-      newVal[`${obj.values.ledId}`] = obj.values.state;
-      console.info(newVal);
-      this.addValue(newVal);
-    });
+    if (!this.params.simulate) {
+      this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
+        this.addValue(latestVal);
+      });
+    } else this.addValue(latestVal);
 
     obj.status = 'completed';
     console.info(`Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
