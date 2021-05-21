@@ -18,7 +18,7 @@ function createSocketServer(server) {
           set: (arr, index, val) => {
             if (!isNaN(parseInt(index))) {
               arr[index] = val;
-              ws.send(`Get PIR Value: ${val.presence}`);
+              ws.send(`New Data Values: ${val}`);
             }
             return true;
           }
