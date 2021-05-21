@@ -26,7 +26,7 @@ function initPlugins() {
   const LedPlugin = require('./plugins/internal/ledPlugin');
 
   pirPlugin = new PirPlugin({
-    'simulate': false,
+    'simulate': true,
     'frequency': 3000
   });
   pirPlugin.startPlugin();
