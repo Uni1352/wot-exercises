@@ -12,15 +12,17 @@ function createSocketServer(server) {
     const pathname = req.url;
 
     try {
-      let target = selectResource(pathname);
-
-      target = new Proxy(selectResource(pathname), {
-        set: (arr, index, val) => {
-          ws.send([arr, index, val]);
-        }
-      });
+      createProxy(selectResource(pathname));
     } catch (err) {
       console.info(`Unable to observe ${req.url} resource`);
+    }
+  });
+}
+
+function createProxy(target) {
+  target = new Proxy(selectResource(pathname), {
+    set: (arr, index, val) => {
+      ws.send([arr, index, val]);
     }
   });
 }
@@ -33,7 +35,7 @@ function selectResource(pathname) {
   if (parts[0] === 'actions')
     return model.links.actions.resources[parts[1]].data;
   else if (parts[0] === 'properties')
-    return model.links.product.resources[parts[1]].data;
+    return model.links.properties.resources[parts[1]].data;
   else return;
 }
 
