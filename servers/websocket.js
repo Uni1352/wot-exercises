@@ -13,8 +13,9 @@ function createSocketServer(server) {
 
     try {
       let target = selectResource(pathname);
+      console.info(target);
 
-      target = new Proxy(target, {
+      selectResource(pathname) = new Proxy(selectResource(pathname), {
         set: (arr, index, val) => {
           ws.send([arr, index, val]);
         }
