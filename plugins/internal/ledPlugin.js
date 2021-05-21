@@ -14,7 +14,6 @@ class LedPlugin extends CorePlugin {
     this.setActions();
   }
 
-  // TODO: check again
   connectHardware() {
     const Gpio = require('onoff').Gpio;
 
@@ -43,7 +42,6 @@ class LedPlugin extends CorePlugin {
     this.doActions = this.switchOnOff;
   }
 
-  // TODO: led change state: data missing
   switchOnOff(obj) {
     const target = this.model.data[this.model.data.length - 1];
     const latestVal = [target['1'], target['2']];
