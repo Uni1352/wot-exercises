@@ -1,7 +1,5 @@
 const CorePlugin = require('../corePlugin');
 
-let model = require('../../resources/model');
-
 class LedPlugin extends CorePlugin {
   constructor(params) {
     super(params, 'leds', ['ledState']);
@@ -47,7 +45,6 @@ class LedPlugin extends CorePlugin {
     const latestVal = [target['1'], target['2']];
 
     latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
-    console.info(latestVal);
 
     if (!this.params.simulate) {
       this.actuators[`${obj.values.ledId}`].write(obj.values.state === true ? 1 : 0, () => {
