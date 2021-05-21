@@ -13,8 +13,6 @@ function createSocketServer(server) {
     try {
       let parts = getPathnameParts(req.url);
 
-      console.info(parts);
-
       if (parts[0] && parts[1]) {
         model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
           set: (arr, index, val) => {
