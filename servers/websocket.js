@@ -9,14 +9,14 @@ function createSocketServer(server) {
   console.info('WebSocket server started...');
 
   wss.on('connection', (ws, req) => {
-    const path = new URL(req.url).pathname;
+    const pathname = req.url;
 
-    ws.send(path);
+    ws.send(pathname);
   });
 }
 
-function selectResource(path) {
-  let parts = path.split('/');
+function selectResource(pathname) {
+  let parts = pathname.split('/');
 
   parts.shift();
 
