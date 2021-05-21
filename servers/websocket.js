@@ -17,6 +17,7 @@ function createSocketServer(server) {
         model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
           set: (arr, index, val) => {
             if (!isNaN(parseInt(index))) {
+              console.info(arr, index, val);
               arr[index] = val;
               ws.send(`Get PIR Value: ${val.presence}`);
             }
