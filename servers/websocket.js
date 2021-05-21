@@ -13,15 +13,16 @@ function createSocketServer(server) {
     try {
       let parts = getPathnameParts(req.url);
 
+      console.info(req.url.split('/'));
+
       if (parts[0] && parts[1]) {
         model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
           set: (arr, index, val) => {
             if (!isNaN(parseInt(index))) {
               console.info(arr, index, val);
               arr[index] = val;
-              ws.send('msg from ws server!');
+              ws.send(`Get PIR Value: ${val.presence}`);
             }
-            // ws.send([arr, index, val]);
             return true;
           }
         });
