@@ -15,9 +15,11 @@ function createSocketServer(server) {
       let target = selectResource(pathname);
       console.info(target);
 
-      selectResource(pathname) = new Proxy(selectResource(pathname), {
+      new Proxy(selectResource(pathname), {
         set: (arr, index, val) => {
-          ws.send([arr, index, val]);
+          console.info(arr, index, val);
+          // ws.send([arr, index, val]);
+          ws.send('msg from ws server!')
         }
       });
     } catch (err) {
