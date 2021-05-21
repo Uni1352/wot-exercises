@@ -16,7 +16,7 @@ function createSocketServer(server) {
       if (parts[0] && parts[1]) {
         let resourceData = model.links[parts[0]].resources[parts[1]].data;
 
-        console.info(parts);
+        console.info(resourceData);
 
         resourceData = new Proxy(resourceData, {
           set: (arr, index, val) => {
