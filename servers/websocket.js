@@ -18,7 +18,7 @@ function createSocketServer(server) {
           set: (arr, index, val) => {
             if (!isNaN(parseInt(index))) {
               arr[index] = val;
-              ws.send(`New Data Values: ${val}`);
+              ws.send(val);
             }
             return true;
           }
