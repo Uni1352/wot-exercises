@@ -34,7 +34,9 @@ function createSocketServer(server) {
 function selectResource(pathname) {
   let parts = pathname.split('/');
 
-  return parts.shift();
+  parts.shift();
+
+  return parts;
 
 
 
