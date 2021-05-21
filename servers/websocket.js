@@ -13,8 +13,16 @@ function createSocketServer(server) {
     try {
       let parts = selectResource(req.url);
 
-      if (parts[0] && parts[1])
-        createProxy(model.links[parts[0]].resources[parts[1]].data);
+      if (parts[0] && parts[1]) {
+        model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
+          set: (arr, index, val) => {
+            console.info(arr, index, val);
+            // ws.send([arr, index, val]);
+            ws.send('msg from ws server!');
+            return true;
+          }
+        });
+      }
     } catch (err) {
       console.info(`Unable to observe ${req.url} resource`);
     }
