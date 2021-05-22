@@ -38,13 +38,13 @@
           "description": "The LEDs of this device.",
           "values": {
             "1": {
-              "name": "LED 1",
+              "name": "Power LED",
               "customFields": {
                 "gpio": 4
               }
             },
             "2": {
-              "name": "LED 2",
+              "name": "Access LED",
               "customFields": {
                 "gpio": 9
               }
