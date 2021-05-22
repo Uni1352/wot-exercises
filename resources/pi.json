@@ -44,7 +44,7 @@
               }
             },
             "2": {
-              "name": "Access LED",
+              "name": "Door LED",
               "customFields": {
                 "gpio": 9
               }

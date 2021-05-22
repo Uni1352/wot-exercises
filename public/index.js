@@ -10,11 +10,11 @@ function openDoorAccess() {
 function closeDoorAccess() {
   changeLedState('2', false);
 
-  $('.msg-content').append(`<p>[Action] Door Locked!</p>`);
-  $('.status-door').html('Locked');
+  $('.msg-content').append(`<p>[Action] Door Closed!</p>`);
+  $('.status-door').html('Closed');
 }
 
-function changeLedState(id, state) {
+function changeLedState(id, state, action) {
   $.ajax({
     url: 'http://192.168.0.17:8484/actions/ledState',
     method: 'POST',
@@ -25,7 +25,7 @@ function changeLedState(id, state) {
       'state': state
     }),
     processData: false,
-    success: (res) => console.log(res),
+    success: () => console.log('Led State Changed!'),
     error: (err) => {
       console.log(errorThrown);
       $('.msg-content').append(`<p>[ERROR] ${err}</p>`);
@@ -40,10 +40,14 @@ function getLedState() {
     dataType: 'json',
     processData: false,
     success: (res) => {
-      if (res['1']) {
+      if (res[0]['1']) {
+        changeLedState('1', true);
+        changeLedState('2', false);
         $('#power-switch').prop('checked', true);
         $('.status__power').html('On');
       } else {
+        changeLedState('1', false);
+        changeLedState('2', false);
         $('#power-switch').prop('checked', false);
         $('.status__power').html('Off');
       }
@@ -62,18 +66,17 @@ ws.onopen = () => console.log('Connection Opened!');
 ws.onmessage = (msg) => {
   let data = JSON.parse(msg.data);
 
-  if ($('#power-switch').prop('checked')) {
+  if (!$('#power-switch').prop('checked')) {
     if (data.presence) openDoorAccess();
     else closeDoorAccess();
+  } else {
+    if (data.presence) $('.msg-content').append(`<p>[ERROR] You Can't Get In.</p>`);
   }
-
-  Object.keys(data).forEach(
-    (key) => console.log(`${key}: ${data[key]}`));
 };
 ws.onclose = () => console.log('Connection Closed!');
 
 // initial
-$(document).ready(initial);
+$(document).ready(() => initial());
 
 // toggle switch
 $(function () {
@@ -85,7 +88,14 @@ $(function () {
 
 $(function () {
   $('#power-switch').change(function () {
-    if ($(this).prop('checked')) $('.status__power').html('On');
-    else $('.status__power').html('Off');
+    if ($(this).prop('checked')) {
+      changeLedState('1', true);
+      changeLedState('2', false);
+      $('.status__power').html('On');
+    } else {
+      changeLedState('1', false);
+      changeLedState('2', false);
+      $('.status__power').html('Off');
+    }
   });
 });
