@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cons = require('consolidate');
 const routeCreator = require('../routes/routeCreator');
 const converter = require('../middleware/middleware').representationConverter;
 
@@ -15,6 +16,11 @@ app.use(cors());
 
 // bind routes
 app.use('/', routeCreator(model));
+
+// html template
+app.engine('html', cons.handlebars);
+app.set('view engine', 'html');
+app.set('views', `${__dirname}/../views`);
 
 // representation converter
 app.use(converter());

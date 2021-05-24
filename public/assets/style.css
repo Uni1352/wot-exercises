@@ -22,10 +22,6 @@ body {
   margin-right: 20px;
 }
 
-.msg {
-  max-width: 75%;
-}
-
 .msg > div {
   width: 50%;
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Thing</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <section>
+    <h1><a href="/{{req.qp}}">{{req.rooturl}}</a>/</h1>
+    <p>WoT PI Root Resource</p>
+  </section>
+  <div vocab="http://model.webofthings.org/" typeof="WebThing">
+    <section>
+      <h2>Metadata</h2>
+      <p>ID: <span property="id"></span>{{req.result.id}}</p>
+      <p>Name: <span property="name"></span>{{req.result.name}}</p>
+      <p>Description: <span property="description">{{req.result.description}}</span></p>
+      <p>Tags: <span property="tags">{{req.result.tags}}</span></p>
+      <p>Root URL: <a property="url" href="{{req.result.id}}">{{req.result.id}}</a></p>
+      <h3>CustomFields</h3>
+      {{#each req.result.customFields}}
+      <p>Key: {{@key}} = {{this}}</p>
+      {{/each}}
+      <h3>Model</h3>
+      <a href="model/{{req.qp}}">View Full Model</a> of this Web Thing.
+    </section>
+    <section>
+      <h2>Resource</h2>
+      <ul>
+        {{#each req.model.links}}
+        <li property="links" typeof="{{@key}}">
+          <a href="{{this.link}}{{../req.qp}}" property="url"><span property="name">{{@key}}</span></a> - <span
+            property="title">{{this.title}}</span>
+        </li>
+        {{/each}}
+      </ul>
+    </section>
+  </div>
+</body>
+
+</html>

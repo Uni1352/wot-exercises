@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Comfortaa", "Roboto", serif;
+}
+
+body {
+  padding: 5vh 0;
+}
+
+section {
+  padding: 0 5vw;
+}
