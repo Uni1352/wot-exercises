@@ -16,7 +16,7 @@
     },
     "properties": {
       "link": "/properties",
-      "title": "Properties of this Web Thing",
+      "title": "List of Properties",
       "resources": {
         "pir": {
           "name": "Passive Infrared",
