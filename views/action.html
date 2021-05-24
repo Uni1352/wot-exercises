@@ -27,26 +27,27 @@
 
     <p>{{req.actionModel.description}}</p>
     <p><b>Tags:</b> {{req.actionModel.tags}}</p>
-    <h3>Values</h3>
 
-    {#each req.actionModel.values}}
+    <h3>Values</h3>
+    {{#each req.actionModel.values}}
     <h4>["{{@key}}"] - {{this.name}}</h4>
     <p><em>{{this.description}}</em></p>
     <p>type: {{this.type}}</p>
     <p>unit: {{this.unit}}</p>
-    {{/each}}
-    <!-- {{#if ../req.result.[0]}}
+    {{#if ../req.result.[0]}}
     <p>Value: {{getById ../../req.result.[0] @key}}</p>
     <p>Timestamp: {{../../req.result.[0].timestamp}}</p>
     {{/if}}
-    
+
     <ul class="list-group">
       {{#each this.values}}
       <li class="list-group-item">
         <span id="value-{{@key}}" class="badge">{{this}}</span>{{@key}}
       </li>
       {{/each}}
-    </ul> -->
+    </ul>
+    {{/each}}
+
   </section>
 </body>
 
