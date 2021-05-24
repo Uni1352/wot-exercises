@@ -7,7 +7,7 @@ function createSocketServer(server) {
     server: server
   });
 
-  wss.on('listening', () => console.info('[Server] WebSocket server started...'));
+  console.info('[Server] WebSocket server started...');
 
   wss.on('connection', (ws, req) => {
     try {
@@ -28,8 +28,6 @@ function createSocketServer(server) {
       console.info(`[Error] Unable to observe ${req.url} resource.`);
     }
   });
-
-  wss.on('close', () => console.info('[Server] WebSocket server closed.'));
 }
 
 function getPathnameParts(pathname) {

@@ -41,7 +41,9 @@ function initPlugins() {
 process.on('SIGINT', () => {
   pirPlugin.stopPlugin();
   ledsPlugin.stopPlugin();
-  console.info('BYE!');
+  console.info('[Server] WebSocket server closed.');
+  console.info('[Server] HTTP server closed.');
+  console.info('[Info] BYE!');
   process.exit();
 });
 
