@@ -34,7 +34,6 @@
     <p><em>{{this.description}}</em></p>
     <p>type: {{this.type}}</p>
     <p>unit: {{this.unit}}</p>
-    {{/each}}
     {{#if ../req.result.[0]}}
     <p>Value: {{getById ../../req.result.[0] @key}}</p>
     <p>Timestamp: {{../../req.result.[0].timestamp}}</p>
@@ -46,6 +45,7 @@
       </li>
       {{/each}}
     </ul>
+    {{/each}}
   </section>
 </body>
 
