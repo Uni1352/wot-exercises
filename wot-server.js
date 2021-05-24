@@ -15,7 +15,7 @@ function createServer(port, secure) {
   if (!secure) server = httpServer.listen(port, () => {
     console.info('[Server] HTTP server started...');
     wsServer(server);
-    console.info(`[Server] Your WoT Pi server is up and running on port ${port}`);
+    console.info(`[Info] Your WoT Pi server is up and running on port ${port}`);
   });
 
   return server;
