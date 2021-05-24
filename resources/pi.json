@@ -1,7 +1,11 @@
 {
-  "id": "http://localhost:8484",
+  "@context": "http://schema.org/Product",
+  "@id": "http://localhost:8484",
   "name": "My WoT Raspberry PI",
   "description": "A simple WoT-connected Raspberry Pi.",
+  "productID": "asin:B00T2U7R7I",
+  "manufacturer": "Raspberry Pi",
+  "model": "100437",
   "tags": ["raspberry", "pi", "WoT"],
   "customFields": {
     "host": "localhost",

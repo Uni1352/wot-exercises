@@ -6,10 +6,15 @@ function createRootRoute(model) {
   // GET {wt}
   router.route('/').get((req, res, next) => {
     let fields = ['id', 'name', 'description', 'tags', 'customFields'];
+    let type;
 
     req.model = model;
     req.type = 'root';
     req.result = utils.extractFields(fields, model);
+
+    if (model['@context']) type = model['@context'];
+    else type = 'http://model.webofthings.io/';
+
     res.links({
       model: '/model/',
       properties: '/properties/',
@@ -17,7 +22,7 @@ function createRootRoute(model) {
       things: '/things/',
       help: '/help/',
       ui: '/',
-      type: 'http://model.webofthings.io/'
+      type: type
     });
 
     next();
@@ -27,10 +32,16 @@ function createRootRoute(model) {
 function createModelRoute(model) {
   // GET {WT}/model
   router.route('/model').get((req, res, next) => {
+    let type;
+
     req.result = model;
     req.type = 'model';
+
+    if (model['@context']) type = model['@context'];
+    else type = 'http://model.webofthings.io/';
+
     res.links({
-      type: 'http://model.webofthings.io/'
+      type: type
     });
 
     next();
@@ -39,6 +50,7 @@ function createModelRoute(model) {
 
 function createPropertiesRoute(model) {
   let properties = model.links.properties;
+  let type;
 
   // GET {WT}/properties
   router.route(properties.link).get((req, res, next) => {
@@ -46,8 +58,12 @@ function createPropertiesRoute(model) {
     req.type = 'properties';
     req.entityId = 'properties';
     req.result = utils.modelToResource(properties.resources, true);
+
+    if (properties['@context']) type = properties['@context'];
+    else type = 'http://model.webofthings.io/#properties-resource';
+
     res.links({
-      type: 'http://model.webofthings.io/#properties-resource'
+      type: type
     });
 
     next();
@@ -60,8 +76,12 @@ function createPropertiesRoute(model) {
     req.type = 'property';
     req.entityId = req.params.id;
     req.result = reverseResults(properties.resources[req.params.id].data);
+
+    if (properties.resources[req.params.id]['@context']) type = properties.resources[req.params.id]['@context'];
+    else type = 'http://model.webofthings.io/#properties-resource';
+
     res.links({
-      type: 'http://model.webofthings.io/#properties-resource'
+      type: type
     });
 
     next();
@@ -70,6 +90,7 @@ function createPropertiesRoute(model) {
 
 function createActionsRoute(model) {
   let actions = model.links.actions;
+  let type;
 
   // GET {WT}/actions
   router.route(actions.link).get((req, res, next) => {
@@ -77,8 +98,12 @@ function createActionsRoute(model) {
     req.type = 'actions';
     req.entityId = 'actions';
     req.result = utils.modelToResource(actions.resources, true);
+
+    if (actions['@context']) type = actions['@context'];
+    else type = 'http://model.webofthings.io/#actions-resource';
+
     res.links({
-      type: 'http://model.webofthings.io/#actions-resource'
+      type: type
     });
 
     next();
@@ -92,8 +117,12 @@ function createActionsRoute(model) {
       req.type = 'action';
       req.entityId = req.params.actionType;
       req.result = reverseResults(actions.resources[req.params.actionType].data);
+
+      if (actions.resources[req.params.actionType]['@context']) type = actions.resources[req.params.actionType]['@context'];
+      else type = 'http://model.webofthings.io/#actions-resource';
+
       res.links({
-        type: 'http://model.webofthings.io/#actions-resource'
+        type: type
       });
 
       next();
