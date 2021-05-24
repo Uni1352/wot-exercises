@@ -17,7 +17,7 @@ class LedPlugin extends CorePlugin {
 
     Object.keys(this.leds).forEach((led) => {
       this.actuators[`${led}`] = new Gpio(this.leds[led].customFields.gpio, 'out');
-      console.info(`Hardware ${this.leds[led].name} actuator started!`);
+      console.info(`[Hardware] ${this.leds[led].name} actuator started!`);
     });
   }
 
@@ -53,7 +53,7 @@ class LedPlugin extends CorePlugin {
     } else this.addValue(latestVal);
 
     obj.status = 'completed';
-    console.info(`Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
+    console.info(`[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
   }
 }
 

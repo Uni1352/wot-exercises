@@ -20,7 +20,7 @@ class PirPlugin extends CorePlugin {
       this.addValue(!!val);
       this.showValue();
     });
-    console.info(`Hardware ${this.model.name} sensor started!`);
+    console.info(`[Hardware] ${this.model.name} sensor started!`);
   }
 
   createValue(val) {

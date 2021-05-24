@@ -22,6 +22,10 @@ body {
   margin-right: 20px;
 }
 
+.msg {
+  max-width: 75%;
+}
+
 .msg > div {
   width: 50%;
 }
@@ -31,7 +35,7 @@ body {
 
 .msg-content {
   padding: 0 10px;
-  margin-right: 20px;
+  margin-right: 5vw;
   border: 1px solid silver;
   border-radius: 5px;
   background-color: rgb(235, 235, 235);

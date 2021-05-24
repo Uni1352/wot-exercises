@@ -13,9 +13,9 @@ function createServer(port, secure) {
   if (port === undefined) port = model.customFields.port;
 
   if (!secure) server = httpServer.listen(port, () => {
-    console.info('HTTP server started...');
+    console.info('[Server] HTTP server started...');
     wsServer(server);
-    console.info(`Your WoT Pi server is up and running on port ${port}`);
+    console.info(`[Server] Your WoT Pi server is up and running on port ${port}`);
   });
 
   return server;

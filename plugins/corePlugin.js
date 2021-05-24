@@ -25,7 +25,7 @@ class CorePlugin {
       this.doSimulate();
       this.showValue();
     }, this.params.frequency);
-    console.info(`[simulator started] ${this.model.name}`);
+    console.info(`[Simulator] ${this.model.name} started.`);
   }
 
   connectHardware() {
@@ -49,14 +49,14 @@ class CorePlugin {
       target[actionId].data = new Proxy(target[actionId].data, {
         set: (arr, index, val) => {
           if (!isNaN(parseInt(index))) {
-            console.info(`[proxy] plugin action detected: ${actionId}`);
+            console.info(`[Proxy] plugin action detected: ${actionId}`);
             arr[index] = val;
             if (this.doActions) this.doActions(val);
           }
           return true;
         }
       });
-      console.info(`[proxy] ${actionId} proxy created!`);
+      console.info(`[Proxy] ${actionId} proxy created!`);
     });
   }
 
@@ -66,14 +66,14 @@ class CorePlugin {
     if (this.params.simulate) this.simulate();
     else this.connectHardware();
 
-    console.info(`[plugin started] ${this.model.name}`);
+    console.info(`[Plugin] ${this.model.name} started.`);
   }
 
   stopPlugin() {
     if (this.params.simulate) clearInterval(this.interval);
     else if (this.doStop) this.doStop();
 
-    console.info(`[plugin stopped] ${this.model.name}`);
+    console.info(`[Plugin] ${this.model.name} stopped.`);
   }
 }
 

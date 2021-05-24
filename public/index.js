@@ -2,14 +2,16 @@ function openDoorAccess() {
   changeLedState('2', true);
 
   $('.msg-content').append(`<p>[Action] Door Opened!</p>`);
-  $('.status-door').html('Opened');
+  $('.status__access').html('On');
+  $('.status__door').html('Opened');
 }
 
 function closeDoorAccess() {
   changeLedState('2', false);
 
   $('.msg-content').append(`<p>[Action] Door Closed!</p>`);
-  $('.status-door').html('Closed');
+  $('.status__access').html('Off');
+  $('.status__door').html('Closed');
 }
 
 function changeLedState(id, state, action) {
@@ -40,15 +42,16 @@ function getLedState() {
     success: (res) => {
       if (res[0]['1']) {
         changeLedState('1', true);
-        changeLedState('2', false);
         $('#power-switch').prop('checked', true);
         $('.status__power').html('On');
       } else {
         changeLedState('1', false);
-        changeLedState('2', false);
         $('#power-switch').prop('checked', false);
         $('.status__power').html('Off');
       }
+
+      changeLedState('2', false);
+      $('.status-access').html('Off');
     },
     error: (err) => console.log(err)
   });
