@@ -21,7 +21,7 @@ app.use('/', routeCreator(model));
 app.engine('html', cons.handlebars);
 app.set('view engine', 'html');
 app.set('views', `${__dirname}/../views`);
-app.use(express.static(`${__dirname}/../public`));
+app.use(express.static(`${__dirname}/../views`));
 
 // representation converter
 app.use(converter());
