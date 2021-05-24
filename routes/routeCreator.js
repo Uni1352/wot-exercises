@@ -35,7 +35,7 @@ function createModelRoute(model) {
     let type;
 
     req.result = model;
-    req.type = 'model';
+    // req.type = 'model';
 
     if (model['@context']) type = model['@context'];
     else type = 'http://model.webofthings.io/';
