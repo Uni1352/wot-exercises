@@ -28,7 +28,7 @@
       <p>Root URL: <a property="url" href="{{req.result.id}}">{{req.result.id}}</a></p>
       <h3>CustomFields</h3>
       {{#each req.result.customFields}}
-      <p>Key: {{@key}} = {{this}}</p>
+      <p>{{@key}}: {{this}}</p>
       {{/each}}
       <h3>Model</h3>
       <a href="model/{{req.qp}}">View Full Model</a> of this Web Thing.
