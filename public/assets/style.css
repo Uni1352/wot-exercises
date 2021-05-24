@@ -10,6 +10,10 @@ body {
   padding: 20px;
 }
 
+section {
+  padding: 0 5vw;
+}
+
 .flex {
   display: flex;
 }
