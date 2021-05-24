@@ -14,24 +14,7 @@
 </head>
 
 <body>
-  <section>
-    <h1><a href="/{{req.qp}}">{{req.rooturl}}</a>/{{req.entityId}}</h1>
-    <p>Properties of this Web Thing</p>
-  </section>
-  <section>
-    <h2>{{req.model.links.properties.title}}</h2>
-    {{#each req.result}}
-    <h3><a href="/properties/{{this.id}}{{../req.qp}}">{{this.name}}</a></h3>
-    <p>{{this.description}}</p>
-    <ul class="list-group">
-      {{#each this.values}}
-      <li class="list-group-item">
-        <span id="value-{{@key}}" class="badge">{{this}}</span>{{@key}}
-      </li>
-      {{/each}}
-    </ul>
-    {{/each}}
-  </section>
+
 </body>
 
 </html>
