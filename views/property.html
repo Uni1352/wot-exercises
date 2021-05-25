@@ -50,7 +50,7 @@
     <p><em>{{this.description}}</em></p>
     <p>type: {{this.type}}</p>
     {{#if req.result.[0]}}
-    {{json req.result}}
+    {{json req.result.[0]}}
     <!-- <p>Value: {{getById ../../req.result.[0] @key}}</p>
     <p>Timestamp: {{../../req.result.[0].timestamp}}</p> -->
     {{/if}}
