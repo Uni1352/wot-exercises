@@ -42,7 +42,11 @@
     <h2>{{req.entityId}}</h2>
     {{/if}}
     <p>{{req.actionModel.description}}</p>
-    <p><b>Tags:</b> {{req.actionModel.tags}}</p>
+    <p><b>Tags:</b>
+      {{#each req.actionModel.tags}}
+      <span>{{this}}</span>
+      {{/each}}
+    </p>
   </section>
   <section>
     <h2>Result</h2>
