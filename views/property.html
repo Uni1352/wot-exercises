@@ -43,6 +43,14 @@
     {{/if}}
     <p>{{req.propertyModel.description}}</p>
     <p><b>Tags:</b> {{req.propertyModel.tags}}</p>
+
+    <h3>Values</h3>
+    {{#each req.propertyModel.values}}
+    <h4>["{{@key}}"] - {{this.name}}</h4>
+    <p><em>{{this.description}}</em></p>
+    <p>type: {{this.type}}</p>
+    <p>unit: {{this.unit}}</p>
+    {{/each}}
   </section>
   <section>
     <h2>Result</h2>

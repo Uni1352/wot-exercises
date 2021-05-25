@@ -43,12 +43,14 @@
           "values": {
             "1": {
               "name": "Power LED",
+              "description": "LED of access control power",
               "customFields": {
                 "gpio": 4
               }
             },
             "2": {
               "name": "Door LED",
+              "description": "LED of door",
               "customFields": {
                 "gpio": 9
               }
@@ -67,6 +69,8 @@
           "description": "Change the state of an LED",
           "values": {
             "ledId": {
+              "name": "led ID",
+              "description": "The id of target LED",
               "type": "enum",
               "customFields": {
                 "1": "LED 1",
@@ -76,6 +80,8 @@
               "required": true
             },
             "state": {
+              "name": "led state",
+              "description": "The state of target LED",
               "type": "boolean",
               "required": true
             }
