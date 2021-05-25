@@ -44,6 +44,7 @@
             "1": {
               "name": "Power LED",
               "description": "LED of access control power",
+              "type": "boolean",
               "customFields": {
                 "gpio": 4
               }
@@ -51,6 +52,7 @@
             "2": {
               "name": "Door LED",
               "description": "LED of door",
+              "type": "boolean",
               "customFields": {
                 "gpio": 9
               }
