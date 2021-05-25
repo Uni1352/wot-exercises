@@ -36,12 +36,6 @@
     <p>Actions Details</p>
   </section>
   <section>
-    {{#if req.actionModel.name}}
-    <h2>{{req.actionModel.name}}</h2>
-    {{else}}
-    <h2>{{req.entityId}}</h2>
-    {{/if}}
-
     <h2>Result</h2>
     {{json req.result}}
   </section>
