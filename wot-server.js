@@ -21,7 +21,7 @@ function createServer(port, secure) {
     const config = {
       cert: fs.readFileSync('./resources/caCert.pem'),
       key: fs.readFileSync('./resources/privateKey.pem'),
-      passphrase: 'uni135219'
+      passphrase: 'Uni135219'
     }
 
     server = https.createServer(config, httpServer).listen(port, () => {
