@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
 

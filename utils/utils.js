@@ -40,5 +40,20 @@ module.exports = {
   },
   reverseResults: (arr) => arr.slice(0).reverse(),
   isoTimestamp: () => new Date().toISOString(),
-  findProperty: (propId) => model.links.properties.resources[propId]
+  findProperty: (propId) => model.links.properties.resources[propId],
+  generateApiToken: (length, chars) => {
+    if (!length) length = 32;
+    if (!chars) chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    let randomBytes = crypto.randomBytes(length);
+    let token = new Array(length);
+    let cursor = 0;
+
+    for (let i = 0; i < length; i++) {
+      cursor += randomBytes[i];
+      token[i] = chars[cursor % chars.length];
+    }
+
+    return token.join('');
+  }
 };
