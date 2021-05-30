@@ -46,7 +46,7 @@ function generateRepresentationForm(req, res, next) {
 function apiTokenAuthorization(req, res, next) {
   console.log(`${req.method} ${req.path}`);
 
-  if (req.path.substring(0, 7) === '/assets/') next();
+  if (req.path.substring(0, 6) === '/assets/') next();
   else {
     const token = req.body.token || req.get('authorization') || req.query.token;
 
