@@ -48,7 +48,7 @@ function apiTokenAuthorization(req, res, next) {
 
   console.log(req.path.substring(0, 8));
 
-  if (req.path.substring(0, 6) === '/assets') {
+  if (req.path.substring(0, 8) === '/assets/') {
     next();
   } else {
     const token = req.body.token || req.get('authorization') || req.query.token;
