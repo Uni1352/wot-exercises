@@ -12,7 +12,7 @@ function createServer(port, secure) {
 
   if (process.env.PORT) port = process.env.PORT;
   else if (port === undefined) port = model.customFields.port;
-  if (secure === undefined) secure = resource.customFields.secure;
+  if (secure === undefined) secure = model.customFields.secure;
 
   initPlugins();
 
