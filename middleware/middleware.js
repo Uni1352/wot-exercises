@@ -46,11 +46,12 @@ function generateRepresentationForm(req, res, next) {
 function apiTokenAuthorization(req, res, next) {
   console.log(`${req.method} ${req.path}`);
 
-  if (req.path.substring(0, 6) === '/assets/') next();
-  else {
+  if (req.path.substring(0, 6) === '/assets/') {
+    console.log(req.path.substring(0, 6));
+    next();
+  } else {
     const token = req.body.token || req.get('authorization') || req.query.token;
 
-    console.log(req.params);
     if (!token) return res.status(401).send({
       success: false,
       message: 'API token missing.'
