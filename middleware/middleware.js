@@ -44,13 +44,8 @@ function generateRepresentationForm(req, res, next) {
 }
 
 function apiTokenAuthorization(req, res, next) {
-  console.log(`${req.method} ${req.path}`);
-
-  console.log(req.path.substring(0, 8));
-
-  if (req.path.substring(0, 8) === '/assets/') {
-    next();
-  } else {
+  if (req.path.substring(0, 8) === '/assets/') next();
+  else {
     const token = req.body.token || req.get('authorization') || req.query.token;
 
     if (!token) return res.status(401).send({
