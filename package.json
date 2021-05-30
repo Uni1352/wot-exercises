@@ -28,6 +28,7 @@
   "dependencies": {
     "consolidate": "^0.16.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "handlebars": "^4.7.7",

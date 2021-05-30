@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+
 let model = require('../resources/model');
 
 module.exports = {
