@@ -46,19 +46,22 @@ function generateRepresentationForm(req, res, next) {
 function apiTokenAuthorization(req, res, next) {
   console.log(`${req.method} ${req.path}`);
 
-  const token = req.body.token || req.get('authorization') || req.query.token;
-
-  console.log(req.params);
-  if (!token) return res.status(401).send({
-    success: false,
-    message: 'API token missing.'
-  });
+  if (req.path.substring(0, 7) === '/assets/') next();
   else {
-    if (token !== keys.apiToken) return res.status(403).send({
+    const token = req.body.token || req.get('authorization') || req.query.token;
+
+    console.log(req.params);
+    if (!token) return res.status(401).send({
       success: false,
-      message: 'API token invalid.'
+      message: 'API token missing.'
     });
-    else next();
+    else {
+      if (token !== keys.apiToken) return res.status(403).send({
+        success: false,
+        message: 'API token invalid.'
+      });
+      else next();
+    }
   }
 }
 
