@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
 
@@ -8,15 +10,31 @@ let pirPlugin, ledsPlugin;
 function createServer(port, secure) {
   let server;
 
+  if (process.env.PORT) port = process.env.PORT;
+  else if (port === undefined) port = model.customFields.port;
+  if (secure === undefined) secure = resource.customFields.secure;
+
   initPlugins();
 
-  if (port === undefined) port = model.customFields.port;
+  if (secure) {
+    const https = require('https');
+    const config = {
+      cert: fs.readFileSync('./resources/caCert.pem'),
+      key: fs.readFileSync('./resources/privateKey.pem'),
+      passphrase: 'uni135219'
+    }
 
-  if (!secure) server = httpServer.listen(port, () => {
-    console.info('[Server] HTTP server started...');
-    wsServer(server);
-    console.info(`[Info] Your WoT Pi server is up and running on port ${port}`);
-  });
+    server = https.createServer(config, httpServer).listen(port, () => {
+      wsServer(server);
+      console.info(`[Info] Secured WoT server started on port ${port}`);
+    });
+  } else {
+    const http = require('http');
+    server = http.createServer(httpServer).listen(port, () => {
+      wsServer(server);
+      console.info(`[Info] Unsecured WoT server started on port ${port}`);
+    });
+  }
 
   return server;
 }
@@ -26,14 +44,14 @@ function initPlugins() {
   const LedPlugin = require('./plugins/internal/ledPlugin');
 
   pirPlugin = new PirPlugin({
-    'simulate': false,
-    'frequency': 2000
+    'simulate': true,
+    'frequency': 3000
   });
   pirPlugin.startPlugin();
 
   ledsPlugin = new LedPlugin({
-    'simulate': false,
-    'frequency': 2000
+    'simulate': true,
+    'frequency': 5000
   });
   ledsPlugin.startPlugin();
 }
