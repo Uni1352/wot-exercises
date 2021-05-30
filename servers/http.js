@@ -3,7 +3,7 @@ const cors = require('cors');
 const cons = require('consolidate');
 const routeCreator = require('../routes/routeCreator');
 const converter = require('../middleware/middleware').representationConverter;
-const generateApiToken = require('../utils/utils').generateApiToken;
+const auth = require('../middleware/middleware').authorization;
 
 let model = require('../resources/model');
 
@@ -15,7 +15,8 @@ app.use(express.json());
 // cors
 app.use(cors());
 
-console.info(`Here is a new random crypto-secure API Key: ${generateApiToken()}`);
+// api token
+if (model.customFields.secure === true) app.use(auth());
 
 // bind routes
 app.use('/', routeCreator(model));

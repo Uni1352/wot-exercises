@@ -1,3 +1,4 @@
+const keys = require('../resources/auth.json');
 const msgpack = require('msgpack5')();
 const msgpackEncoder = msgpack.encode;
 
@@ -42,6 +43,29 @@ function generateRepresentationForm(req, res, next) {
   }
 }
 
+function apiTokenAuthorization(req, res, next) {
+  console.log(`${req.method} ${req.path}`);
+
+  if (req.path.substring(0, 5) === '/css/') next();
+  else {
+    const token = req.body.token || req.get('authorization') || req.query.token;
+
+    console.log(req.params);
+    if (!token) return res.status(401).send({
+      success: false,
+      message: 'API token missing.'
+    });
+    else {
+      if (token !== keys.apiToken) return res.status(403).send({
+        success: false,
+        message: 'API token invalid.'
+      });
+      else next();
+    }
+  }
+}
+
 module.exports = {
-  representationConverter: () => generateRepresentationForm
+  representationConverter: () => generateRepresentationForm,
+  authorization: () => apiTokenAuthorization
 }
