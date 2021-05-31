@@ -2,7 +2,7 @@ const mongoClient = require('mongodb').MongoClient;
 const curd = require('./db/db');
 
 
-mongoClient.connect('mongodb://raspberrypi:27017/test', {
+mongoClient.connect('mongodb://raspberrypi.local:27017/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, (err, db) => {
