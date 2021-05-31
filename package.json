@@ -34,6 +34,7 @@
     "handlebars": "^4.7.7",
     "http": "0.0.1-security",
     "https": "^1.0.0",
+    "mongodb": "^3.6.9",
     "msgpack5": "^5.3.2",
     "util": "^0.12.3",
     "uuid": "^8.3.2",

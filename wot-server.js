@@ -1,6 +1,8 @@
 const fs = require('fs');
+const mongo = require('mongodb').MongoClient;
 const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
+const dbActions = require('./database/db');
 
 let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
@@ -34,6 +36,7 @@ function createServer(port, secure) {
       console.info(`[Info] Unsecured WoT server started on port ${port}`);
     });
   }
+  mongo.connect('mongodb://192.168.0.14:27017/wot', dbActions.connectToDB);
 
   return server;
 }
