@@ -1,6 +1,6 @@
 const mongoClient = require('mongodb').MongoClient;
 const server = require('./wot-server');
-const curd = require('./database/curd');
+const curd = require('./db/db');
 
 server();
 
