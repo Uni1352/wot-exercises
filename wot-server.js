@@ -4,6 +4,8 @@ const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
 const curd = require('./database/curd');
 
+const url = 'mongodb://192.168.0.14:27017/wot'
+
 let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
 
@@ -37,7 +39,7 @@ function createServer(port, secure) {
     });
   }
 
-  mongoClient.connect('mongodb://localhost:27017/wot', curd.connection);
+  mongoClient.connect(url, curd.connection);
 
   return server;
 }
