@@ -2,7 +2,7 @@ const mongoClient = require('mongodb').MongoClient;
 const curd = require('./db/db');
 
 
-mongoClient.connect('mongodb://localhost:27017/test', {
+mongoClient.connect('mongodb://192.168.0.17:27017/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, (err, db) => {
