@@ -63,10 +63,6 @@ class CorePlugin {
   startPlugin() {
     if (this.actions) this.createProxy(model.links.actions.resources);
 
-    mongoClient.connect(url, {
-      useUnifiedTopology: true
-    }, curd.connection);
-
     if (this.params.simulate) this.simulate();
     else this.connectHardware();
 
