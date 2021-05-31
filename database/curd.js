@@ -2,7 +2,7 @@ module.exports = {
   connection: (err, db) => {
     if (err) throw err;
 
-    console.log('MongoDB is Running!');
+    console.info('[Info] Connected to MongoDB!');
     db.close();
   }
 }
