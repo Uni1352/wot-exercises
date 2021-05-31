@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const curd = require('./db/db');
 
-const url = 'mongodb://192.168.0.14:27017';
+const url = 'mongodb://0.0.0.0:27017';
 const dbName = 'test';
 const client = new MongoClient(url, {
   useUnifiedTopology: true
