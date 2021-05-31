@@ -39,7 +39,9 @@ function createServer(port, secure) {
     });
   }
 
-  mongoClient.connect(url, curd.connection);
+  mongoClient.connect(url, {
+    useUnifiedTopology: true
+  }, curd.connection);
 
   return server;
 }
