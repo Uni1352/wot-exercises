@@ -4,7 +4,7 @@ const curd = require('./db/db');
 
 server();
 
-mongoClient.connect('mongodb://192.168.0.14:27017/test', {
+mongoClient.connect('mongodb://127.0.0.1:27017/test', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, curd.connection);
