@@ -2,12 +2,6 @@ const fs = require('fs');
 const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
 
-const mongoClient = require('mongodb').MongoClient;
-const curd = require('./database/curd');
-
-
-const url = 'mongodb://192.168.0.14:27017/wot'
-
 let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
 
@@ -20,7 +14,6 @@ function createServer(port, secure) {
   if (secure === undefined) secure = model.customFields.secure;
 
   initPlugins();
-  connectToDB();
 
   if (secure) {
     const https = require('https');
@@ -60,12 +53,6 @@ function initPlugins() {
     'frequency': 5000
   });
   ledsPlugin.startPlugin();
-}
-
-function connectToDB() {
-  mongoClient.connect(url, {
-    useUnifiedTopology: true
-  }, curd.connection);
 }
 
 process.on('SIGINT', () => {
