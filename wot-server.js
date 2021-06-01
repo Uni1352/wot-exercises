@@ -14,6 +14,7 @@ function createServer(port, secure) {
   if (secure === undefined) secure = model.customFields.secure;
 
   initPlugins();
+  connectToDB();
 
   if (secure) {
     const https = require('https');
