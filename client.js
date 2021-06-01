@@ -19,15 +19,17 @@ const client = new MongoClient(url, config);
 // });
 
 async function run() {
-  try {
-    await client.connect();
+  await client.connect((err) => {
     console.log("[Info] Connected successfully to server");
-  } catch (err) {
-    console.info(err);
-  } finally {
-    await client.close();
-    console.log('[Info] Server Disconnected');
-  }
+    try {
+      const db = client.db(dbName);
+    } catch (err) {
+      console.info(err);
+    } finally {
+      await client.close();
+      console.log('[Info] Server Disconnected');
+    }
+  });
 }
 
 function insertData(data) {
