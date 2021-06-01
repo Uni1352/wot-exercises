@@ -8,17 +8,19 @@ const config = {
 }
 const client = new MongoClient(url, config);
 
+// client.connect((err) => {
+//   console.info('[Info] Connected to MongoDB!');
+
+//   try {
+//     const db = client.db(dbName);
+//   } catch (err) {
+//     console.info(err);
+//   }
+// });
+
 client.connect((err) => {
   console.info('[Info] Connected to MongoDB!');
 
-  try {
-    const db = client.db(dbName);
-  } catch (err) {
-    console.info(err);
-  }
-});
-
-client.connect((err) => {
   try {
     const collection = client.db(dbName).collection('Person');
 
