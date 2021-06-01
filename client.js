@@ -18,24 +18,36 @@ const client = new MongoClient(url, config);
 //   }
 // });
 
-async function insertData(data) {
-  await client.connect();
+async function run() {
+  try {
+    await client.connect();
+    console.log("[Info] Connected successfully to server");
+  } catch (err) {
+    console.info(err);
+  } finally {
+    await client.close();
+    console.log('[Info] Server Disconnected');
+  }
+}
+
+function insertData(data) {
+  client.connect();
   console.info('[Info] Connected to MongoDB!');
 
   try {
     const collection = client.db(dbName).collection('Person');
 
-    await collection.insertOne(data);
-
+    collection.insertOne(data);
     console.info('[Info] Inserting Data...');
-    await client.close()
   } catch (err) {
     console.info(err);
   }
 }
 
-insertData({
-  id: 1,
-  firstName: 'Steve',
-  lastName: 'Jobs'
-})
+// insertData({
+//   id: 1,
+//   firstName: 'Steve',
+//   lastName: 'Jobs'
+// });
+
+run();
