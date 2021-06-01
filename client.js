@@ -19,5 +19,8 @@ function insertData() {
     }
 
     client.close();
+
   });
 }
+
+insertData()
