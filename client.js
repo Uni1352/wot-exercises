@@ -18,19 +18,24 @@ const client = new MongoClient(url, config);
 //   }
 // });
 
-client.connect((err) => {
+async function insertData(data) {
+  await client.connect();
   console.info('[Info] Connected to MongoDB!');
 
   try {
     const collection = client.db(dbName).collection('Person');
 
+    await collection.insertOne(data);
+
     console.info('[Info] Inserting Data...');
-    collection.insertOne({
-      id: 1,
-      firstName: 'Steve',
-      lastName: 'Jobs'
-    });
+    await client.close()
   } catch (err) {
     console.info(err);
   }
-});
+}
+
+insertData({
+  id: 1,
+  firstName: 'Steve',
+  lastName: 'Jobs'
+})
