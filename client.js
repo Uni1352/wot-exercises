@@ -12,7 +12,7 @@ async function run() {
   try {
     await client.connect();
     const db = client.db(dbName);
-    console.log("[Info] Connect successfully to server");
+
   } catch (err) {
     console.log(`[Error] Connect Error: ${err}`);
   }
@@ -26,8 +26,8 @@ function insertDocument(docs) {
 }
 
 try {
-  client.connect();
-  console.log("[Info] Connect successfully to server");
+  client.connect((err) => console.log("[Info] Connect successfully to server"));
+  // console.log("[Info] Connect successfully to server");
 
   // insertDocument([{
   //   id: 1,
