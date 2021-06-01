@@ -19,17 +19,16 @@ async function run() {
 }
 
 function insertDocument(docs) {
-  const collection = client.db(dbName).collection('Person');
 
-  collection.insertMany(docs);
-  console.info(`[Insert] Inserting Docs...`);
 }
 
 try {
   client.connect();
   console.log("[Info] Connect successfully to server");
 
-  insertDocument([{
+  const collection = client.db(dbName).collection('Person');
+
+  collection.insertMany([{
     id: 1,
     firstName: 'Steve',
     lastName: 'Jobs'
@@ -38,6 +37,7 @@ try {
     firstName: 'Bill',
     lastName: 'Gates'
   }]);
+  console.info(`[Insert] Inserting Docs...`);
 } catch (err) {
   console.log(`[Error] Error: ${err}`);
 } finally {
