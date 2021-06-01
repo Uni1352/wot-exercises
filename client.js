@@ -4,7 +4,7 @@ const url = 'mongodb://192.168.0.14:27017'
 const dbName = 'test';
 const config = {
   useNewUrlParser: true,
-  // useUnifiedTopology: true,
+  useUnifiedTopology: true,
 }
 const client = new MongoClient(url, config);
 
