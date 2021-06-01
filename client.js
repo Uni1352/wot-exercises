@@ -25,7 +25,7 @@ client.connect((err) => {
 
   } catch (err) {
     console.info(err);
+  } finally {
+    client.close();
   }
-
-  client.close();
 });
