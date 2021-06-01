@@ -8,8 +8,8 @@ const config = {
 }
 const client = new MongoClient(url, config);
 
-function run() {
-  client.connect((err) => {
+async function run() {
+  await client.connect((err) => {
     console.log("[Info] Connected successfully to server");
     try {
       const collection = client.db(dbName).collection('Person');
@@ -20,10 +20,8 @@ function run() {
         lastName: 'Jobs'
       });
       console.info('[Info] Inserting Data...');
-    } catch (err) {
-      console.info(err);
     }
   });
 }
 
-run();
+run().catch((err) => console.info(err));
