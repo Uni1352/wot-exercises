@@ -26,7 +26,7 @@ async function run() {
     } catch (err) {
       console.info(err);
     } finally {
-      await client.close();
+      client.close();
       console.log('[Info] Server Disconnected');
     }
   });
