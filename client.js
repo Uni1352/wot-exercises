@@ -22,9 +22,6 @@ function run() {
       console.info('[Info] Inserting Data...');
     } catch (err) {
       console.info(err);
-    } finally {
-      client.close();
-      console.log('[Info] Server Disconnected');
     }
   });
 }
