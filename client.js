@@ -4,19 +4,9 @@ const url = 'mongodb://192.168.0.14:27017'
 const dbName = 'test';
 const config = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // useUnifiedTopology: true,
 }
 const client = new MongoClient(url, config);
-
-// client.connect((err) => {
-//   console.info('[Info] Connected to MongoDB!');
-
-//   try {
-//     const db = client.db(dbName);
-//   } catch (err) {
-//     console.info(err);
-//   }
-// });
 
 async function run() {
   await client.connect((err) => {
@@ -32,10 +22,11 @@ async function run() {
 
     } catch (err) {
       console.info(err);
-    } finally {
-      client.close();
-      console.log('[Info] Server Disconnected');
     }
+    // finally {
+    //   client.close();
+    //   console.log('[Info] Server Disconnected');
+    // }
   });
 }
 
