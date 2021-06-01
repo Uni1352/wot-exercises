@@ -14,21 +14,12 @@ client.connect((err) => {
   try {
     const db = client.db(dbName);
 
+    console.info('[Info] Inserting Data...');
     db.collection('Person', (err, collection) => {
-      collection.insert({
+      collection.insertOne({
         id: 1,
         firstName: 'Steve',
         lastName: 'Jobs'
-      });
-      collection.insert({
-        id: 2,
-        firstName: 'Bill',
-        lastName: 'Gates'
-      });
-      collection.insert({
-        id: 3,
-        firstName: 'James',
-        lastName: 'Bond'
       });
     });
 
