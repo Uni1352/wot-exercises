@@ -19,6 +19,7 @@ async function run() {
         firstName: 'Steve',
         lastName: 'Jobs'
       });
+    } finally {
       console.info('[Info] Inserting Data...');
     }
   });
