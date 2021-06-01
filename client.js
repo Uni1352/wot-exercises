@@ -9,13 +9,12 @@ const config = {
 const client = new MongoClient(url, config);
 
 async function run() {
-  try {
-    await client.connect();
+  await client.connect((err) => {
+    if (err) console.log(`[Error] Connect Error: ${err}`);
+
     const db = client.db(dbName);
-    console.log("[Info] Connected successfully to server");
-  } catch (err) {
-    console.log(`[Info] Connect Error: ${err}`);
-  }
+    console.log("[Info] Connect successfully to server");
+  });
 }
 
 run();
