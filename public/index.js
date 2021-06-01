@@ -1,4 +1,4 @@
-import auth from '../resources/auth.json'
+import auth from '../resources/auth.json';
 
 function openDoorAccess() {
   changeLedState('2', true);
@@ -16,7 +16,7 @@ function closeDoorAccess() {
   $('.status__door').html('Closed');
 }
 
-function changeLedState(id, state, action) {
+function changeLedState(id, state) {
   $.ajax({
     url: `https://192.168.0.17:8484/actions/ledState?token=${auth.apiToken}`,
     method: 'POST',

@@ -50,7 +50,7 @@ function initPlugins() {
 
   ledsPlugin = new LedPlugin({
     'simulate': false,
-    'frequency': 5000
+    'frequency': 3000
   });
   ledsPlugin.startPlugin();
 }
