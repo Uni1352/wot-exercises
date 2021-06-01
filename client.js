@@ -19,25 +19,25 @@ async function run() {
 }
 
 function insertDocument(docs) {
+  const collection = client.db(dbName).collection('Person');
 
+  collection.insertMany(docs);
+  console.info(`[Insert] Inserting Docs...`);
 }
 
 try {
   client.connect();
   console.log("[Info] Connect successfully to server");
 
-  const collection = client.db(dbName).collection('Person');
-
-  collection.insertMany([{
-    id: 1,
-    firstName: 'Steve',
-    lastName: 'Jobs'
-  }, {
-    id: 2,
-    firstName: 'Bill',
-    lastName: 'Gates'
-  }]);
-  console.info(`[Insert] Inserting Docs...`);
+  // insertDocument([{
+  //   id: 1,
+  //   firstName: 'Steve',
+  //   lastName: 'Jobs'
+  // }, {
+  //   id: 2,
+  //   firstName: 'Bill',
+  //   lastName: 'Gates'
+  // }]);
 } catch (err) {
   console.log(`[Error] Error: ${err}`);
 } finally {
