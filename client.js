@@ -22,7 +22,14 @@ async function run() {
   await client.connect((err) => {
     console.log("[Info] Connected successfully to server");
     try {
-      const db = client.db(dbName);
+      const collection = client.db(dbName).collection('Person');
+
+      insertData(collection, {
+        id: 1,
+        firstName: 'Steve',
+        lastName: 'Jobs'
+      });
+
     } catch (err) {
       console.info(err);
     } finally {
@@ -32,24 +39,13 @@ async function run() {
   });
 }
 
-function insertData(data) {
-  client.connect();
-  console.info('[Info] Connected to MongoDB!');
-
+function insertData(collection, data) {
   try {
-    const collection = client.db(dbName).collection('Person');
-
     collection.insertOne(data);
     console.info('[Info] Inserting Data...');
   } catch (err) {
     console.info(err);
   }
 }
-
-// insertData({
-//   id: 1,
-//   firstName: 'Steve',
-//   lastName: 'Jobs'
-// });
 
 run();
