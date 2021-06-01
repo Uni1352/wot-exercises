@@ -13,16 +13,21 @@ client.connect((err) => {
 
   try {
     const db = client.db(dbName);
+  } catch (err) {
+    console.info(err);
+  }
+});
+
+client.connect((err) => {
+  try {
+    const collection = client.db(dbName).collection('Person');
 
     console.info('[Info] Inserting Data...');
-    db.collection('Person', (err, collection) => {
-      collection.insertOne({
-        id: 1,
-        firstName: 'Steve',
-        lastName: 'Jobs'
-      });
+    await collection.insertOne({
+      id: 1,
+      firstName: 'Steve',
+      lastName: 'Jobs'
     });
-
   } catch (err) {
     console.info(err);
   } finally {
