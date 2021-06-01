@@ -40,6 +40,4 @@ try {
   // }]);
 } catch (err) {
   console.log(`[Error] Error: ${err}`);
-} finally {
-  client.close();
 }
