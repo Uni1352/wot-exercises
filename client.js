@@ -5,8 +5,8 @@ const dbName = 'test';
 const config = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  connectTimeoutMS: 5000,
-  socketTimeoutMS: 5000
+  // connectTimeoutMS: 3000,
+  // socketTimeoutMS: 3000
 }
 const client = new MongoClient(url, config);
 
