@@ -1,5 +1,6 @@
 const util = require('util');
 const utils = require('../utils/utils');
+const db = require('../db/db');
 
 let model = require('../resources/model');
 
@@ -37,7 +38,12 @@ class CorePlugin {
   }
 
   addValue(val) {
-    utils.cappedPush(this.model.data, this.createValue(val));
+    const newVal = this.createValue(val);
+
+    db.insertDoc('sensor', newVal, {
+      ordered: true
+    });
+    utils.cappedPush(this.model.data, newVal);
   }
 
   showValue() {
