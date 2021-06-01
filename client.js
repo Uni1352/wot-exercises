@@ -9,7 +9,7 @@ const config = {
 const client = new MongoClient(url, config);
 
 async function run() {
-  client.connect((err) => {
+  await client.connect((err) => {
     console.log("[Info] Connected successfully to server");
     try {
       const collection = client.db(dbName).collection('Person');
