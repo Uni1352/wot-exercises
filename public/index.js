@@ -1,3 +1,5 @@
+import auth from '../resources/auth.json'
+
 function openDoorAccess() {
   changeLedState('2', true);
 
@@ -16,7 +18,7 @@ function closeDoorAccess() {
 
 function changeLedState(id, state, action) {
   $.ajax({
-    url: 'http://192.168.0.17:8484/actions/ledState',
+    url: `https://192.168.0.17:8484/actions/ledState?token=${auth.apiToken}`,
     method: 'POST',
     contentType: 'application/json',
     dataType: 'json',
@@ -35,7 +37,7 @@ function changeLedState(id, state, action) {
 
 function getLedState() {
   $.ajax({
-    url: 'http://192.168.0.17:8484/properties/leds',
+    url: `https://192.168.0.17:8484/properties/leds?token=${auth.apiToken}`,
     method: 'GET',
     dataType: 'json',
     processData: false,
@@ -58,7 +60,7 @@ function getLedState() {
 }
 
 function startSocket() {
-  const ws = new WebSocket('ws://192.168.0.17:8484/properties/pir');
+  const ws = new WebSocket(`wss://192.168.0.17:8484/properties/pir?token=${auth.apiToken}`);
 
   ws.onopen = () => console.log('Connection Opened!');
   ws.onmessage = (msg) => {
