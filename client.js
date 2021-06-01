@@ -9,17 +9,17 @@ const config = {
 const client = new MongoClient(url, config);
 
 async function run() {
-  await client.connect((err) => {
+  client.connect((err) => {
     console.log("[Info] Connected successfully to server");
     try {
       const collection = client.db(dbName).collection('Person');
 
-      insertData(collection, {
+      collection.insertOne({
         id: 1,
         firstName: 'Steve',
         lastName: 'Jobs'
       });
-
+      console.info('[Info] Inserting Data...');
     } catch (err) {
       console.info(err);
     }
@@ -28,15 +28,6 @@ async function run() {
     //   console.log('[Info] Server Disconnected');
     // }
   });
-}
-
-function insertData(collection, data) {
-  try {
-    collection.insertOne(data);
-    console.info('[Info] Inserting Data...');
-  } catch (err) {
-    console.info(err);
-  }
 }
 
 run();
