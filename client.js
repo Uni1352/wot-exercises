@@ -6,23 +6,59 @@ const config = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }
-const client = new MongoClient(url, config);
+// const client = new MongoClient(url, config);
 
-async function run() {
-  await client.connect((err) => {
-    console.log("[Info] Connected successfully to server");
-    try {
-      const collection = client.db(dbName).collection('Person');
+// client.connect((err) => {
+//   console.log("[Info] Connected successfully to server");
+//   try {
+//     const collection = client.db(dbName).collection('Person');
 
-      collection.insertOne({
-        id: 1,
-        firstName: 'Steve',
-        lastName: 'Jobs'
-      });
-    } finally {
-      console.info('[Info] Inserting Data...');
-    }
-  });
-}
+//     // insert
+//     collection.insertMany([{
+//       id: 1,
+//       firstName: 'Steve',
+//       lastName: 'Jobs'
+//     }, {
+//       id: 2,
+//       firstName: 'Bill',
+//       lastName: 'Gates'
+//     }], (err) => {
+//       if (err) console.log(err);
+//       console.info('[Info] Inserting Data...');
+//     });
 
-run().catch((err) => console.info(err));
+//     // update
+//     collection.updateOne({
+//       id: 1
+//     }, {
+//       $set: {
+//         firstName: 'James',
+//         lastName: 'Gosling'
+//       }
+//     }, {
+//       w: 1
+//     }, (err) => {
+//       if (err) console.log(err);
+//       console.info('[Info] Updating Data...');
+//     });
+
+//     // delete
+//     collection.deleteOne({
+//       id: 2
+//     }, {
+//       w: 1
+//     }, (err) => {
+//       if (err) console.log(err);
+//       console.info('[Info] Deleting Data...');
+//     });
+//   } finally {
+//     console.info('DONE!');
+//   }
+// });
+
+MongoClient.connect(url, config).then((client) => {
+  console.log("mongo db connection success");
+}).catch(err => {
+  console.log("connection failure.... ", url);
+  console.log("connection error ", err);
+})
