@@ -1,5 +1,4 @@
 const MongoClient = require('mongodb').MongoClient;
-const curd = require('./db/db');
 
 const url = 'mongodb://192.168.43.57:27017';
 const dbName = 'test';
