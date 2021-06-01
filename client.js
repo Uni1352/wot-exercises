@@ -10,7 +10,7 @@ const config = {
 }
 const client = new MongoClient(url, config);
 
-client.connect(url, config, (err) => {
+client.connect((err) => {
   try {
     const db = client.db(dbName);
 
