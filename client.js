@@ -5,18 +5,19 @@ const dbName = 'test';
 const config = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  // connectTimeoutMS: 3000,
-  // socketTimeoutMS: 3000
 }
 const client = new MongoClient(url, config);
 
-client.connect((err) => {
-  try {
-    const db = client.db(dbName);
-
+function insertData() {
+  client.connect((err) => {
     console.info('[Info] Connected to MongoDB!');
+
+    try {
+      const db = client.db(dbName);
+    } catch (err) {
+      console.info(err);
+    }
+
     client.close();
-  } catch (err) {
-    console.info(err);
-  }
-});
+  });
+}
