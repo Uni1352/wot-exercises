@@ -1,11 +1,20 @@
 const MongoClient = require('mongodb').MongoClient;
 
-MongoClient.connect('mongodb://192.168.0.14:27017/test', {
+const url = 'mongodb://192.168.0.14:27017'
+const config = {
   useNewUrlParser: true,
-  useUnifiedTopology: true
-}, (err, db) => {
-  if (err) throw err;
+  useUnifiedTopology: true,
+  connectTimeoutMS: 5000,
+  socketTimeoutMS: 5000
+}
 
-  console.info('[Info] Connected to MongoDB!');
-  db.close();
+MongoClient.connect(url, config, (err, db) => {
+  try {
+    console.info('[Info] Connected to MongoDB!');
+  } catch (err) {
+    console.info(err);
+  } finally {
+    db.close();
+  }
+
 });
