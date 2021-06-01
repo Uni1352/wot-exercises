@@ -25,19 +25,21 @@ function insertDocument(docs) {
   console.info(`[Insert] Inserting Docs...`);
 }
 
-try {
-  client.connect((err) => console.log("[Info] Connect successfully to server"));
-  // console.log("[Info] Connect successfully to server");
+// try {
+//   client.connect((err) => console.log("[Info] Connect successfully to server"));
+//   // console.log("[Info] Connect successfully to server");
 
-  // insertDocument([{
-  //   id: 1,
-  //   firstName: 'Steve',
-  //   lastName: 'Jobs'
-  // }, {
-  //   id: 2,
-  //   firstName: 'Bill',
-  //   lastName: 'Gates'
-  // }]);
-} catch (err) {
-  console.log(`[Error] Error: ${err}`);
-}
+//   // insertDocument([{
+//   //   id: 1,
+//   //   firstName: 'Steve',
+//   //   lastName: 'Jobs'
+//   // }, {
+//   //   id: 2,
+//   //   firstName: 'Bill',
+//   //   lastName: 'Gates'
+//   // }]);
+// } catch (err) {
+//   console.log(`[Error] Error: ${err}`);
+// }
+
+run();
