@@ -24,21 +24,18 @@ function createServer(port, secure) {
 
     server = https.createServer(config, httpServer).listen(port, () => {
       wsServer(server);
-      db.startDB();
       console.info(`[Info] Secured WoT server started on port ${port}`);
+      db.startDB();
     });
   } else {
     const http = require('http');
     server = http.createServer(httpServer).listen(port, () => {
       wsServer(server);
-      db.startDB();
       console.info(`[Info] Unsecured WoT server started on port ${port}`);
+      db.startDB();
     });
   }
-
-  initPlugins();
-
-  return server;
+  // return server;
 }
 
 function initPlugins() {
@@ -58,6 +55,9 @@ function initPlugins() {
   ledsPlugin.startPlugin();
 }
 
+createServer();
+initPlugins();
+
 process.on('SIGINT', () => {
   pirPlugin.stopPlugin();
   ledsPlugin.stopPlugin();
@@ -67,5 +67,4 @@ process.on('SIGINT', () => {
   console.info('[Info] BYE!');
   process.exit();
 });
-
-module.exports = createServer;
+// module.exports = createServer;
