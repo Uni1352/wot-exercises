@@ -24,7 +24,6 @@ function createServer(port, secure) {
 
     server = https.createServer(config, httpServer).listen(port, () => {
       wsServer(server);
-      db.startDB();
       console.info(`[Info] Secured WoT server started on port ${port}`);
     });
   } else {
@@ -33,7 +32,6 @@ function createServer(port, secure) {
     server = http.createServer(httpServer).listen(port, () => {
       wsServer(server);
       console.info(`[Info] Unsecured WoT server started on port ${port}`);
-      db.startDB();
     });
   }
 }
@@ -66,6 +64,7 @@ process.on('SIGINT', () => {
 });
 
 module.exports = async (port, secure) => {
-  await createServer(port, secure);
+  createServer(port, secure);
+  await db.startDB();
   initPlugins();
 };
