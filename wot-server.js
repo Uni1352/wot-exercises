@@ -4,9 +4,6 @@ const wsServer = require('./servers/websocket');
 const db = require('./db/db');
 
 let model = require('./resources/model');
-const {
-  create
-} = require('eslint/lib/rules/*');
 let pirPlugin, ledsPlugin;
 
 
