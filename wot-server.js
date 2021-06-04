@@ -14,9 +14,6 @@ function createServer(port, secure) {
   else if (port === undefined) port = model.customFields.port;
   if (secure === undefined) secure = model.customFields.secure;
 
-  db.startDB();
-  initPlugins();
-
   if (secure) {
     const https = require('https');
     const config = {
@@ -27,15 +24,19 @@ function createServer(port, secure) {
 
     server = https.createServer(config, httpServer).listen(port, () => {
       wsServer(server);
+      db.startDB();
       console.info(`[Info] Secured WoT server started on port ${port}`);
     });
   } else {
     const http = require('http');
     server = http.createServer(httpServer).listen(port, () => {
       wsServer(server);
+      db.startDB();
       console.info(`[Info] Unsecured WoT server started on port ${port}`);
     });
   }
+
+  initPlugins();
 
   return server;
 }
