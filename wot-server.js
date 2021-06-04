@@ -34,8 +34,8 @@ function createServer(port, secure) {
     });
   }
 
-  initPlugins();
   db.startDB();
+  initPlugins();
 
   return server;
 }
