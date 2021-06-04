@@ -32,7 +32,7 @@ class LedPlugin extends CorePlugin {
 
   setActions() {
     this.doSimulate = () => {
-      for (let val of this.simulateVal) val = !val;
+      for (let val in this.simulateVal) val = !val;
       this.addValue(this.simulateVal);
     };
     this.doStop = () => {
