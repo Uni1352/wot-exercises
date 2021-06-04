@@ -7,7 +7,7 @@ let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
 
 
-async function createServer(port, secure) {
+function createServer(port, secure) {
   let server;
 
   if (process.env.PORT) port = process.env.PORT;
@@ -22,7 +22,7 @@ async function createServer(port, secure) {
       passphrase: 'uni135219'
     }
 
-    server = await https.createServer(config, httpServer).listen(port, () => {
+    server = https.createServer(config, httpServer).listen(port, () => {
       wsServer(server);
       db.startDB();
       console.info(`[Info] Secured WoT server started on port ${port}`);
@@ -30,16 +30,12 @@ async function createServer(port, secure) {
   } else {
     const http = require('http');
 
-    server = await http.createServer(httpServer).listen(port, () => {
+    server = http.createServer(httpServer).listen(port, () => {
       wsServer(server);
       console.info(`[Info] Unsecured WoT server started on port ${port}`);
       db.startDB();
     });
   }
-
-  initPlugins();
-
-  return server;
 }
 
 function initPlugins() {
@@ -69,4 +65,7 @@ process.on('SIGINT', () => {
   process.exit();
 });
 
-module.exports = createServer;
+module.exports = async (port, secure) => {
+  createServer(port, secure);
+  initPlugins();
+};
