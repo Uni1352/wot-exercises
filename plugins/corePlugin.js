@@ -17,6 +17,7 @@ class CorePlugin {
     this.doSimulate;
     this.doStop;
     this.doActions;
+    this.deviceName = propId;
     this.actions = actionsIds;
     this.model = utils.findProperty(propId);
   }
@@ -40,9 +41,10 @@ class CorePlugin {
   addValue(val) {
     const newVal = this.createValue(val);
 
-    db.insertDoc('sensor', newVal, {
+    db.insertDoc(this.deviceName, newVal, {
       ordered: true
     });
+
     utils.cappedPush(this.model.data, newVal);
   }
 
@@ -57,6 +59,9 @@ class CorePlugin {
           if (!isNaN(parseInt(index))) {
             console.info(`[Proxy] plugin action detected: ${actionId}`);
             arr[index] = val;
+            db.insertOne(this.actionId, val, {
+              ordered: true
+            });
             if (this.doActions) this.doActions(val);
           }
           return true;

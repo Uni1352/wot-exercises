@@ -1,6 +1,7 @@
 const fs = require('fs');
 const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
+const db = require('./db/db');
 
 let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
@@ -12,8 +13,6 @@ function createServer(port, secure) {
   if (process.env.PORT) port = process.env.PORT;
   else if (port === undefined) port = model.customFields.port;
   if (secure === undefined) secure = model.customFields.secure;
-
-  initPlugins();
 
   if (secure) {
     const https = require('https');
@@ -35,6 +34,9 @@ function createServer(port, secure) {
     });
   }
 
+  initPlugins();
+  db.startDB();
+
   return server;
 }
 
@@ -49,7 +51,7 @@ function initPlugins() {
   pirPlugin.startPlugin();
 
   ledsPlugin = new LedPlugin({
-    'simulate': false,
+    'simulate': true,
     'frequency': 3000
   });
   ledsPlugin.startPlugin();
@@ -58,6 +60,7 @@ function initPlugins() {
 process.on('SIGINT', () => {
   pirPlugin.stopPlugin();
   ledsPlugin.stopPlugin();
+  db.closeDB();
   console.info('[Server] WebSocket server closed.');
   console.info('[Server] HTTP server closed.');
   console.info('[Info] BYE!');

@@ -5,6 +5,7 @@ class PirPlugin extends CorePlugin {
     super(params, 'pir');
 
     this.sensor;
+    this.deviceName = 'PIR';
     this.simulateVal = true;
     this.addValue(false);
     this.setActions();
