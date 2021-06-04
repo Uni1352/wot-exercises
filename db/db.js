@@ -12,6 +12,7 @@ module.exports = {
   startDB: async () => {
     try {
       await client.connect();
+      console.info(`[MongoDB] DB server started.`);
     } catch (err) {
       console.info(`[Error] ${err}`);
     }
