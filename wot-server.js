@@ -4,10 +4,13 @@ const wsServer = require('./servers/websocket');
 const db = require('./db/db');
 
 let model = require('./resources/model');
+const {
+  create
+} = require('eslint/lib/rules/*');
 let pirPlugin, ledsPlugin;
 
 
-function createServer(port, secure) {
+async function createServer(port, secure) {
   let server;
 
   if (process.env.PORT) port = process.env.PORT;
@@ -34,6 +37,9 @@ function createServer(port, secure) {
       console.info(`[Info] Unsecured WoT server started on port ${port}`);
     });
   }
+
+  await db.startDB();
+  initPlugins();
 }
 
 function initPlugins() {
@@ -63,8 +69,4 @@ process.on('SIGINT', () => {
   process.exit();
 });
 
-module.exports = async (port, secure) => {
-  createServer(port, secure);
-  await db.startDB();
-  initPlugins();
-};
+module.exports = createServer;
