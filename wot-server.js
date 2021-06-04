@@ -8,6 +8,8 @@ let pirPlugin, ledsPlugin;
 
 
 function createServer(port, secure) {
+  let server;
+
   if (process.env.PORT) port = process.env.PORT;
   else if (port === undefined) port = model.customFields.port;
   if (secure === undefined) secure = model.customFields.secure;
@@ -23,18 +25,19 @@ function createServer(port, secure) {
       passphrase: 'uni135219'
     }
 
-    return https.createServer(config, httpServer).listen(port, () => {
+    server = https.createServer(config, httpServer).listen(port, () => {
       wsServer(server);
       console.info(`[Info] Secured WoT server started on port ${port}`);
     });
   } else {
     const http = require('http');
-    return http.createServer(httpServer).listen(port, () => {
+    server = http.createServer(httpServer).listen(port, () => {
       wsServer(server);
       console.info(`[Info] Unsecured WoT server started on port ${port}`);
     });
   }
 
+  return server;
 }
 
 function initPlugins() {
