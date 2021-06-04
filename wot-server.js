@@ -7,7 +7,7 @@ let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
 
 
-async function createServer(port, secure) {
+function createServer(port, secure) {
   let server;
 
   if (process.env.PORT) port = process.env.PORT;
@@ -35,7 +35,7 @@ async function createServer(port, secure) {
     });
   }
 
-  await db.startDB();
+  db.startDB();
   initPlugins();
 }
 
@@ -44,13 +44,13 @@ function initPlugins() {
   const LedPlugin = require('./plugins/internal/ledPlugin');
 
   pirPlugin = new PirPlugin({
-    'simulate': true,
+    'simulate': false,
     'frequency': 3000
   });
   pirPlugin.startPlugin();
 
   ledsPlugin = new LedPlugin({
-    'simulate': true,
+    'simulate': false,
     'frequency': 3000
   });
   ledsPlugin.startPlugin();
