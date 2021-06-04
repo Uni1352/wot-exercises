@@ -66,6 +66,6 @@ process.on('SIGINT', () => {
 });
 
 module.exports = async (port, secure) => {
-  createServer(port, secure);
+  await createServer(port, secure);
   initPlugins();
 };
