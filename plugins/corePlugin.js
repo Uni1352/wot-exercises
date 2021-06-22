@@ -41,9 +41,9 @@ class CorePlugin {
   addValue(val) {
     const newVal = this.createValue(val);
 
-    db.insertDoc(this.deviceName, newVal, {
-      ordered: true
-    });
+    // db.insertDoc(this.deviceName, newVal, {
+    //   ordered: true
+    // });
 
     utils.cappedPush(this.model.data, newVal);
   }
@@ -59,9 +59,9 @@ class CorePlugin {
           if (!isNaN(parseInt(index))) {
             console.info(`[Proxy] plugin action detected: ${actionId}`);
             arr[index] = val;
-            db.insertOne(this.actionId, val, {
-              ordered: true
-            });
+            // db.insertOne(this.actionId, val, {
+            //   ordered: true
+            // });
             if (this.doActions) this.doActions(val);
           }
           return true;
