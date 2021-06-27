@@ -1,4 +1,4 @@
-const token = 'AFTP03jkUXBqvpOrhnnEkMhSSGZxK9Eo'
+// const token = 'AFTP03jkUXBqvpOrhnnEkMhSSGZxK9Eo'
 
 function openDoorAccess() {
   changeLedState('2', true);
@@ -18,7 +18,7 @@ function closeDoorAccess() {
 
 function changeLedState(id, state) {
   $.ajax({
-    url: `https://192.168.43.129:8484/actions/ledState?token=${token}`,
+    url: `http://192.168.43.129:8484/actions/ledState`,
     method: 'POST',
     contentType: 'application/json',
     dataType: 'json',
@@ -37,7 +37,7 @@ function changeLedState(id, state) {
 
 function getLedState() {
   $.ajax({
-    url: `https://192.168.43.129:8484/properties/leds?token=${token}`,
+    url: `http://192.168.43.129:8484/properties/leds`,
     method: 'GET',
     dataType: 'json',
     processData: false,
@@ -60,13 +60,14 @@ function getLedState() {
 }
 
 function startSocket() {
-  const ws = new WebSocket(`wss://192.168.43.129:8484/properties/pir?token=${token}`);
+  const ws = new WebSocket(`ws://192.168.43.129:8484/properties/pir`);
 
   ws.onopen = () => console.log('Connection Opened!');
   ws.onmessage = (msg) => {
     let data = JSON.parse(msg.data);
 
     if (!$('#power-switch').prop('checked')) {
+      console.log('test')
       if (data.presence) openDoorAccess();
       else closeDoorAccess();
     } else {
@@ -77,10 +78,10 @@ function startSocket() {
 }
 
 // initial
-$(document).ready(() => {
+$(document).ready(async () => {
   $('.msg-content').html();
 
-  getLedState();
+  await getLedState();
   startSocket();
 });
 
