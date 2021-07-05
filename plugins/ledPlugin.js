@@ -5,10 +5,10 @@ let model = require('../resources/model');
 let leds = model.links.properties.resources.leds;
 
 module.exports = {
-  pluginStart
+  startPlugin
 };
 
-function pluginStart() {
+function startPlugin() {
   model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState.data, {
     set: (arr, index, val) => {
       if (!isNaN(parseInt(index))) {

@@ -44,28 +44,14 @@ function createServer(port, secure) {
 }
 
 function initPlugins() {
-  // const PirPlugin = require('./plugins/internal/pirPlugin');
-  // const LedPlugin = require('./plugins/internal/ledPlugin');
-
-  // pirPlugin = new PirPlugin({
-  //   'simulate': false,
-  //   'frequency': 3000
-  // });
-  // pirPlugin.startPlugin();
-
-  // ledsPlugin = new LedPlugin({
-  //   'simulate': false,
-  //   'frequency': 3000
-  // });
-  // ledsPlugin.startPlugin();
+  const pirPlugin = require('./plugins/pirPlugin');
   const ledPlugin = require('./plugins/ledPlugin');
 
-  ledPlugin.pluginStart();
+  pirPlugin.startPlugin();
+  ledPlugin.startPlugin();
 }
 
 process.on('SIGINT', () => {
-  // pirPlugin.stopPlugin();
-  // ledsPlugin.stopPlugin();
   // db.closeDB();
   mqtt.disconnectMQTTBroker();
   console.info('[Server] WebSocket server closed.');

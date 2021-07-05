@@ -1,11 +1,18 @@
+const mqtt = require('../mqtt/mqtt');
 const utils = require('../utils/utils');
 
 let model = require('../resources/model');
 let pir = model.links.properties.resources.pir;
 
 module.exports = {
+  startPlugin,
   addValue
 };
+
+function startPlugin() {
+  mqtt.subscribeTopic('/properties/pir');
+  addValue(false);
+}
 
 function createValue(val) {
   return {
