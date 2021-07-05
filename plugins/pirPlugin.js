@@ -16,7 +16,7 @@ function pluginInit() {
 
 function createValue(val) {
   return {
-    'presence': msg.presence,
+    'presence': val,
     'timestamp': new Date().toISOString()
   };
 }

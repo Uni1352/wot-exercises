@@ -5,7 +5,6 @@ const mqtt = require('./mqtt/mqtt');
 const db = require('./db/db');
 
 let model = require('./resources/model');
-let pirPlugin, ledsPlugin;
 
 module.exports = createServer;
 
@@ -38,10 +37,10 @@ function createServer(port, secure) {
   }
 
   mqtt.connectMQTTBroker();
-  mqtt.subscribeTopic('/properties/pir');
+  // mqtt.subscribeTopic('/properties/pir');
 
   // db.startDB();
-  // initPlugins();
+  initPlugins();
 }
 
 function initPlugins() {
@@ -62,7 +61,7 @@ function initPlugins() {
 
   const pirPlugin = require('./plugins/pirPlugin');
 
-  pirPlugin.pluginInit()
+  pirPlugin.pluginInit();
 }
 
 process.on('SIGINT', () => {
