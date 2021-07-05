@@ -81,7 +81,13 @@ function startSocket() {
 $(document).ready(async () => {
   $('.msg-content').html();
 
-  await getLedState();
+  // await getLedState();
+  if ($('#power-switch').prop('checked')) {
+    $('.status__power').html('On');
+  } else {
+    $('.status__power').html('Off');
+  }
+
   startSocket();
 });
 

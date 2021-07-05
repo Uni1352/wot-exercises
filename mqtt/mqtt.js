@@ -1,4 +1,5 @@
 const mqtt = require('mqtt');
+const pirPlugin = require('../plugins/pirPlugin');
 
 let client;
 let url = 'mqtt://192.168.43.129:1883';
@@ -7,12 +8,13 @@ let options = {
   username: 'uni',
   password: 'uni135219'
 };
+let data;
 
 module.exports = {
   connectMQTTBroker,
   disconnectMQTTBroker,
   subscribeTopic,
-  publishTopic
+  publishTopic,
 };
 
 function connectMQTTBroker() {
@@ -24,14 +26,19 @@ function connectMQTTBroker() {
   });
 
   client.on('message', (topic, message) => {
+    data = JSON.parse(message.toString());
+
     console.info(`[MQTT] Receive Topic ${topic} Message:`);
-    console.info(JSON.parse(message.toString()));
+    console.info(data);
+
+    if (topic === '/properties/pir') {
+      pirPlugin.addValue(data.presence);
+    }
   });
 }
 
 function disconnectMQTTBroker() {
   console.info(`[MQTT] Close Connection To MQTT Broker!`);
-  clearInterval(interval);
   client.end();
 }
 

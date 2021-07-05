@@ -1,9 +1,9 @@
-const socketServer = require('ws').Server;
+const Server = require('ws').Server;
 
 let model = require('../resources/model');
 
 function createSocketServer(server) {
-  const wss = new socketServer({
+  const wss = new Server({
     server: server
   });
 

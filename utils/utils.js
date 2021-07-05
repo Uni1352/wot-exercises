@@ -61,8 +61,8 @@ function getISOTimestamp() {
   return new Date().toISOString();
 }
 
-function cappedPush(arr, entry, limit) {
-  if (arr.length >= limit) arr.shift();
+function cappedPush(arr, entry) {
+  if (arr.length >= model.customFields.dataArraySize) arr.shift();
   arr.push(entry);
 
   return arr;

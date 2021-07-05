@@ -41,24 +41,28 @@ function createServer(port, secure) {
   mqtt.subscribeTopic('/properties/pir');
 
   // db.startDB();
-  // initPlugins();
+  initPlugins();
 }
 
 function initPlugins() {
-  const PirPlugin = require('./plugins/internal/pirPlugin');
-  const LedPlugin = require('./plugins/internal/ledPlugin');
+  // const PirPlugin = require('./plugins/internal/pirPlugin');
+  // const LedPlugin = require('./plugins/internal/ledPlugin');
 
-  pirPlugin = new PirPlugin({
-    'simulate': false,
-    'frequency': 3000
-  });
-  pirPlugin.startPlugin();
+  // pirPlugin = new PirPlugin({
+  //   'simulate': false,
+  //   'frequency': 3000
+  // });
+  // pirPlugin.startPlugin();
 
-  ledsPlugin = new LedPlugin({
-    'simulate': false,
-    'frequency': 3000
-  });
-  ledsPlugin.startPlugin();
+  // ledsPlugin = new LedPlugin({
+  //   'simulate': false,
+  //   'frequency': 3000
+  // });
+  // ledsPlugin.startPlugin();
+
+  const pirPlugin = require('./plugins/pirPlugin');
+
+  pirPlugin.pluginInit();
 }
 
 process.on('SIGINT', () => {
