@@ -1,8 +1,6 @@
-const mqttClient = require('../mqtt/mqtt');
 const utils = require('../utils/utils');
 
 let model = require('../resources/model');
-
 let pir = model.links.properties.resources.pir;
 
 module.exports = {
