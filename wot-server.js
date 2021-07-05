@@ -36,7 +36,7 @@ function createServer(port, secure) {
   }
 
   // db.startDB();
-  initPlugins();
+  // initPlugins();
 }
 
 function initPlugins() {
@@ -57,8 +57,8 @@ function initPlugins() {
 }
 
 process.on('SIGINT', () => {
-  pirPlugin.stopPlugin();
-  ledsPlugin.stopPlugin();
+  // pirPlugin.stopPlugin();
+  // ledsPlugin.stopPlugin();
   // db.closeDB();
   console.info('[Server] WebSocket server closed.');
   console.info('[Server] HTTP server closed.');
