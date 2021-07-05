@@ -1,4 +1,5 @@
 const mqtt = require('../mqtt/mqtt');
+const utils = require('../utils/utils');
 
 let model = require('../resources/model');
 let leds = model.links.properties.resources.leds;
