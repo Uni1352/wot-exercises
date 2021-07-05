@@ -1,3 +1,5 @@
+const mqtt = require('../mqtt/mqtt');
+
 let model = require('../resources/model');
 let leds = model.links.properties.resources.leds;
 
@@ -37,8 +39,9 @@ function switchOnOff(obj) {
   const target = this.model.data[this.model.data.length - 1];
   const latestVal = [target['1'], target['2']];
 
-  latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
+  mqtt.publishTopic('/actions/ledState', JSON.stringify(obj.values));
 
+  latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
   addValue(latestVal);
 
   obj.status = 'completed';
