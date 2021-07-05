@@ -60,8 +60,8 @@ function initPlugins() {
 
   const pirPlugin = require('./plugins/pirPlugin');
 
-  // pirPlugin.pluginInit();
-  mqtt.subscribeTopic('/properties/pir');
+  pirPlugin.startPlugin();
+  // mqtt.subscribeTopic('/properties/pir');
 }
 
 process.on('SIGINT', () => {
