@@ -37,7 +37,6 @@ function createServer(port, secure) {
   }
 
   mqtt.connectMQTTBroker();
-  // mqtt.subscribeTopic('/properties/pir');
 
   // db.startDB();
   initPlugins();
@@ -61,7 +60,8 @@ function initPlugins() {
 
   const pirPlugin = require('./plugins/pirPlugin');
 
-  pirPlugin.pluginInit();
+  // pirPlugin.pluginInit();
+  mqtt.subscribeTopic('/properties/pir');
 }
 
 process.on('SIGINT', () => {
