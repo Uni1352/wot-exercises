@@ -9,7 +9,7 @@ module.exports = {
 
 function pluginStart() {
   model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState.data, {
-    set: (arr, prop, val) => {
+    set: (arr, index, val) => {
       if (!isNaN(parseInt(index))) {
         console.info(`[Proxy] plugin action detected: ledState`);
         arr[index] = val;
