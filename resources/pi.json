@@ -29,10 +29,7 @@
             "presence": {
               "name": "Presence",
               "description": "Current sensor value (true=motion detected)",
-              "type": "boolean",
-              "customFields": {
-                "gpio": 17
-              }
+              "type": "boolean"
             }
           },
           "tags": ["sensor", "public"]
@@ -44,18 +41,12 @@
             "1": {
               "name": "Power LED",
               "description": "LED of access control power",
-              "type": "boolean",
-              "customFields": {
-                "gpio": 4
-              }
+              "type": "boolean"
             },
             "2": {
               "name": "Door LED",
               "description": "LED of door",
-              "type": "boolean",
-              "customFields": {
-                "gpio": 9
-              }
+              "type": "boolean"
             }
           },
           "tags": ["actuator", "public"]
@@ -90,6 +81,10 @@
           }
         }
       }
+    },
+    "things": {
+      "link": "/things",
+      "title": "Things which connect to this Web Thing"
     },
     "type": {
       "link": "http://model.webofthings.io/",

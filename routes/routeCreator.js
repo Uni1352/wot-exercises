@@ -2,6 +2,19 @@ const uuid = require('uuid');
 const router = require('express').Router();
 const utils = require('../utils/utils');
 
+module.exports = (model) => {
+  createDefaultData(model.links.properties.resources);
+  createDefaultData(model.links.actions.resources);
+
+  createRootRoute(model);
+  createModelRoute(model);
+  createPropertiesRoute(model);
+  createActionsRoute(model);
+  createThingsRoute(model);
+
+  return router;
+};
+
 function createRootRoute(model) {
   // GET {wt}
   router.route('/').get((req, res, next) => {
@@ -133,7 +146,7 @@ function createActionsRoute(model) {
       action.id = uuid.v1();
       action.values = req.body;
       action.status = 'pending';
-      action.timestamp = utils.isoTimestamp();
+      action.timestamp = utils.getISOTimestamp();
 
       utils.cappedPush(actions.resources[req.params.actionType].data, action);
       res.location(`${req.originalUrl}/${action.id}`);
@@ -151,6 +164,64 @@ function createActionsRoute(model) {
   });
 }
 
+function createThingsRoute(model) {
+  let things = model.links.things;
+  let type;
+
+  router.route(things.link)
+    .get((req, res, next) => {
+      req.model = model;
+      req.type = 'things';
+      req.entityId = 'things';
+
+      if (things.resources) {
+        req.result = utils.modelToResource(things.resources, false);
+      } else req.result = [];
+
+      if (model['@context']) type = model['@context'];
+      else type = 'http://model.webofthings.io/#things-resource';
+
+      res.links({
+        type: type
+      });
+
+      next();
+    })
+    .post((req, res, next) => {
+      let thing = req.body;
+
+      if (!thing.id) thing.id = uuid.v1();
+
+      utils.addThingToModel(thing);
+      res.location(`${req.originalUrl}/${thing.id}`);
+
+      next();
+    });
+
+  router.route(`${things.link}/:id`)
+    .get((req, res, next) => {
+      let fields = ['id', 'name', 'description', 'rootUrl', 'tags'];
+      let thingModel = things.resources[req.params.id];
+      let type;
+
+      thingModel.id = req.params.id;
+
+      req.model = model;
+      req.type = 'thing';
+      req.entityId = req.params.id;
+      req.result = utils.extractFields(fields, thingModel);
+
+      if (model['@context']) type = model['@context'];
+      else type = 'http://model.webofthings.io/#things-resource';
+
+      res.links({
+        type: type
+      });
+
+      next();
+    });
+}
+
 function createDefaultData(resources) {
   Object.keys(resources).forEach(function (resKey) {
     var resource = resources[resKey];
@@ -161,15 +232,3 @@ function createDefaultData(resources) {
 function reverseResults(array) {
   return array.slice(0).reverse();
 }
-
-module.exports = (model) => {
-  createDefaultData(model.links.properties.resources);
-  createDefaultData(model.links.actions.resources);
-
-  createRootRoute(model);
-  createModelRoute(model);
-  createPropertiesRoute(model);
-  createActionsRoute(model);
-
-  return router;
-};
