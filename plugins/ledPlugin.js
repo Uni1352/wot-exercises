@@ -8,12 +8,7 @@ module.exports = {
 };
 
 function pluginStart() {
-  createProxy(model.links.actions.resources.ledState.data);
-  console.info(`[Proxy] ledState proxy created!`);
-}
-
-function createProxy(target) {
-  target = new Proxy(target, {
+  model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState.data, {
     set: (arr, prop, val) => {
       if (!isNaN(parseInt(index))) {
         console.info(`[Proxy] plugin action detected: ledState`);
@@ -23,6 +18,7 @@ function createProxy(target) {
       return true;
     }
   })
+  console.info(`[Proxy] ledState proxy created!`);
 }
 
 function createValue(val) {
