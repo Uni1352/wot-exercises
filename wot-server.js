@@ -37,9 +37,10 @@ function createServer(port, secure) {
   }
 
   mqtt.connectMQTTBroker();
+  mqtt.subscribeTopic('/properties/pir');
 
   // db.startDB();
-  initPlugins();
+  // initPlugins();
 }
 
 function initPlugins() {
@@ -57,11 +58,6 @@ function initPlugins() {
   //   'frequency': 3000
   // });
   // ledsPlugin.startPlugin();
-
-  const pirPlugin = require('./plugins/pirPlugin');
-
-  pirPlugin.startPlugin();
-  // mqtt.subscribeTopic('/properties/pir');
 }
 
 process.on('SIGINT', () => {

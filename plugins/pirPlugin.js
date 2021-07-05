@@ -6,13 +6,8 @@ let model = require('../resources/model');
 let pir = model.links.properties.resources.pir;
 
 module.exports = {
-  startPlugin,
   addValue
 };
-
-function startPlugin() {
-  mqttClient.subscribeTopic('/properties/pir');
-}
 
 function createValue(val) {
   return {
