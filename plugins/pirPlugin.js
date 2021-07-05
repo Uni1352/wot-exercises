@@ -1,4 +1,4 @@
-const mqtt = require('../mqtt/mqtt');
+const mqttClient = require('../mqtt/mqtt');
 const utils = require('../utils/utils');
 
 let model = require('../resources/model');
@@ -11,7 +11,7 @@ module.exports = {
 };
 
 function startPlugin() {
-  mqtt.subscribeTopic('/properties/pir');
+  mqttClient.subscribeTopic('/properties/pir');
 }
 
 function createValue(val) {
