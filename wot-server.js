@@ -1,11 +1,13 @@
 const fs = require('fs');
 const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
+const mqtt = require('./mqtt/mqtt');
 const db = require('./db/db');
 
 let model = require('./resources/model');
 let pirPlugin, ledsPlugin;
 
+module.exports = createServer;
 
 function createServer(port, secure) {
   let server;
@@ -35,6 +37,9 @@ function createServer(port, secure) {
     });
   }
 
+  mqtt.connectMQTTBroker();
+  mqtt.subscribeTopic('/properties/pir');
+
   // db.startDB();
   // initPlugins();
 }
@@ -60,10 +65,9 @@ process.on('SIGINT', () => {
   // pirPlugin.stopPlugin();
   // ledsPlugin.stopPlugin();
   // db.closeDB();
+  mqtt.disconnectMQTTBroker();
   console.info('[Server] WebSocket server closed.');
   console.info('[Server] HTTP server closed.');
   console.info('[Info] BYE!');
   process.exit();
 });
-
-module.exports = createServer;
