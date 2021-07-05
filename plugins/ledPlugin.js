@@ -3,7 +3,9 @@ const mqtt = require('../mqtt/mqtt');
 let model = require('../resources/model');
 let leds = model.links.properties.resources.leds;
 
-module.exports = pluginStart();
+module.exports = {
+  pluginStart
+};
 
 function pluginStart() {
   createProxy(model.links.actions.resources.ledState.data);
