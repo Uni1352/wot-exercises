@@ -12,8 +12,8 @@ function pluginStart() {
     set: (arr, index, val) => {
       if (!isNaN(parseInt(index))) {
         console.info(`[Proxy] plugin action detected: ledState`);
-        arr[index] = val;
         switchOnOff(val);
+        arr[index] = val;
       }
       return true;
     }
@@ -34,7 +34,7 @@ function addValue(val) {
 }
 
 function switchOnOff(obj) {
-  const target = this.model.data[this.model.data.length - 1];
+  const target = leds.data[leds.data.length - 1];
   const latestVal = [target['1'], target['2']];
 
   mqtt.publishTopic('/actions/ledState', JSON.stringify(obj.values));
