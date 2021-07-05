@@ -19,6 +19,8 @@ function pluginStart() {
     }
   })
   console.info(`[Proxy] ledState proxy created!`);
+
+  addValue([false, false]);
 }
 
 function createValue(val) {
