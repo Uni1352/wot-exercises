@@ -38,7 +38,6 @@ function createServer(port, secure) {
   }
 
   mqtt.connectMQTTBroker();
-  mqtt.subscribeTopic('/properties/pir');
 
   // db.startDB();
   initPlugins();
