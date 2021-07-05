@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Thing</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+  </script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap");
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      font-family: "Comfortaa", "Roboto", serif;
+    }
+
+    body {
+      padding: 20px;
+    }
+
+    section {
+      padding: 0 5vw;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <h1><a href="/{{req.qp}}">{{req.rooturl}}</a>/<a href="/things{{../req.qp}}">things</a>/{{req.entityId}}
+    </h1>
+    <p>Thing Details</p>
+  </section>
+  <section>
+    {{#if req.thingModel.name}}
+    <h2>{{req.thingModel.name}}</h2>
+    {{else}}
+    <h2>{{req.entityId}}</h2>
+    {{/if}}
+
+    <p>ID: <span property="id">{{req.result.id}}</span></p>
+    <p>Name: <span property="name">{{req.result.name}}</span></p>
+    <p>Description: <span property="description">{{req.result.description}}</span></p>
+    <p>Root URL: <a property="url" href="{{this.rootUrl}}">{{req.result.rootUrl}}</a></p>
+  </section>
+</body>
+
+</html>
