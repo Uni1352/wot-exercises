@@ -2,7 +2,6 @@ const fs = require('fs');
 const httpServer = require('./servers/http');
 const wsServer = require('./servers/websocket');
 const mqtt = require('./mqtt/mqtt');
-const db = require('./db/db');
 
 let model = require('./resources/model');
 
@@ -39,7 +38,6 @@ function createServer(port, secure) {
   mqtt.connectMQTTBroker();
   mqtt.subscribeTopic('/properties/pir');
 
-  // db.startDB();
   initPlugins();
 }
 
@@ -52,7 +50,7 @@ function initPlugins() {
 }
 
 process.on('SIGINT', () => {
-  // db.closeDB();
+  db.closeDB();
   mqtt.disconnectMQTTBroker();
   console.info('[Server] WebSocket server closed.');
   console.info('[Server] HTTP server closed.');
