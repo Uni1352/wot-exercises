@@ -1,4 +1,4 @@
-const { ApolloClient, InMemoryCache, HttpLink, gql } = require('@apollo/client/core');
+const { ApolloClient, InMemoryCache, HttpLink } = require('@apollo/client/core');
 const fetch = require('cross-fetch');
 
 const uri = 'http://192.168.43.129:4000/graphql';

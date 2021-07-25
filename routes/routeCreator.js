@@ -1,5 +1,7 @@
 const uuid = require('uuid');
 const router = require('express').Router();
+const { gql } = require('@apollo/client');
+const client = require('../db/client/client');
 const utils = require('../utils/utils');
 
 module.exports = (model) => {
@@ -61,7 +63,7 @@ function createModelRoute(model) {
   });
 }
 
-function createPropertiesRoute(model) {
+async function createPropertiesRoute(model) {
   let properties = model.links.properties;
   let type;
 
@@ -88,9 +90,39 @@ function createPropertiesRoute(model) {
     req.propertyModel = properties.resources[req.params.id];
     req.type = 'property';
     req.entityId = req.params.id;
-    req.result = reverseResults(properties.resources[req.params.id].data);
 
-    if (properties.resources[req.params.id]['@context']) type = properties.resources[req.params.id]['@context'];
+    switch (req.params.id) {
+      case 'pir':
+        await client
+          .query(gql(`query Query {
+              pirValues {
+                presence
+                createAt
+              }
+            }`))
+          .then(result => {
+            req.result = reverseResults(result.data.pirValues);
+          });
+        break;
+      case 'leds':
+        await client
+          .query(gql(`query Query {
+              ledValues {
+                one
+                two
+                createAt
+              }
+            }`))
+          .then(result => {
+            req.result = reverseResults(result.data.ledValues);
+          });
+        break;
+    }
+
+    // req.result = reverseResults(properties.resources[req.params.id].data);
+
+    if (properties.resources[req.params.id]['@context']) type = properties.resources[req
+      .params.id]['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';
 
     res.links({
@@ -101,7 +133,7 @@ function createPropertiesRoute(model) {
   });
 }
 
-function createActionsRoute(model) {
+async function createActionsRoute(model) {
   let actions = model.links.actions;
   let type;
 
@@ -129,9 +161,25 @@ function createActionsRoute(model) {
       req.actionModel = actions.resources[req.params.actionType];
       req.type = 'action';
       req.entityId = req.params.actionType;
-      req.result = reverseResults(actions.resources[req.params.actionType].data);
 
-      if (actions.resources[req.params.actionType]['@context']) type = actions.resources[req.params.actionType]['@context'];
+      await client
+        .query(gql(`query Query {
+            ledStateActions {
+              id
+              status
+              createAt
+              ledId
+              state
+            }
+          }`))
+        .then(result => {
+          resource.values = result.data.ledStateActions;
+        });
+
+      // req.result = reverseResults(actions.resources[req.params.actionType].data);
+
+      if (actions.resources[req.params.actionType]['@context']) type = actions.resources[req
+        .params.actionType]['@context'];
       else type = 'http://model.webofthings.io/#actions-resource';
 
       res.links({
@@ -156,13 +204,28 @@ function createActionsRoute(model) {
 
   // GET /actions/{id}/{actionId}
   router.route(`${actions.link}/:actionType/:actionId`).get((req, res, next) => {
-    req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
-      'id': req.params.actionId
-    });
+    // req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
+    //   'id': req.params.actionId
+    // });
+
+    await client
+      .query(gql(`query Query {
+          targetLedStateAction(id: ${req.params.actionId}) {
+            id
+            status
+            createAt
+            ledId
+            state
+          }
+        }`))
+      .then(result => {
+        req.result = result.data.targetLedStateAction;
+      });
 
     next();
   });
 }
+s
 
 function createThingsRoute(model) {
   let things = model.links.things;
@@ -223,12 +286,12 @@ function createThingsRoute(model) {
 }
 
 function createDefaultData(resources) {
-  Object.keys(resources).forEach(function (resKey) {
+  Object.keys(resources).forEach(function(resKey) {
     var resource = resources[resKey];
     resource.data = [];
   });
 }
 
-function reverseResults(array) {
-  return array.slice(0).reverse();
-}
+// function reverseResults(array) {
+//   return array.slice(0).reverse();
+// }

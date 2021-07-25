@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const { gql } = require('@apollo/client');
+const client = require('../db/client/client');
 
 let model = require('../resources/model');
 
@@ -38,7 +40,7 @@ function extractFields(fields, object, target) {
   return target;
 }
 
-function modelToResource(subModel, withValue) {
+async function modelToResource(subModel, withValue) {
   let resources = [];
 
   Object.keys(subModel).forEach((key) => {
@@ -49,7 +51,52 @@ function modelToResource(subModel, withValue) {
     resource.name = val['name'];
 
     if (val['description']) resource.description = val['description'];
-    if (withValue) resource.values = val.data[val.data.length - 1];
+    if (withValue) {
+      // resource.values = val.data[val.data.length - 1];
+
+      switch (key) {
+        case 'pir':
+          await client
+            .query(gql(`query Query {
+                pirValues(limit:1){
+                  presence
+                  createAt
+                }
+              }`))
+            .then(result => {
+              resource.values = result.data.pirValues;
+            });
+          break;
+        case 'leds':
+          await client
+            .query(gql(`query Query {
+                ledValues(limit:1){
+                  one
+                  two
+                  createAt
+                }
+              }`))
+            .then(result => {
+              resource.values = result.data.ledValues;
+            });
+          break;
+        case 'ledState':
+          await client
+            .query(gql(`query Query {
+                ledStateActions(limit:1) {
+                  id
+                  status
+                  createAt
+                  ledId
+                  state
+                }
+              }`))
+            .then(result => {
+              resource.values = result.data.ledStateActions;
+            });
+          break;
+      }
+    }
 
     resources.push(resource);
   });

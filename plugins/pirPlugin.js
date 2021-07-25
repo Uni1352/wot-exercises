@@ -1,4 +1,6 @@
+const { gql } = require('@apollo/client/core');
 const utils = require('../utils/utils');
+const client = require('../db/client/client');
 
 let model = require('../resources/model');
 let pir = model.links.properties.resources.pir;
@@ -21,4 +23,8 @@ function createValue(val) {
 
 function addValue(val) {
   utils.cappedPush(pir.data, createValue(val));
+  client.mutate(gql(`
+    addPirData(presence:${val}){
+      createAt
+    }`));
 }

@@ -1,5 +1,7 @@
 const mqtt = require('../mqtt/mqtt');
+const { gql } = require('@apollo/client/core');
 const utils = require('../utils/utils');
+const client = require('../db/client/client');
 
 let model = require('../resources/model');
 let leds = model.links.properties.resources.leds;
@@ -9,16 +11,26 @@ module.exports = {
 };
 
 function startPlugin() {
-  model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState.data, {
-    set: (arr, index, val) => {
-      if (!isNaN(parseInt(index))) {
-        console.info(`[Proxy] plugin action detected: ledState`);
-        switchOnOff(val);
-        arr[index] = val;
+  model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState
+    .data, {
+      set: (arr, index, val) => {
+        if (!isNaN(parseInt(index))) {
+          console.info(`[Proxy] plugin action detected: ledState`);
+          switchOnOff(val);
+          arr[index] = val;
+          client.mutate(gql(
+            `addLedStateAction(
+              status: ${val.status}
+              ledId: ${val.values.ledId}
+              state:${val.values.state}){
+              id
+              createAt
+            }`
+          ));
+        }
+        return true;
       }
-      return true;
-    }
-  })
+    })
   console.info(`[Proxy] ledState proxy created!`);
 
   addValue([false, false]);
@@ -34,6 +46,10 @@ function createValue(val) {
 
 function addValue(val) {
   utils.cappedPush(leds.data, createValue(val));
+  client.mutate(gql(`
+    addLedData(one:${val[0]},two:${val[1]}){
+      createAt
+    }`));
 }
 
 function switchOnOff(obj) {
