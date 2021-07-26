@@ -18,15 +18,6 @@ function startPlugin() {
           console.info(`[Proxy] plugin action detected: ledState`);
           switchOnOff(val);
           arr[index] = val;
-          client.mutate(gql(
-            `addLedStateAction(
-              status: ${val.status}
-              ledId: ${val.values.ledId}
-              state:${val.values.state}){
-              id
-              createAt
-            }`
-          ));
         }
         return true;
       }
@@ -40,7 +31,7 @@ function createValue(val) {
   return {
     "1": val[0],
     "2": val[1],
-    "timestamp": new Date().toISOString()
+    "createAt": new Date().toISOString()
   };
 }
 
@@ -52,7 +43,7 @@ function addValue(val) {
     }`));
 }
 
-function switchOnOff(obj) {
+async function switchOnOff(obj) {
   const target = leds.data[leds.data.length - 1];
   const latestVal = [target['1'], target['2']];
 
@@ -60,6 +51,12 @@ function switchOnOff(obj) {
 
   latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
   addValue(latestVal);
+
+  await client.mutate(gql(`mutation Mutation
+    updateLedStateAction(id:${obj.id},status:${obj.status}){
+      id
+    }
+  `));
 
   obj.status = 'completed';
   console.info(`[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);

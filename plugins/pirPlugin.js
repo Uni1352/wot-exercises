@@ -17,13 +17,13 @@ function startPlugin() {
 function createValue(val) {
   return {
     'presence': val,
-    'timestamp': new Date().toISOString()
+    'createAt': new Date().toISOString()
   };
 }
 
-function addValue(val) {
+async function addValue(val) {
   utils.cappedPush(pir.data, createValue(val));
-  client.mutate(gql(`
+  await client.mutate(gql(`
     addPirData(presence:${val}){
       createAt
     }`));
