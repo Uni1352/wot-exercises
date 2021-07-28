@@ -171,7 +171,7 @@ function createActionsRoute(model) {
         .query({
           query: gql(`query Query {
             ledStateActions {
-              _id
+              id
               status
               createAt
               ledId
@@ -209,7 +209,7 @@ function createActionsRoute(model) {
               status: "pending",
               ledId:${req.body.ledId},
               state:${req.body.state}){
-                _id
+                id
             }
           }`)
         })
@@ -232,8 +232,8 @@ function createActionsRoute(model) {
     await client
       .query({
         query: gql(`query Query {
-          targetLedStateAction(_id: ${req.params.actionId}) {
-            _id
+          targetLedStateAction(id: ${req.params.actionId}) {
+            id
             status
             createAt
             ledId
