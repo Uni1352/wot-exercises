@@ -232,7 +232,7 @@ function createActionsRoute(model) {
     await client
       .query({
         query: gql(`query Query {
-          targetLedStateAction(id: ${req.params.actionId}) {
+          targetLedStateAction(_id: ${req.params.actionId}) {
             _id
             status
             createAt
