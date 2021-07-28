@@ -229,6 +229,8 @@ function createActionsRoute(model) {
     //   'id': req.params.actionId
     // });
 
+    console.info(typeof req.params.actionId);
+
     await client
       .query({
         query: gql(`query Query {
