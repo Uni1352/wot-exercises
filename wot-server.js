@@ -50,7 +50,6 @@ function initPlugins() {
 }
 
 process.on('SIGINT', () => {
-  db.closeDB();
   mqtt.disconnectMQTTBroker();
   console.info('[Server] WebSocket server closed.');
   console.info('[Server] HTTP server closed.');

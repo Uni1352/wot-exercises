@@ -196,14 +196,16 @@ function createActionsRoute(model) {
       action.timestamp = utils.getISOTimestamp();
 
       await client
-        .mutate(gql(`mutation Mutation{
+        .mutate({
+          mutation: gql(`mutation Mutation{
             addLedStateAction(
               status: "pending"
               ledId:${req.body.ledId}
               state:${req.body.state}){
                 id
             }
-          }`))
+          }`)
+        })
         .then(result => {
           action.id = result.data.addLedStateAction.id;
         });
