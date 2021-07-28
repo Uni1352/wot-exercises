@@ -213,9 +213,11 @@ function createActionsRoute(model) {
             }
           }`)
         })
-        .then(result => {
-          action.id = result.data.addLedStateAction.id;
-        });
+      // .then(result => {
+      //   const data = JSON.stringify(result.data.addLedStateAction);
+
+      //   action.id = data.id;
+      // });
 
       utils.cappedPush(actions.resources[req.params.actionType].data, action);
       res.location(`${req.originalUrl}/${action.id}`);
@@ -228,8 +230,6 @@ function createActionsRoute(model) {
     // req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
     //   'id': req.params.actionId
     // });
-
-    console.info(typeof req.params.actionId);
 
     await client
       .query({
