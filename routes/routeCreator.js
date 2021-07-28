@@ -168,7 +168,8 @@ function createActionsRoute(model) {
       req.entityId = req.params.actionType;
 
       await client
-        .query(gql(`query Query {
+        .query({
+          query: gql(`query Query {
             ledStateActions {
               _id
               status
@@ -176,7 +177,8 @@ function createActionsRoute(model) {
               ledId
               state
             }
-          }`))
+          }`)
+        })
         .then(result => {
           resource.values = result.data.ledStateActions;
         });
@@ -228,7 +230,8 @@ function createActionsRoute(model) {
     // });
 
     await client
-      .query(gql(`query Query {
+      .query({
+        query: gql(`query Query {
           targetLedStateAction(id: ${req.params.actionId}) {
             _id
             status
@@ -236,7 +239,8 @@ function createActionsRoute(model) {
             ledId
             state
           }
-        }`))
+        }`)
+      })
       .then(result => {
         req.result = result.data.targetLedStateAction;
       });
