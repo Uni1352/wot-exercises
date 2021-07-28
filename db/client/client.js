@@ -9,4 +9,23 @@ const client = new ApolloClient({
   cache: cache
 });
 
+client.mutate({
+  mutation: gql(`mutation Mutation{
+    addPirData(presence:${val}){
+      createAt
+    }
+  }`)
+});
+
+await client
+  .query(gql(`query Query {
+              pirValues {
+                presence
+                createAt
+              }
+            }`))
+  .then(result => {
+    console.info(JSON.stringify(result));
+  });
+
 module.exports = client;
