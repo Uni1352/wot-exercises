@@ -35,30 +35,6 @@ function changeLedState(id, state) {
   });
 }
 
-function getLedState() {
-  $.ajax({
-    url: `http://192.168.43.129:8484/properties/leds`,
-    method: 'GET',
-    dataType: 'json',
-    processData: false,
-    success: (res) => {
-      if (res[0]['1']) {
-        changeLedState('1', true);
-        $('#power-switch').prop('checked', true);
-        $('.status__power').html('On');
-      } else {
-        changeLedState('1', false);
-        $('#power-switch').prop('checked', false);
-        $('.status__power').html('Off');
-      }
-
-      changeLedState('2', false);
-      $('.status-access').html('Off');
-    },
-    error: (err) => console.log(err)
-  });
-}
-
 function startSocket() {
   const ws = new WebSocket(`ws://192.168.43.129:8484/properties/pir`);
 
@@ -67,7 +43,6 @@ function startSocket() {
     let data = JSON.parse(msg.data);
 
     if (!$('#power-switch').prop('checked')) {
-      console.log('test')
       if (data.presence) openDoorAccess();
       else closeDoorAccess();
     } else {
@@ -77,30 +52,29 @@ function startSocket() {
   ws.onclose = () => console.log('Connection Closed!');
 }
 
+function switchInit() {
+  $('#power-switch').prop('checked', false);
+  $('.status__power').html('Off');
+}
+
 // initial
 $(document).ready(async () => {
   $('.msg-content').html();
 
-  // await getLedState();
-  if ($('#power-switch').prop('checked')) {
-    $('.status__power').html('On');
-  } else {
-    $('.status__power').html('Off');
-  }
-
+  switchInit();
   startSocket();
 });
 
 // toggle switch
-$(function () {
+$(function() {
   $('#power-switch').bootstrapToggle({
     on: 'On',
     off: 'Off'
   });
 });
 
-$(function () {
-  $('#power-switch').change(function () {
+$(function() {
+  $('#power-switch').change(function() {
     if ($(this).prop('checked')) {
       changeLedState('1', true);
       $('.status__power').html('On');

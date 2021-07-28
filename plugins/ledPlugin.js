@@ -46,8 +46,10 @@ function addValue(val) {
 async function switchOnOff(obj) {
   const target = leds.data[leds.data.length - 1];
   const latestVal = [target['1'], target['2']];
+  const publishData = {}
 
-  mqtt.publishTopic('/actions/ledState', JSON.stringify(obj.values));
+  publishData[obj.values.ledId] = obj.values.state;
+  mqtt.publishTopic('/actions/ledState', JSON.stringify(publishData));
 
   latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
   addValue(latestVal);
