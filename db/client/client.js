@@ -21,12 +21,14 @@ client.mutate({
 });
 
 client
-  .query(gql(`query Query {
-              pirValues {
-                presence
-                createAt
-              }
-            }`))
+  .query({
+    query: gql(`query Query {
+      pirValues {
+        presence
+        createAt
+      }
+    }`)
+  })
   .then(result => {
     console.info(JSON.stringify(result));
   });
