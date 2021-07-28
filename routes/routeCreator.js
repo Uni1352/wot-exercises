@@ -63,7 +63,7 @@ function createModelRoute(model) {
   });
 }
 
-async function createPropertiesRoute(model) {
+function createPropertiesRoute(model) {
   let properties = model.links.properties;
   let type;
 
@@ -85,7 +85,7 @@ async function createPropertiesRoute(model) {
   });
 
   // GET {WT}/properties/{id}
-  router.route(`${properties.link}/:id`).get((req, res, next) => {
+  router.route(`${properties.link}/:id`).get(async (req, res, next) => {
     req.model = model;
     req.propertyModel = properties.resources[req.params.id];
     req.type = 'property';
@@ -133,7 +133,7 @@ async function createPropertiesRoute(model) {
   });
 }
 
-async function createActionsRoute(model) {
+function createActionsRoute(model) {
   let actions = model.links.actions;
   let type;
 
@@ -156,7 +156,7 @@ async function createActionsRoute(model) {
 
   // GET & POST{WT}/actions/{id}
   router.route(`/actions/:actionType`)
-    .get((req, res, next) => {
+    .get(async (req, res, next) => {
       req.model = model;
       req.actionModel = actions.resources[req.params.actionType];
       req.type = 'action';
@@ -188,7 +188,7 @@ async function createActionsRoute(model) {
 
       next();
     })
-    .post((req, res, next) => {
+    .post(async (req, res, next) => {
       let action = {};
 
       action.values = req.body;
@@ -215,7 +215,7 @@ async function createActionsRoute(model) {
     });
 
   // GET /actions/{id}/{actionId}
-  router.route(`${actions.link}/:actionType/:actionId`).get((req, res, next) => {
+  router.route(`${actions.link}/:actionType/:actionId`).get(async (req, res, next) => {
     // req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
     //   'id': req.params.actionId
     // });
@@ -237,7 +237,6 @@ async function createActionsRoute(model) {
     next();
   });
 }
-s
 
 function createThingsRoute(model) {
   let things = model.links.things;
