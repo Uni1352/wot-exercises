@@ -17,7 +17,7 @@ client.mutate({
   }`)
 });
 
-await client
+client
   .query(gql(`query Query {
               pirValues {
                 presence
