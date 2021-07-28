@@ -1,4 +1,5 @@
 const { ApolloClient, InMemoryCache, HttpLink } = require('@apollo/client/core');
+const { gql } = require('@apollo/client/core');
 const fetch = require('cross-fetch');
 
 const uri = 'http://192.168.43.61:4000';
