@@ -103,7 +103,8 @@ function createPropertiesRoute(model) {
             }`)
           })
           .then(result => {
-            req.result = reverseResults(result.data.pirValues);
+            // req.result = reverseResults(result.data.pirValues);
+            req.result = result.data.pirValues;
           });
         break;
       case 'leds':
@@ -118,7 +119,7 @@ function createPropertiesRoute(model) {
             }`)
           })
           .then(result => {
-            req.result = reverseResults(result.data.ledValues);
+            req.result = result.data.ledValues;
           });
         break;
     }
@@ -169,7 +170,7 @@ function createActionsRoute(model) {
       await client
         .query(gql(`query Query {
             ledStateActions {
-              id
+              _id
               status
               createAt
               ledId
