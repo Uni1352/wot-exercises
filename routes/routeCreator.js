@@ -198,6 +198,7 @@ function createActionsRoute(model) {
     .post((req, res, next) => {
       let action = {};
 
+      action.id = uuid.v1();
       action.values = req.body;
       action.status = 'pending';
       action.timestamp = utils.getISOTimestamp();
@@ -206,16 +207,17 @@ function createActionsRoute(model) {
         .mutate({
           mutation: gql(`mutation Mutation{
             addLedStateAction(
+              id: ${action.id}
               status: "pending"
               ledId:${req.body.ledId}
               state:${req.body.state}){
                 id
             }
           }`)
-        })
-        .then(result => {
-          action.id = result.data.addLedStateAction.id;
         });
+      // .then(result => {
+      //   action.id = result.data.addLedStateAction.id;
+      // });
 
       utils.cappedPush(actions.resources[req.params.actionType].data, action);
       res.location(`${req.originalUrl}/${action.id}`);
