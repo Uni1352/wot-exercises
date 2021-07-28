@@ -94,25 +94,29 @@ function createPropertiesRoute(model) {
     switch (req.params.id) {
       case 'pir':
         await client
-          .query(gql(`query Query {
+          .query({
+            query: gql(`query Query {
               pirValues {
                 presence
                 createAt
               }
-            }`))
+            }`)
+          })
           .then(result => {
             req.result = reverseResults(result.data.pirValues);
           });
         break;
       case 'leds':
         await client
-          .query(gql(`query Query {
+          .query({
+            query: gql(`query Query {
               ledValues {
                 one
                 two
                 createAt
               }
-            }`))
+            }`)
+          })
           .then(result => {
             req.result = reverseResults(result.data.ledValues);
           });
@@ -188,26 +192,26 @@ function createActionsRoute(model) {
 
       next();
     })
-    .post(async (req, res, next) => {
+    .post((req, res, next) => {
       let action = {};
 
       action.values = req.body;
       action.status = 'pending';
       action.timestamp = utils.getISOTimestamp();
 
-      await client
+      client
         .mutate({
           mutation: gql(`mutation Mutation{
             addLedStateAction(
               status: "pending"
               ledId:${req.body.ledId}
               state:${req.body.state}){
-                id
+                _id
             }
           }`)
         })
         .then(result => {
-          action.id = result.data.addLedStateAction.id;
+          action.id = result.data.addLedStateAction._id;
         });
 
       utils.cappedPush(actions.resources[req.params.actionType].data, action);
@@ -225,7 +229,7 @@ function createActionsRoute(model) {
     await client
       .query(gql(`query Query {
           targetLedStateAction(id: ${req.params.actionId}) {
-            id
+            _id
             status
             createAt
             ledId

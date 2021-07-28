@@ -21,13 +21,13 @@ function createValue(val) {
   };
 }
 
-async function addValue(val) {
+function addValue(val) {
   utils.cappedPush(pir.data, createValue(val));
-  await client.mutate({
-    mutation: gql(`mutation Mutation{
-      addPirData(presence:${val}){
-        createAt
-      }
-    }`)
-  });
+  // await client.mutate({
+  //   mutation: gql(`mutation Mutation{
+  //     addPirData(presence:${val}){
+  //       createAt
+  //     }
+  //   }`)
+  // });
 }

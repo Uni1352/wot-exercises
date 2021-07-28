@@ -1,5 +1,5 @@
 const { ApolloClient, InMemoryCache, HttpLink } = require('@apollo/client/core');
-const { gql } = require('@apollo/client/core');
+// const { gql } = require('@apollo/client/core');
 const fetch = require('cross-fetch');
 
 const uri = 'http://192.168.43.61:4000';
@@ -10,27 +10,27 @@ const client = new ApolloClient({
   cache: cache
 });
 
-const val = true;
+// const val = true;
 
-client.mutate({
-  mutation: gql(`mutation Mutation{
-    addPirData(presence:${val}){
-      createAt
-    }
-  }`)
-});
+// client.mutate({
+//   mutation: gql(`mutation Mutation{
+//     addPirData(presence:${val}){
+//       createAt
+//     }
+//   }`)
+// });
 
-client
-  .query({
-    query: gql(`query Query {
-      pirValues {
-        presence
-        createAt
-      }
-    }`)
-  })
-  .then(result => {
-    console.info(JSON.stringify(result));
-  });
+// client
+//   .query({
+//     query: gql(`query Query {
+//       pirValues {
+//         presence
+//         createAt
+//       }
+//     }`)
+//   })
+//   .then(result => {
+//     console.info(JSON.stringify(result));
+//   });
 
 module.exports = client;
