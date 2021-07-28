@@ -206,8 +206,8 @@ function createActionsRoute(model) {
         .mutate({
           mutation: gql(`mutation Mutation{
             addLedStateAction(
-              status: "pending"
-              ledId:${req.body.ledId}
+              status: "pending",
+              ledId:${req.body.ledId},
               state:${req.body.state}){
                 _id
             }
