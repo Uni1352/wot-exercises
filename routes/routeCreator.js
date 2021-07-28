@@ -180,7 +180,7 @@ function createActionsRoute(model) {
           }`)
         })
         .then(result => {
-          resource.values = result.data.ledStateActions;
+          req.result = result.data.ledStateActions;
         });
 
       // req.result = reverseResults(actions.resources[req.params.actionType].data);
