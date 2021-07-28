@@ -10,6 +10,8 @@ const client = new ApolloClient({
   cache: cache
 });
 
+const val = true;
+
 client.mutate({
   mutation: gql(`mutation Mutation{
     addPirData(presence:${val}){
