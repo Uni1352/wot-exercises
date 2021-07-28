@@ -214,7 +214,7 @@ function createActionsRoute(model) {
           }`)
         })
         .then(result => {
-          action.id = result.data.addLedStateAction._id;
+          action.id = result.data.addLedStateAction.id;
         });
 
       utils.cappedPush(actions.resources[req.params.actionType].data, action);
