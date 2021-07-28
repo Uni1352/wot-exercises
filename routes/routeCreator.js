@@ -195,14 +195,14 @@ function createActionsRoute(model) {
 
       next();
     })
-    .post((req, res, next) => {
+    .post(async (req, res, next) => {
       let action = {};
 
       action.values = req.body;
       action.status = 'pending';
       action.timestamp = utils.getISOTimestamp();
 
-      client
+      await client
         .mutate({
           mutation: gql(`mutation Mutation{
             addLedStateAction(
