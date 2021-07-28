@@ -23,8 +23,9 @@ function createValue(val) {
 
 async function addValue(val) {
   utils.cappedPush(pir.data, createValue(val));
-  await client.mutate(gql(`
+  await client.mutate(gql(`mutation Mutation{
     addPirData(presence:${val}){
       createAt
-    }`));
+    }
+  }`));
 }

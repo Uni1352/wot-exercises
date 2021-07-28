@@ -37,10 +37,11 @@ function createValue(val) {
 
 function addValue(val) {
   utils.cappedPush(leds.data, createValue(val));
-  client.mutate(gql(`
+  client.mutate(gql(`mutation Mutation{
     addLedData(one:${val[0]},two:${val[1]}){
       createAt
-    }`));
+    }
+  }`));
 }
 
 async function switchOnOff(obj) {
@@ -54,11 +55,11 @@ async function switchOnOff(obj) {
   latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
   addValue(latestVal);
 
-  await client.mutate(gql(`mutation Mutation
+  await client.mutate(gql(`mutation Mutation{
     updateLedStateAction(id:${obj.id},status:${obj.status}){
       id
     }
-  `));
+  }`));
 
   obj.status = 'completed';
   console.info(`[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
