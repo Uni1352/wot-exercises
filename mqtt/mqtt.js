@@ -27,7 +27,7 @@ function connectMQTTBroker() {
 
   client.on('message', (topic, message) => {
     data = JSON.parse(message.toString());
-    console.info(`[MQTT] Receive Topic ${topic} Message: ${data}`);
+    console.info(`[MQTT] Receive Topic ${topic} Message: ${JSON.stringify(data)}`);
 
     if (topic === '/properties/pir') {
       pirPlugin.addValue(data.presence);
