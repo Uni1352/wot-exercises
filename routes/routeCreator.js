@@ -91,40 +91,39 @@ function createPropertiesRoute(model) {
     req.type = 'property';
     req.entityId = req.params.id;
 
-    switch (req.params.id) {
-      case 'pir':
-        await client
-          .query({
-            query: gql(`query Query {
-              pirValues {
-                presence
-                createAt
-              }
-            }`)
-          })
-          .then(result => {
-            // req.result = reverseResults(result.data.pirValues);
-            req.result = result.data.pirValues;
-          });
-        break;
-      case 'leds':
-        await client
-          .query({
-            query: gql(`query Query {
-              ledValues {
-                one
-                two
-                createAt
-              }
-            }`)
-          })
-          .then(result => {
-            req.result = result.data.ledValues;
-          });
-        break;
-    }
+    // switch (req.params.id) {
+    //   case 'pir':
+    //     await client
+    //       .query({
+    //         query: gql(`query Query {
+    //           pirValues {
+    //             presence
+    //             createAt
+    //           }
+    //         }`)
+    //       })
+    //       .then(result => {
+    //         req.result = result.data.pirValues;
+    //       });
+    //     break;
+    //   case 'leds':
+    //     await client
+    //       .query({
+    //         query: gql(`query Query {
+    //           ledValues {
+    //             one
+    //             two
+    //             createAt
+    //           }
+    //         }`)
+    //       })
+    //       .then(result => {
+    //         req.result = result.data.ledValues;
+    //       });
+    //     break;
+    // }
 
-    // req.result = reverseResults(properties.resources[req.params.id].data);
+    req.result = reverseResults(properties.resources[req.params.id].data);
 
     if (properties.resources[req.params.id]['@context']) type = properties.resources[req
       .params.id]['@context'];
@@ -167,23 +166,23 @@ function createActionsRoute(model) {
       req.type = 'action';
       req.entityId = req.params.actionType;
 
-      await client
-        .query({
-          query: gql(`query Query {
-            ledStateActions {
-              id
-              status
-              createAt
-              ledId
-              state
-            }
-          }`)
-        })
-        .then(result => {
-          req.result = result.data.ledStateActions;
-        });
+      // await client
+      //   .query({
+      //     query: gql(`query Query {
+      //       ledStateActions {
+      //         id
+      //         status
+      //         createAt
+      //         ledId
+      //         state
+      //       }
+      //     }`)
+      //   })
+      //   .then(result => {
+      //     req.result = result.data.ledStateActions;
+      //   });
 
-      // req.result = reverseResults(actions.resources[req.params.actionType].data);
+      req.result = reverseResults(actions.resources[req.params.actionType].data);
 
       if (actions.resources[req.params.actionType]['@context']) type = actions.resources[req
         .params.actionType]['@context'];
@@ -198,26 +197,25 @@ function createActionsRoute(model) {
     .post((req, res, next) => {
       let action = {};
 
+      action.id = uuid.v1();
       action.values = req.body;
       action.status = 'pending';
       action.timestamp = utils.getISOTimestamp();
 
-      client
-        .mutate({
-          mutation: gql(`mutation Mutation{
-            addLedStateAction(
-              status: "pending"
-              ledId:${req.body.ledId}
-              state:${req.body.state}){
-                id
-            }
-          }`)
-        })
-      // .then(result => {
-      //   const data = JSON.stringify(result.data.addLedStateAction);
-
-      //   action.id = data.id;
-      // });
+      // client
+      //   .mutate({
+      //     mutation: gql(`mutation Mutation{
+      //       addLedStateAction(
+      //         status: "pending"
+      //         ledId:${req.body.ledId}
+      //         state:${req.body.state}){
+      //           id
+      //       }
+      //     }`)
+      //   })
+      //   .then(result => {
+      //     action.id = result.data.addLedStateAction.id;
+      //   });
 
       utils.cappedPush(actions.resources[req.params.actionType].data, action);
       res.location(`${req.originalUrl}/${action.id}`);
@@ -227,25 +225,25 @@ function createActionsRoute(model) {
 
   // GET /actions/{id}/{actionId}
   router.route(`${actions.link}/:actionType/:actionId`).get(async (req, res, next) => {
-    // req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
-    //   'id': req.params.actionId
-    // });
+    req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
+      'id': req.params.actionId
+    });
 
-    await client
-      .query({
-        query: gql(`query Query {
-          targetLedStateAction(id: ${req.params.actionId}) {
-            id
-            status
-            createAt
-            ledId
-            state
-          }
-        }`)
-      })
-      .then(result => {
-        req.result = result.data.targetLedStateAction;
-      });
+    // await client
+    //   .query({
+    //     query: gql(`query Query {
+    //       targetLedStateAction(id: ${req.params.actionId}) {
+    //         id
+    //         status
+    //         createAt
+    //         ledId
+    //         state
+    //       }
+    //     }`)
+    //   })
+    //   .then(result => {
+    //     req.result = result.data.targetLedStateAction;
+    //   });
 
     next();
   });
@@ -316,6 +314,6 @@ function createDefaultData(resources) {
   });
 }
 
-// function reverseResults(array) {
-//   return array.slice(0).reverse();
-// }
+function reverseResults(array) {
+  return array.slice(0).reverse();
+}
