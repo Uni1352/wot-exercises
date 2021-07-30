@@ -91,37 +91,43 @@ function createPropertiesRoute(model) {
     req.type = 'property';
     req.entityId = req.params.id;
 
-    // switch (req.params.id) {
-    //   case 'pir':
-    //     await client
-    //       .query({
-    //         query: gql(`query Query {
-    //           pirValues {
-    //             presence
-    //             createAt
-    //           }
-    //         }`)
-    //       })
-    //       .then(result => {
-    //         req.result = result.data.pirValues;
-    //       });
-    //     break;
-    //   case 'leds':
-    //     await client
-    //       .query({
-    //         query: gql(`query Query {
-    //           ledValues {
-    //             one
-    //             two
-    //             createAt
-    //           }
-    //         }`)
-    //       })
-    //       .then(result => {
-    //         req.result = result.data.ledValues;
-    //       });
-    //     break;
-    // }
+    switch (req.params.id) {
+      case 'pir':
+        await client
+          .query({
+            query: gql(`query Query {
+              pirValues {
+                presence
+                timestamp
+              }
+            }`)
+          })
+          .then(result => {
+              req.result = result.data.pirValues;
+              console.info('[MongoDB] Get Data Successfully!');
+            },
+            err => console.info(`[MongoDB] Error ocurred: ${err}`))
+          .finally(() => console.info('[MongoDB] Done'));
+        break;
+      case 'leds':
+        await client
+          .query({
+            query: gql(`query Query {
+              ledValues {
+                one
+                two
+                timestamp
+              }
+            }`)
+          })
+          .then(result => {
+              req.result = result.data.ledValues;
+              console.info('[MongoDB] Get Data Successfully!');
+            },
+            err => console.info(`[MongoDB] Error ocurred: ${err}`))
+          .finally(() => console.info('[MongoDB] Done'));
+        break;
+    }
 
     req.result = reverseResults(properties.resources[req.params.id].data);
 
@@ -166,21 +172,24 @@ function createActionsRoute(model) {
       req.type = 'action';
       req.entityId = req.params.actionType;
 
-      // await client
-      //   .query({
-      //     query: gql(`query Query {
-      //       ledStateActions {
-      //         id
-      //         status
-      //         createAt
-      //         ledId
-      //         state
-      //       }
-      //     }`)
-      //   })
-      //   .then(result => {
-      //     req.result = result.data.ledStateActions;
-      //   });
+      await client
+        .query({
+          query: gql(`query Query {
+            ledStateActions {
+              id
+              status
+              timestamp
+              ledId
+              state
+            }
+          }`)
+        })
+        .then(result => {
+            req.result = result.data.ledStateActions;
+            console.info('[MongoDB] Get Data Successfully!');
+          },
+          err => console.info(`[MongoDB] Error ocurred: ${err}`))
+        .finally(() => console.info('[MongoDB] Done'));
 
       req.result = reverseResults(actions.resources[req.params.actionType].data);
 
