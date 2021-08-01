@@ -112,9 +112,9 @@ async function modelToResource(subModel, withValue) {
           break;
       }
     }
-
-    resources.push(resource);
   });
+
+  resources.push(resource);
 
   console.info(resources);
 
