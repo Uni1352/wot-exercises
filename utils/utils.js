@@ -40,10 +40,10 @@ function extractFields(fields, object, target) {
   return target;
 }
 
-async function modelToResource(subModel, withValue) {
+function modelToResource(subModel, withValue) {
   let resources = [];
 
-  await Object.keys(subModel).forEach(async (key) => {
+  Object.keys(subModel).forEach(async (key) => {
     let val = subModel[key];
     let resource = {};
 
