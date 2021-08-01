@@ -50,6 +50,8 @@ async function modelToResource(subModel, withValue) {
     resource.id = key;
     resource.name = val['name'];
 
+    console.info(resource);
+
     if (val['description']) resource.description = val['description'];
     if (withValue) {
       switch (key) {
