@@ -236,21 +236,21 @@ function createActionsRoute(model) {
       'id': req.params.actionId
     });
 
-    await client
-      .query({
-        query: gql(`query Query {
-          targetLedStateAction(_id: ${req.params.actionId}) {
-            _id
-            status
-            createAt
-            ledId
-            state
-          }
-        }`)
-      })
-      .then(result => {
-        req.result = result.data.targetLedStateAction;
-      });
+    // await client
+    //   .query({
+    //     query: gql(`query Query {
+    //       targetLedStateAction(_id: ${req.params.actionId}) {
+    //         _id
+    //         status
+    //         createAt
+    //         ledId
+    //         state
+    //       }
+    //     }`)
+    //   })
+    //   .then(result => {
+    //     req.result = result.data.targetLedStateAction;
+    //   });
 
     next();
   });
