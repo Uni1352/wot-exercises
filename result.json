@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "__typename": "Pir",
+    "presence": true,
+    "timestamp": "2021-07-31T13:39:59.407Z"
+  },
+  {
+    "__typename": "Pir",
+    "presence": true,
+    "timestamp": "2021-07-31T12:43:58.597Z"
+  },
+  {
+    "__typename": "Pir",
+    "presence": true,
+    "timestamp": "2021-07-31T12:43:12.451Z"
+  },
+  {
+    "__typename": "Pir",
+    "presence": true,
+    "timestamp": "2021-07-31T12:37:23.103Z"
+  }
+]
