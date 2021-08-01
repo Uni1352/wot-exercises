@@ -69,10 +69,82 @@ function createPropertiesRoute(model) {
 
   // GET {WT}/properties
   router.route(properties.link).get(async (req, res, next) => {
+    let resources = [];
+    let subModel = properties.resources;
+
+    await Object.keys(subModel).forEach(async (key) => {
+      let val = subModel[key];
+      let resource = {};
+
+      resource.id = key;
+      resource.name = val['name'];
+
+      switch (key) {
+        case 'pir':
+          await client
+            .query({
+              query: gql(`query Query {
+                  pirValues(num:1){
+                    presence
+                    timestamp
+                  }
+                }`)
+            })
+            .then(result => {
+                resource.values = result.data.pirValues;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
+          break;
+        case 'leds':
+          await client
+            .query({
+              query: gql(`query Query {
+                  ledValues(num:1){
+                    one
+                    two
+                    timestamp
+                  }
+                }`)
+            })
+            .then(result => {
+                resource.values = result.data.ledValues;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
+          break;
+        case 'ledState':
+          await client
+            .query({
+              query: gql(`query Query {
+                  ledStateActions(num:1) {
+                    _id
+                    status
+                    timestamp
+                    ledId
+                    state
+                  }
+                }`)
+            })
+            .then(result => {
+                resource.values = result.data.ledStateActions;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
+          break;
+      }
+
+      resources.push(resource);
+    });
+
     req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
-    req.result = await modelToResource(properties.resources, true);
+    // req.result = await modelToResource(properties.resources, true);
+    req.result = resources;
 
     if (properties['@context']) type = properties['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';
@@ -128,8 +200,6 @@ function createPropertiesRoute(model) {
           .finally(() => console.info('[MongoDB] Done'));
         break;
     }
-
-    // req.result = reverseResults(properties.resources[req.params.id].data);
 
     if (properties.resources[req.params.id]['@context']) type = properties.resources[req
       .params.id]['@context'];
@@ -325,83 +395,4 @@ function createDefaultData(resources) {
 
 function reverseResults(array) {
   return array.slice(0).reverse();
-}
-
-function modelToResource(subModel, withValue) {
-  let resources = [];
-
-  Object.keys(subModel).forEach(async (key) => {
-    let val = subModel[key];
-    let resource = {};
-
-    resource.id = key;
-    resource.name = val['name'];
-
-    if (val['description']) resource.description = val['description'];
-    if (withValue) {
-      switch (key) {
-        case 'pir':
-          await client
-            .query({
-              query: gql(`query Query {
-                pirValues(num:1){
-                  presence
-                  timestamp
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.pirValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-        case 'leds':
-          await client
-            .query({
-              query: gql(`query Query {
-                ledValues(num:1){
-                  one
-                  two
-                  timestamp
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.ledValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-        case 'ledState':
-          await client
-            .query({
-              query: gql(`query Query {
-                ledStateActions(num:1) {
-                  _id
-                  status
-                  timestamp
-                  ledId
-                  state
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.ledStateActions;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-      }
-    }
-
-    resources.push(resource);
-  });
-
-  console.info(resources);
-
-  return resources;
 }
