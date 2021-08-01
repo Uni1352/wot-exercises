@@ -58,33 +58,39 @@ function modelToResource(subModel, withValue) {
         case 'pir':
           await client
             .query(gql(`query Query {
-                pirValues(limit:1){
+                pirValues(num:1){
                   presence
                   createAt
                 }
               }`))
             .then(result => {
-              resource.values = result.data.pirValues;
-            });
+                resource.values = result.data.pirValues;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
           break;
         case 'leds':
           await client
             .query(gql(`query Query {
-                ledValues(limit:1){
+                ledValues(num:1){
                   one
                   two
                   createAt
                 }
               }`))
             .then(result => {
-              resource.values = result.data.ledValues;
-            });
+                resource.values = result.data.ledValues;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
           break;
         case 'ledState':
           await client
             .query(gql(`query Query {
-                ledStateActions(limit:1) {
-                  id
+                ledStateActions(num:1) {
+                  _id
                   status
                   createAt
                   ledId
@@ -92,8 +98,11 @@ function modelToResource(subModel, withValue) {
                 }
               }`))
             .then(result => {
-              resource.values = result.data.ledStateActions;
-            });
+                resource.values = result.data.ledStateActions;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
           break;
       }
     }
