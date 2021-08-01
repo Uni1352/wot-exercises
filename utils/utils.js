@@ -42,10 +42,11 @@ function extractFields(fields, object, target) {
 
 async function modelToResource(subModel, withValue) {
   let resources = [];
+  let resource = {};
+
 
   await Object.keys(subModel).forEach(async (key) => {
     let val = subModel[key];
-    let resource = {};
 
     resource.id = key;
     resource.name = val['name'];
@@ -113,7 +114,6 @@ async function modelToResource(subModel, withValue) {
       }
     }
   });
-
   resources.push(resource);
 
   console.info(resources);
