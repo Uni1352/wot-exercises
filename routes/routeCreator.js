@@ -68,12 +68,12 @@ function createPropertiesRoute(model) {
   let type;
 
   // GET {WT}/properties
-  router.route(properties.link).get((req, res, next) => {
+  router.route(properties.link).get(async (req, res, next) => {
     let resources = utils.modelToResource(properties.resources, false);
 
     console.info(resources);
 
-    resources.forEach(async (resource) => {
+    await resources.forEach(async (resource) => {
       switch (resource.id) {
         case 'pir':
           await client
