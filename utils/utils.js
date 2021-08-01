@@ -52,8 +52,6 @@ function modelToResource(subModel, withValue) {
 
     if (val['description']) resource.description = val['description'];
     if (withValue) {
-      // resource.values = val.data[val.data.length - 1];
-
       switch (key) {
         case 'pir':
           await client
@@ -113,10 +111,10 @@ function modelToResource(subModel, withValue) {
       }
     }
 
-    console.info(resource);
-
     resources.push(resource);
   });
+
+  console.info(resources);
 
   return resources;
 }

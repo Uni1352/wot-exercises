@@ -68,11 +68,11 @@ function createPropertiesRoute(model) {
   let type;
 
   // GET {WT}/properties
-  router.route(properties.link).get((req, res, next) => {
+  router.route(properties.link).get(async (req, res, next) => {
     req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
-    req.result = utils.modelToResource(properties.resources, true);
+    req.result = await utils.modelToResource(properties.resources, true);
 
     if (properties['@context']) type = properties['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';
