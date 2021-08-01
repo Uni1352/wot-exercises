@@ -57,12 +57,14 @@ function modelToResource(subModel, withValue) {
       switch (key) {
         case 'pir':
           await client
-            .query(gql(`query Query {
+            .query({
+              query: gql(`query Query {
                 pirValues(num:1){
                   presence
                   createAt
                 }
-              }`))
+              }`)
+            })
             .then(result => {
                 resource.values = result.data.pirValues;
                 console.info('[MongoDB] Get Data Successfully!');
@@ -72,13 +74,15 @@ function modelToResource(subModel, withValue) {
           break;
         case 'leds':
           await client
-            .query(gql(`query Query {
+            .query({
+              query: gql(`query Query {
                 ledValues(num:1){
                   one
                   two
                   createAt
                 }
-              }`))
+              }`)
+            })
             .then(result => {
                 resource.values = result.data.ledValues;
                 console.info('[MongoDB] Get Data Successfully!');
@@ -88,7 +92,8 @@ function modelToResource(subModel, withValue) {
           break;
         case 'ledState':
           await client
-            .query(gql(`query Query {
+            .query({
+              query: gql(`query Query {
                 ledStateActions(num:1) {
                   _id
                   status
@@ -96,7 +101,8 @@ function modelToResource(subModel, withValue) {
                   ledId
                   state
                 }
-              }`))
+              }`)
+            })
             .then(result => {
                 resource.values = result.data.ledStateActions;
                 console.info('[MongoDB] Get Data Successfully!');
