@@ -69,54 +69,10 @@ function createPropertiesRoute(model) {
 
   // GET {WT}/properties
   router.route(properties.link).get(async (req, res, next) => {
-    let resources = utils.modelToResource(properties.resources, false);
-
-    console.info(resources);
-
-    await resources.forEach(async (resource) => {
-      switch (resource.id) {
-        case 'pir':
-          await client
-            .query({
-              query: gql(`query Query {
-                pirValues(num:1){
-                  presence
-                  timestamp
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.pirValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-        case 'leds':
-          await client
-            .query({
-              query: gql(`query Query {
-                ledValues(num:1){
-                  one
-                  two
-                  timestamp
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.ledValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-      }
-    });
-
     req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
-    req.result = resources;
+    req.result = utils.modelToResource(properties.resources, true);
 
     if (properties['@context']) type = properties['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';

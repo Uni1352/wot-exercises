@@ -1,8 +1,1 @@
-[
-  {
-    "id": "pir",
-    "name": "Passive Infrared",
-    "description": "A passive infrared sensor."
-  },
-  { "id": "leds", "name": "LEDs", "description": "The LEDs of this device." }
-]
+[{"id":"pir","name":"Passive Infrared","description":"A passive infrared sensor."},{"id":"leds","name":"LEDs","description":"The LEDs of this device."}]

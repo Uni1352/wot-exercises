@@ -52,63 +52,65 @@ function modelToResource(subModel, withValue) {
 
     if (val['description']) resource.description = val['description'];
     if (withValue) {
-      switch (key) {
-        case 'pir':
-          await client
-            .query({
-              query: gql(`query Query {
-                pirValues(num:1){
-                  presence
-                  timestamp
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.pirValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-        case 'leds':
-          await client
-            .query({
-              query: gql(`query Query {
-                ledValues(num:1){
-                  one
-                  two
-                  timestamp
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.ledValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-        case 'ledState':
-          await client
-            .query({
-              query: gql(`query Query {
-                ledStateActions(num:1) {
-                  _id
-                  status
-                  timestamp
-                  ledId
-                  state
-                }
-              }`)
-            })
-            .then(result => {
-                resource.values = result.data.ledStateActions;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-      }
+      resource.values = val.data[val.data.length - 1];
+
+      // switch (key) {
+      //   case 'pir':
+      //     await client
+      //       .query({
+      //         query: gql(`query Query {
+      //           pirValues(num:1){
+      //             presence
+      //             timestamp
+      //           }
+      //         }`)
+      //       })
+      //       .then(result => {
+      //           resource.values = result.data.pirValues;
+      //           console.info('[MongoDB] Get Data Successfully!');
+      //         },
+      //         err => console.info(`[MongoDB] Error ocurred: ${err}`))
+      //       .finally(() => console.info('[MongoDB] Done'));
+      //     break;
+      //   case 'leds':
+      //     await client
+      //       .query({
+      //         query: gql(`query Query {
+      //           ledValues(num:1){
+      //             one
+      //             two
+      //             timestamp
+      //           }
+      //         }`)
+      //       })
+      //       .then(result => {
+      //           resource.values = result.data.ledValues;
+      //           console.info('[MongoDB] Get Data Successfully!');
+      //         },
+      //         err => console.info(`[MongoDB] Error ocurred: ${err}`))
+      //       .finally(() => console.info('[MongoDB] Done'));
+      //     break;
+      //   case 'ledState':
+      //     await client
+      //       .query({
+      //         query: gql(`query Query {
+      //           ledStateActions(num:1) {
+      //             _id
+      //             status
+      //             timestamp
+      //             ledId
+      //             state
+      //           }
+      //         }`)
+      //       })
+      //       .then(result => {
+      //           resource.values = result.data.ledStateActions;
+      //           console.info('[MongoDB] Get Data Successfully!');
+      //         },
+      //         err => console.info(`[MongoDB] Error ocurred: ${err}`))
+      //       .finally(() => console.info('[MongoDB] Done'));
+      //     break;
+      // }
     }
 
     resources.push(resource);
