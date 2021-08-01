@@ -129,7 +129,7 @@ function createPropertiesRoute(model) {
         break;
     }
 
-    req.result = reverseResults(properties.resources[req.params.id].data);
+    // req.result = reverseResults(properties.resources[req.params.id].data);
 
     if (properties.resources[req.params.id]['@context']) type = properties.resources[req
       .params.id]['@context'];
@@ -176,7 +176,7 @@ function createActionsRoute(model) {
         .query({
           query: gql(`query Query {
             ledStateActions {
-              id
+              _id
               status
               timestamp
               ledId
@@ -191,7 +191,7 @@ function createActionsRoute(model) {
           err => console.info(`[MongoDB] Error ocurred: ${err}`))
         .finally(() => console.info('[MongoDB] Done'));
 
-      req.result = reverseResults(actions.resources[req.params.actionType].data);
+      // req.result = reverseResults(actions.resources[req.params.actionType].data);
 
       if (actions.resources[req.params.actionType]['@context']) type = actions.resources[req
         .params.actionType]['@context'];
@@ -238,21 +238,21 @@ function createActionsRoute(model) {
       'id': req.params.actionId
     });
 
-    // await client
-    //   .query({
-    //     query: gql(`query Query {
-    //       targetLedStateAction(id: ${req.params.actionId}) {
-    //         id
-    //         status
-    //         createAt
-    //         ledId
-    //         state
-    //       }
-    //     }`)
-    //   })
-    //   .then(result => {
-    //     req.result = result.data.targetLedStateAction;
-    //   });
+    await client
+      .query({
+        query: gql(`query Query {
+          targetLedStateAction(_id: ${req.params.actionId}) {
+            _id
+            status
+            createAt
+            ledId
+            state
+          }
+        }`)
+      })
+      .then(result => {
+        req.result = result.data.targetLedStateAction;
+      });
 
     next();
   });
