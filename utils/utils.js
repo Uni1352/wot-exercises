@@ -61,7 +61,7 @@ function modelToResource(subModel, withValue) {
               query: gql(`query Query {
                 pirValues(num:1){
                   presence
-                  createAt
+                  timestamp
                 }
               }`)
             })
@@ -79,7 +79,7 @@ function modelToResource(subModel, withValue) {
                 ledValues(num:1){
                   one
                   two
-                  createAt
+                  timestamp
                 }
               }`)
             })
@@ -97,7 +97,7 @@ function modelToResource(subModel, withValue) {
                 ledStateActions(num:1) {
                   _id
                   status
-                  createAt
+                  timestamp
                   ledId
                   state
                 }
