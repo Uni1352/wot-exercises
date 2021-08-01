@@ -72,7 +72,7 @@ function createPropertiesRoute(model) {
     req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
-    req.result = utils.modelToResource(properties.resources, false);
+    req.result = utils.modelToResource(properties.resources, true);
 
     if (properties['@context']) type = properties['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';

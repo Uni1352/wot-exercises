@@ -49,6 +49,7 @@ function modelToResource(subModel, withValue) {
 
     resource.id = key;
     resource.name = val['name'];
+    console.info('test');
 
     if (val['description']) resource.description = val['description'];
     if (withValue) {
