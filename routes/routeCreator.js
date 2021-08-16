@@ -222,8 +222,10 @@ function createActionsRoute(model) {
           }`)
         })
         .then(result => {
-          res.location(`${req.originalUrl}/${result.data.addLedStateAction._id}`);
           console.info('[MongoDB] Insert Data Successfully!');
+          res.location(`${req.originalUrl}/${result.data.addLedStateAction._id}`);
+          res.status(204).send();
+          return;
         }, err => console.info(`[MongoDB] Error ocurred: ${err}`))
         .finally(() => console.info('[MongoDB] Done'));
 
@@ -249,9 +251,8 @@ function createActionsRoute(model) {
         }`)
       })
       .then(result => {
-          console.info('[MongoDB] Get Data Successfully!');
           req.result = result.data.targetLedStateAction;
-          res.status(204).send();
+          console.info('[MongoDB] Get Data Successfully!');
         },
         err => console.info(`[MongoDB] Error ocurred: ${err}`))
       .finally(() => console.info('[MongoDB] Done'));
