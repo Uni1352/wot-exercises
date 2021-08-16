@@ -96,7 +96,7 @@ function createPropertiesRoute(model) {
         await client
           .query({
             query: gql(`query Query {
-              pirValues(num:1) {
+              pirValues {
                 presence
                 timestamp
               }
@@ -113,7 +113,7 @@ function createPropertiesRoute(model) {
         await client
           .query({
             query: gql(`query Query {
-              ledValues(num:1) {
+              ledValues {
                 one
                 two
                 timestamp
@@ -173,7 +173,7 @@ function createActionsRoute(model) {
       await client
         .query({
           query: gql(`query Query {
-            ledStateActions(num:1) {
+            ledStateActions {
               _id
               status
               timestamp
@@ -215,7 +215,7 @@ function createActionsRoute(model) {
           mutation: gql(`mutation Mutation{
             addLedStateAction(
               status: "pending"
-              ledId: ${req.body.ledId}
+              ledId: "${req.body.ledId}"
               state: ${req.body.state}){
                 _id
             }
@@ -239,7 +239,7 @@ function createActionsRoute(model) {
     await client
       .query({
         query: gql(`query Query {
-          targetLedStateAction(_id:"6104cb31eb7c9f17805679a6") {
+          targetLedStateAction(_id:"${req.params.actionId}") {
             _id
             status
             timestamp
