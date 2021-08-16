@@ -234,12 +234,12 @@ function createActionsRoute(model) {
   router.route(`${actions.link}/:actionType/:actionId`).get(async (req, res, next) => {
     // req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
     //   '_id': req.params.actionId
-    // });
+    // }); ${req.params.actionId}
 
     await client
       .query({
         query: gql(`query Query {
-          targetLedStateAction(_id: ${req.params.actionId}) {
+          targetLedStateAction(_id:"6104cb31eb7c9f17805679a6") {
             _id
             status
             timestamp
