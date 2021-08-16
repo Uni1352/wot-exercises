@@ -72,7 +72,7 @@ function createPropertiesRoute(model) {
     req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
-    req.result = utils.modelToResource(properties.resources, true);
+    req.result = utils.modelToResource(properties.resources, false);
 
     if (properties['@context']) type = properties['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';
@@ -96,7 +96,7 @@ function createPropertiesRoute(model) {
         await client
           .query({
             query: gql(`query Query {
-              pirValues {
+              pirValues(num:1) {
                 presence
                 timestamp
               }
@@ -113,7 +113,7 @@ function createPropertiesRoute(model) {
         await client
           .query({
             query: gql(`query Query {
-              ledValues {
+              ledValues(num:1) {
                 one
                 two
                 timestamp
@@ -150,7 +150,7 @@ function createActionsRoute(model) {
     req.model = model;
     req.type = 'actions';
     req.entityId = 'actions';
-    req.result = utils.modelToResource(actions.resources, true);
+    req.result = utils.modelToResource(actions.resources, false);
 
     if (actions['@context']) type = actions['@context'];
     else type = 'http://model.webofthings.io/#actions-resource';
@@ -173,7 +173,7 @@ function createActionsRoute(model) {
       await client
         .query({
           query: gql(`query Query {
-            ledStateActions {
+            ledStateActions(num:1) {
               _id
               status
               timestamp
@@ -202,55 +202,58 @@ function createActionsRoute(model) {
       next();
     })
     .post((req, res, next) => {
-      let action = {};
+      // let action = {};
 
-      action.id = uuid.v1();
-      action.values = req.body;
-      action.status = 'pending';
-      action.timestamp = utils.getISOTimestamp();
+      // action._id = uuid.v1();
+      // action.values = req.body;
+      // action.status = 'pending';
+      // action.timestamp = utils.getISOTimestamp();
+      // utils.cappedPush(actions.resources[req.params.actionType].data, action);
 
-      // client
-      //   .mutate({
-      //     mutation: gql(`mutation Mutation{
-      //       addLedStateAction(
-      //         status: "pending"
-      //         ledId:${req.body.ledId}
-      //         state:${req.body.state}){
-      //           id
-      //       }
-      //     }`)
-      //   })
-      //   .then(result => {
-      //     action.id = result.data.addLedStateAction.id;
-      //   });
-
-      utils.cappedPush(actions.resources[req.params.actionType].data, action);
-      res.location(`${req.originalUrl}/${action.id}`);
+      client
+        .mutate({
+          mutation: gql(`mutation Mutation{
+            addLedStateAction(
+              status: "pending"
+              ledId: ${req.body.ledId}
+              state: ${req.body.state}){
+                _id
+            }
+          }`)
+        })
+        .then(result => {
+          res.location(`${req.originalUrl}/${result.data.addLedStateAction._id}`);
+          console.info('[MongoDB] Insert Data Successfully!');
+        }, err => console.info(`[MongoDB] Error ocurred: ${err}`))
+        .finally(() => console.info('[MongoDB] Done'));
 
       next();
     });
 
   // GET /actions/{id}/{actionId}
   router.route(`${actions.link}/:actionType/:actionId`).get(async (req, res, next) => {
-    req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
-      'id': req.params.actionId
-    });
+    // req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
+    //   '_id': req.params.actionId
+    // });
 
-    // await client
-    //   .query({
-    //     query: gql(`query Query {
-    //       targetLedStateAction(_id: ${req.params.actionId}) {
-    //         _id
-    //         status
-    //         createAt
-    //         ledId
-    //         state
-    //       }
-    //     }`)
-    //   })
-    //   .then(result => {
-    //     req.result = result.data.targetLedStateAction;
-    //   });
+    await client
+      .query({
+        query: gql(`query Query {
+          targetLedStateAction(_id: ${req.params.actionId}) {
+            _id
+            status
+            timestamp
+            ledId
+            state
+          }
+        }`)
+      })
+      .then(result => {
+          req.result = result.data.targetLedStateAction;
+          console.info('[MongoDB] Get Data Successfully!');
+        },
+        err => console.info(`[MongoDB] Error ocurred: ${err}`))
+      .finally(() => console.info('[MongoDB] Done'));
 
     next();
   });
