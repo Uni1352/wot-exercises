@@ -47,47 +47,47 @@ function modelToResource(subModel, withValue) {
     let val = subModel[key];
     let resource = {};
 
-    if (withValue) {
-      // resource.values = val.data[val.data.length - 1];
+    // if (withValue) {
+    // resource.values = val.data[val.data.length - 1];
 
-      switch (key) {
-        case 'pir':
-          client
-            .query({
-              query: gql(`query Query {
+    switch (key) {
+      case 'pir':
+        client
+          .query({
+            query: gql(`query Query {
                 pirValues(num:1){
                   presence
                   timestamp
                 }
               }`)
-            })
-            .then(result => {
-                resource.values = result.data.pirValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-        case 'leds':
-          client
-            .query({
-              query: gql(`query Query {
+          })
+          .then(result => {
+              resource.values = result.data.pirValues;
+              console.info('[MongoDB] Get Data Successfully!');
+            },
+            err => console.info(`[MongoDB] Error ocurred: ${err}`))
+          .finally(() => console.info('[MongoDB] Done'));
+        break;
+      case 'leds':
+        client
+          .query({
+            query: gql(`query Query {
                     ledValues(num:1){
                       one
                       two
                       timestamp
                     }
                   }`)
-            })
-            .then(result => {
-                resource.values = result.data.ledValues;
-                console.info('[MongoDB] Get Data Successfully!');
-              },
-              err => console.info(`[MongoDB] Error ocurred: ${err}`))
-            .finally(() => console.info('[MongoDB] Done'));
-          break;
-      }
+          })
+          .then(result => {
+              resource.values = result.data.ledValues;
+              console.info('[MongoDB] Get Data Successfully!');
+            },
+            err => console.info(`[MongoDB] Error ocurred: ${err}`))
+          .finally(() => console.info('[MongoDB] Done'));
+        break;
     }
+    // }
     resource.id = key;
     resource.name = val['name'];
 
