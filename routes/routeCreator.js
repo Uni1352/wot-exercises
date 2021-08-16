@@ -249,8 +249,9 @@ function createActionsRoute(model) {
         }`)
       })
       .then(result => {
-          req.result = result.data.targetLedStateAction;
           console.info('[MongoDB] Get Data Successfully!');
+          req.result = result.data.targetLedStateAction;
+          res.status(204).send();
         },
         err => console.info(`[MongoDB] Error ocurred: ${err}`))
       .finally(() => console.info('[MongoDB] Done'));
