@@ -224,11 +224,12 @@ function createActionsRoute(model) {
         .then(result => {
           console.info('[MongoDB] Insert Data Successfully!');
           res.location(`${req.originalUrl}/${result.data.addLedStateAction._id}`);
-          res.setHeader('Content-Type', 'application/json');
+          res.status(204).send();
         }, err => console.info(`[MongoDB] Error ocurred: ${err}`))
         .finally(() => console.info('[MongoDB] Done'));
 
-      next();
+      // next();
+      return;
     });
 
   // GET /actions/{id}/{actionId}
