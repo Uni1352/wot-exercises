@@ -47,10 +47,10 @@ function modelToResource(subModel, withValue) {
     let val = subModel[key];
     let resource = {};
 
-    resource.id = key;
-    resource.name = val['name'];
+    // resource.id = key;
+    // resource.name = val['name'];
 
-    if (val['description']) resource.description = val['description'];
+    // if (val['description']) resource.description = val['description'];
     if (withValue) {
       // resource.values = val.data[val.data.length - 1];
 
