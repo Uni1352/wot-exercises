@@ -52,7 +52,45 @@ function modelToResource(subModel, withValue) {
 
     if (val['description']) resource.description = val['description'];
     if (withValue) {
-      resource.values = val.data[val.data.length - 1];
+      // resource.values = val.data[val.data.length - 1];
+
+      switch (key) {
+        case 'pir':
+          client
+            .query({
+              query: gql(`query Query {
+                pirValues(num:1){
+                  presence
+                  timestamp
+                }
+              }`)
+            })
+            .then(result => {
+                resource.values = result.data.pirValues;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
+          break;
+        case 'leds':
+          client
+            .query({
+              query: gql(`query Query {
+                    ledValues(num:1){
+                      one
+                      two
+                      timestamp
+                    }
+                  }`)
+            })
+            .then(result => {
+                resource.values = result.data.ledValues;
+                console.info('[MongoDB] Get Data Successfully!');
+              },
+              err => console.info(`[MongoDB] Error ocurred: ${err}`))
+            .finally(() => console.info('[MongoDB] Done'));
+          break;
+      }
 
       // switch (key) {
       //   case 'pir':
@@ -114,7 +152,9 @@ function modelToResource(subModel, withValue) {
     }
 
     resources.push(resource);
+    console.info(resources);
   });
+  console.info(resources);
 
   return resources;
 }
