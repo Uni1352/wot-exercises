@@ -36,11 +36,9 @@ function generateRepresentationForm(req, res, next) {
         res.send(req.result);
     }
     return;
-  }
-  // else if (res.location) {
-  //   res.status(204).send();
-  // } 
-  else {
+  } else if (res.location) {
+    res.status(204).send();
+  } else {
     next();
   }
 }
