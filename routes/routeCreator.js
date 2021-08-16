@@ -68,7 +68,7 @@ function createPropertiesRoute(model) {
   let type;
 
   // GET {WT}/properties
-  router.route(properties.link).get(async (req, res, next) => {
+  router.route(properties.link).get((req, res, next) => {
     req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
