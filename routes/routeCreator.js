@@ -257,7 +257,7 @@ function createActionsRoute(model) {
       next();
     })
     .post(async (req, res) => {
-      // let action = {};
+      let action = {};
 
       await client
         .mutate({
@@ -273,11 +273,11 @@ function createActionsRoute(model) {
         .then(result => {
           console.info('[MongoDB] Insert Data Successfully!');
 
-          // action._id = result.data.addLedStateAction._id;
-          // action.values = req.body;
-          // action.status = 'pending';
-          // action.timestamp = utils.getISOTimestamp();
-          // utils.cappedPush(actions.resources[req.params.actionType].data, action);
+          action._id = result.data.addLedStateAction._id;
+          action.values = req.body;
+          action.status = 'pending';
+          action.timestamp = utils.getISOTimestamp();
+          utils.cappedPush(actions.resources[req.params.actionType].data, action);
 
           res.location(`${req.originalUrl}/${result.data.addLedStateAction._id}`);
           res.status(204).send();

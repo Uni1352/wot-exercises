@@ -46,7 +46,7 @@ function initPlugins() {
   const ledPlugin = require('./plugins/ledPlugin');
 
   pirPlugin.startPlugin();
-  ledPlugin.startPlugin('simulate');
+  ledPlugin.startPlugin();
 }
 
 process.on('SIGINT', () => {

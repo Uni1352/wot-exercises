@@ -53,7 +53,7 @@ async function addValue(val) {
       }`)
     })
     .then(result => {
-        console.info('[MongoDB] Insert Data Successfully!')
+        console.info('[MongoDB] Insert Led Data Successfully!')
         console.info(`[MongoDB] Insert Time: ${result.data.addLedValue.timestamp}`);
       },
       err => console.info(`[MongoDB] Error ocurred: ${err}`))
@@ -73,7 +73,7 @@ function switchOnOff(obj) {
 
   // await client.mutate({
   //   mutation: gql(`mutation Mutation{
-  //     updateLedStateAction(id:${obj.id},status:${obj.status}){
+  //     updateLedStateActionStatus(id:${obj.id},status:${obj.status}){
   //       id
   //     }
   //   }`)
