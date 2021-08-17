@@ -10,24 +10,45 @@ module.exports = {
   addValue
 };
 
-function startPlugin() {
-  addValue(false);
+function startPlugin(mode) {
+  switch (mode) {
+    case 'simulate':
+      let currentState = false;
+
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          addValue(currentState);
+          currentState = !currentState;
+        }, 2000);
+      }
+      break;
+    default:
+      addValue(false);
+  }
 }
 
 function createValue(val) {
   return {
     'presence': val,
-    'createAt': new Date().toISOString()
+    'timestamp': new Date().toISOString()
   };
 }
 
-function addValue(val) {
+async function addValue(val) {
   utils.cappedPush(pir.data, createValue(val));
-  // await client.mutate({
-  //   mutation: gql(`mutation Mutation{
-  //     addPirData(presence:${val}){
-  //       createAt
-  //     }
-  //   }`)
-  // });
+
+  await client
+    .mutate({
+      mutation: gql(`mutation Mutation{
+        addPirValue(presence:${val}){
+          timestamp
+        }
+      }`)
+    })
+    .then(result => {
+        console.info('[MongoDB] Insert Data Successfully!')
+        console.info(`[MongoDB] Insert Time: ${result.data.timestamp}`);
+      },
+      err => console.info(`[MongoDB] Error ocurred: ${err}`))
+    .finally(() => console.info('[MongoDB] Done'));
 }
