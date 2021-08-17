@@ -10,21 +10,27 @@ module.exports = {
   startPlugin
 };
 
-function startPlugin() {
-  model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState
-    .data, {
-      set: (arr, index, val) => {
-        if (!isNaN(parseInt(index))) {
-          console.info(`[Proxy] plugin action detected: ledState`);
-          switchOnOff(val);
-          arr[index] = val;
-        }
-        return true;
-      }
-    })
-  console.info(`[Proxy] ledState proxy created!`);
+function startPlugin(mode) {
+  switch (mode) {
+    case 'simulate':
+      simulator();
+      break;
+    default:
+      model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState
+        .data, {
+          set: (arr, index, val) => {
+            if (!isNaN(parseInt(index))) {
+              console.info(`[Proxy] plugin action detected: ledState`);
+              switchOnOff(val);
+              arr[index] = val;
+            }
+            return true;
+          }
+        })
+      console.info(`[Proxy] ledState proxy created!`);
 
-  addValue([false, false]);
+      addValue([false, false]);
+  }
 }
 
 function createValue(val) {
@@ -35,15 +41,23 @@ function createValue(val) {
   };
 }
 
-function addValue(val) {
+async function addValue(val) {
   utils.cappedPush(leds.data, createValue(val));
-  // client.mutate({
-  //   mutation: gql(`mutation Mutation{
-  //     addLedData(one:${val[0]},two:${val[1]}){
-  //       createAt
-  //     }
-  //   }`)
-  // });
+
+  await client
+    .mutate({
+      mutation: gql(`mutation Mutation{
+        addLedValue(one:${val[0]},two:${val[1]}){
+          timestamp
+        }
+      }`)
+    })
+    .then(result => {
+        console.info('[MongoDB] Insert Data Successfully!')
+        console.info(`[MongoDB] Insert Time: ${result.data.addLedValue.timestamp}`);
+      },
+      err => console.info(`[MongoDB] Error ocurred: ${err}`))
+    .finally(() => console.info('[MongoDB] Done'));
 }
 
 function switchOnOff(obj) {
@@ -67,4 +81,15 @@ function switchOnOff(obj) {
 
   obj.status = 'completed';
   console.info(`[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
+}
+
+function simulator() {
+  let currentLedState = [false, true];
+
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => {
+      addValue(currentLedState);
+      currentLedState[1] = !currentLedState[1];
+    }, i * 2000);
+  }
 }

@@ -256,16 +256,10 @@ function createActionsRoute(model) {
 
       next();
     })
-    .post((req, res, next) => {
+    .post(async (req, res) => {
       // let action = {};
 
-      // action._id = uuid.v1();
-      // action.values = req.body;
-      // action.status = 'pending';
-      // action.timestamp = utils.getISOTimestamp();
-      // utils.cappedPush(actions.resources[req.params.actionType].data, action);
-
-      client
+      await client
         .mutate({
           mutation: gql(`mutation Mutation{
             addLedStateAction(
@@ -278,12 +272,18 @@ function createActionsRoute(model) {
         })
         .then(result => {
           console.info('[MongoDB] Insert Data Successfully!');
+
+          // action._id = result.data.addLedStateAction._id;
+          // action.values = req.body;
+          // action.status = 'pending';
+          // action.timestamp = utils.getISOTimestamp();
+          // utils.cappedPush(actions.resources[req.params.actionType].data, action);
+
           res.location(`${req.originalUrl}/${result.data.addLedStateAction._id}`);
           res.status(204).send();
         }, err => console.info(`[MongoDB] Error ocurred: ${err}`))
         .finally(() => console.info('[MongoDB] Done'));
 
-      // next();
       return;
     });
 
