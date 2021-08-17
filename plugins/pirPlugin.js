@@ -47,7 +47,7 @@ async function addValue(val) {
     })
     .then(result => {
         console.info('[MongoDB] Insert Data Successfully!')
-        console.info(`[MongoDB] Insert Time: ${result.data.timestamp}`);
+        console.info(`[MongoDB] Insert Time: ${result.data.addPirValue.timestamp}`);
       },
       err => console.info(`[MongoDB] Error ocurred: ${err}`))
     .finally(() => console.info('[MongoDB] Done'));
