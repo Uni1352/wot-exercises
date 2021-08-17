@@ -68,11 +68,41 @@ function createPropertiesRoute(model) {
   let type;
 
   // GET {WT}/properties
-  router.route(properties.link).get((req, res, next) => {
+  router.route(properties.link).get(async (req, res, next) => {
     req.model = model;
     req.type = 'properties';
     req.entityId = 'properties';
-    req.result = utils.modelToResource(properties.resources, true);
+    req.result = utils.modelToResource(properties.resources, false);
+
+    await client
+      .query({
+        query: gql(`query Query {
+          pirValues(num:1){
+            presence
+            timestamp
+          }
+          ledValues(num:1){
+            one
+            two
+            timestamp
+          }
+        }`)
+      })
+      .then(result => {
+          for (let propObj of req.result) {
+            switch (propObj.id) {
+              case 'pir':
+                propObj.values = result.data.pirValues;
+                break;
+              case 'leds':
+                propObj.values = result.data.ledValues;
+                break;
+            }
+          }
+          console.info('[MongoDB] Get Data Successfully!');
+        },
+        err => console.info(`[MongoDB] Error ocurred: ${err}`))
+      .finally(() => console.info('[MongoDB] Done'));
 
     if (properties['@context']) type = properties['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';

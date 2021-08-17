@@ -40,6 +40,7 @@ function extractFields(fields, object, target) {
   return target;
 }
 
+// FIXME: get data after return
 function modelToResource(subModel, withValue) {
   let resources = [];
 
@@ -52,61 +53,13 @@ function modelToResource(subModel, withValue) {
 
     if (val['description']) resource.description = val['description'];
     if (withValue) {
-      // resource.values = val.data[val.data.length - 1];
-      resource.values = await getResourceValue(key);
+      resource.values = val.data[val.data.length - 1];
     }
 
     resources.push(resource);
   });
-  console.info(resources);
 
   return resources;
-}
-
-async function getResourceValue(key) {
-  let resultVal = {};
-
-  switch (key) {
-    case 'pir':
-      await client
-        .query({
-          query: gql(`query Query {
-            pirValues(num:1){
-              presence
-              timestamp
-            }
-          }`)
-        })
-        .then(result => {
-            resultVal = result.data.pirValues;
-            console.info('[MongoDB] Get Data Successfully!');
-          },
-          err => console.info(`[MongoDB] Error ocurred: ${err}`))
-        .finally(() => {
-          console.info('[MongoDB] Done');
-          return resultVal;
-        });
-    case 'leds':
-      await client
-        .query({
-          query: gql(`query Query {
-                ledValues(num:1){
-                  one
-                  two
-                  timestamp
-                }
-              }`)
-        })
-        .then(result => {
-            resultVal = result.data.ledValues;
-            console.info('[MongoDB] Get Data Successfully!');
-          },
-          err => console.info(`[MongoDB] Error ocurred: ${err}`))
-        .finally(() => {
-          console.info('[MongoDB] Done');
-          return resultVal;
-        });
-  }
 }
 
 function getISOTimestamp() {
