@@ -176,7 +176,7 @@ function createActionsRoute(model) {
   let type;
 
   // GET {WT}/actions
-  router.route(actions.link).get((req, res, next) => {
+  router.route(actions.link).get(async (req, res, next) => {
     req.model = model;
     req.type = 'actions';
     req.entityId = 'actions';
@@ -186,8 +186,11 @@ function createActionsRoute(model) {
       .query({
         query: gql(`query Query {
           ledStateActions(num:1){
-            presence
+            _id
+            status
             timestamp
+            ledId
+            state
           }
         }`)
       })
