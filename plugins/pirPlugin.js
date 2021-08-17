@@ -13,14 +13,7 @@ module.exports = {
 function startPlugin(mode) {
   switch (mode) {
     case 'simulate':
-      let currentState = false;
-
-      for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-          addValue(currentState);
-          currentState = !currentState;
-        }, 3000);
-      }
+      simulator();
       break;
     default:
       addValue(false);
@@ -51,4 +44,15 @@ async function addValue(val) {
       },
       err => console.info(`[MongoDB] Error ocurred: ${err}`))
     .finally(() => console.info('[MongoDB] Done'));
+}
+
+function simulator() {
+  let currentState = false;
+
+  for (let i = 0; i < 10; i++) {
+    setTimeout(() => {
+      addValue(currentState);
+      currentState = !currentState;
+    }, i * 2000);
+  }
 }

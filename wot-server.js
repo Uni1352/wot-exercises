@@ -45,7 +45,7 @@ function initPlugins() {
   const pirPlugin = require('./plugins/pirPlugin');
   const ledPlugin = require('./plugins/ledPlugin');
 
-  pirPlugin.startPlugin();
+  pirPlugin.startPlugin('simulate');
   ledPlugin.startPlugin();
 }
 
