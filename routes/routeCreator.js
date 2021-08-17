@@ -101,8 +101,7 @@ function createPropertiesRoute(model) {
           }
           console.info('[MongoDB] Get Data Successfully!');
         },
-        err => console.info(`[MongoDB] Error ocurred: ${err}`))
-      .finally(() => console.info('[MongoDB] Done'));
+        err => console.info(`[MongoDB] Error ocurred: ${err}`));
 
     if (properties['@context']) type = properties['@context'];
     else type = 'http://model.webofthings.io/#properties-resource';
@@ -136,8 +135,7 @@ function createPropertiesRoute(model) {
               req.result = result.data.pirValues;
               console.info('[MongoDB] Get Data Successfully!');
             },
-            err => console.info(`[MongoDB] Error ocurred: ${err}`))
-          .finally(() => console.info('[MongoDB] Done'));
+            err => console.info(`[MongoDB] Error ocurred: ${err}`));
         break;
       case 'leds':
         await client
@@ -154,8 +152,7 @@ function createPropertiesRoute(model) {
               req.result = result.data.ledValues;
               console.info('[MongoDB] Get Data Successfully!');
             },
-            err => console.info(`[MongoDB] Error ocurred: ${err}`))
-          .finally(() => console.info('[MongoDB] Done'));
+            err => console.info(`[MongoDB] Error ocurred: ${err}`));
         break;
     }
 
@@ -204,8 +201,7 @@ function createActionsRoute(model) {
           }
           console.info('[MongoDB] Get Data Successfully!');
         },
-        err => console.info(`[MongoDB] Error ocurred: ${err}`))
-      .finally(() => console.info('[MongoDB] Done'));
+        err => console.info(`[MongoDB] Error ocurred: ${err}`));
 
     if (actions['@context']) type = actions['@context'];
     else type = 'http://model.webofthings.io/#actions-resource';
@@ -241,8 +237,7 @@ function createActionsRoute(model) {
             req.result = result.data.ledStateActions;
             console.info('[MongoDB] Get Data Successfully!');
           },
-          err => console.info(`[MongoDB] Error ocurred: ${err}`))
-        .finally(() => console.info('[MongoDB] Done'));
+          err => console.info(`[MongoDB] Error ocurred: ${err}`));
 
       // req.result = reverseResults(actions.resources[req.params.actionType].data);
 
@@ -281,18 +276,13 @@ function createActionsRoute(model) {
 
           res.location(`${req.originalUrl}/${result.data.addLedStateAction._id}`);
           res.status(204).send();
-        }, err => console.info(`[MongoDB] Error ocurred: ${err}`))
-        .finally(() => console.info('[MongoDB] Done'));
+        }, err => console.info(`[MongoDB] Error ocurred: ${err}`));
 
       return;
     });
 
   // GET /actions/{id}/{actionId}
   router.route(`${actions.link}/:actionType/:actionId`).get(async (req, res, next) => {
-    // req.result = utils.findObjInArr(actions.resources[req.params.actionType].data, {
-    //   '_id': req.params.actionId
-    // }); ${req.params.actionId}
-
     await client
       .query({
         query: gql(`query Query {
@@ -309,8 +299,7 @@ function createActionsRoute(model) {
           req.result = result.data.targetLedStateAction;
           console.info('[MongoDB] Get Data Successfully!');
         },
-        err => console.info(`[MongoDB] Error ocurred: ${err}`))
-      .finally(() => console.info('[MongoDB] Done'));
+        err => console.info(`[MongoDB] Error ocurred: ${err}`));
 
     next();
   });

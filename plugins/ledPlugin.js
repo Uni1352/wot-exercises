@@ -28,8 +28,6 @@ function startPlugin(mode) {
           }
         })
       console.info(`[Proxy] ledState proxy created!`);
-
-      addValue([false, false]);
   }
 }
 
@@ -56,8 +54,7 @@ async function addValue(val) {
         console.info('[MongoDB] Insert Led Data Successfully!')
         console.info(`[MongoDB] Insert Time: ${result.data.addLedValue.timestamp}`);
       },
-      err => console.info(`[MongoDB] Error ocurred: ${err}`))
-    .finally(() => console.info('[MongoDB] Done'));
+      err => console.info(`[MongoDB] Error ocurred: ${err}`));
 }
 
 async function switchOnOff(obj) {
@@ -83,8 +80,7 @@ async function switchOnOff(obj) {
     .then(result => {
       console.info('[MongoDB] Update Action Data Successfully!');
       console.info(`[MongoDB] Action ID: ${result.data.updateLedStateActionStatus._id}`);
-    })
-    .finally(() => console.info('[MongoDB] Done'));
+    });
 
   console.info(
     `[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);

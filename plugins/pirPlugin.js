@@ -16,7 +16,6 @@ function startPlugin(mode) {
       simulator();
       break;
     default:
-      addValue(false);
   }
 }
 
