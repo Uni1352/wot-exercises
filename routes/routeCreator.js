@@ -89,13 +89,13 @@ function createPropertiesRoute(model) {
         }`)
       })
       .then(result => {
-          for (let propObj of req.result) {
-            switch (propObj.id) {
+          for (let obj of req.result) {
+            switch (obj.id) {
               case 'pir':
-                propObj.values = result.data.pirValues;
+                obj.values = result.data.pirValues;
                 break;
               case 'leds':
-                propObj.values = result.data.ledValues;
+                obj.values = result.data.ledValues;
                 break;
             }
           }
@@ -181,6 +181,28 @@ function createActionsRoute(model) {
     req.type = 'actions';
     req.entityId = 'actions';
     req.result = utils.modelToResource(actions.resources, false);
+
+    await client
+      .query({
+        query: gql(`query Query {
+          ledStateActions(num:1){
+            presence
+            timestamp
+          }
+        }`)
+      })
+      .then(result => {
+          for (let obj of req.result) {
+            switch (obj.id) {
+              case 'ledState':
+                obj.values = result.data.ledStateActions;
+                break;
+            }
+          }
+          console.info('[MongoDB] Get Data Successfully!');
+        },
+        err => console.info(`[MongoDB] Error ocurred: ${err}`))
+      .finally(() => console.info('[MongoDB] Done'));
 
     if (actions['@context']) type = actions['@context'];
     else type = 'http://model.webofthings.io/#actions-resource';
