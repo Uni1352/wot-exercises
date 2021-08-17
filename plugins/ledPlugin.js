@@ -60,7 +60,7 @@ async function addValue(val) {
     .finally(() => console.info('[MongoDB] Done'));
 }
 
-function switchOnOff(obj) {
+async function switchOnOff(obj) {
   const target = leds.data[leds.data.length - 1];
   const latestVal = [target['1'], target['2']];
   const publishData = {}
@@ -70,17 +70,24 @@ function switchOnOff(obj) {
 
   latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
   addValue(latestVal);
-
-  // await client.mutate({
-  //   mutation: gql(`mutation Mutation{
-  //     updateLedStateActionStatus(id:${obj.id},status:${obj.status}){
-  //       id
-  //     }
-  //   }`)
-  // });
-
   obj.status = 'completed';
-  console.info(`[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
+
+  await client
+    .mutate({
+      mutation: gql(`mutation Mutation{
+        updateLedStateActionStatus(_id:"${obj._id}",status:"${obj.status}"){
+          _id
+        }
+      }`)
+    })
+    .then(result => {
+      console.info('[MongoDB] Update Action Data Successfully!');
+      console.info(`[MongoDB] Action ID: ${result.data.updateLedStateActionStatus._id}`);
+    })
+    .finally(() => console.info('[MongoDB] Done'));
+
+  console.info(
+    `[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
 }
 
 function simulator() {
