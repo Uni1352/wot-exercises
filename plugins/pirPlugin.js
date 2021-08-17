@@ -19,7 +19,7 @@ function startPlugin(mode) {
         setTimeout(() => {
           addValue(currentState);
           currentState = !currentState;
-        }, 2000);
+        }, 3000);
       }
       break;
     default:
