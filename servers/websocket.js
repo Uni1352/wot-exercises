@@ -13,17 +13,25 @@ function createSocketServer(server) {
     try {
       let parts = getPathnameParts(req.url);
 
-      if (parts[0] && parts[1]) {
-        model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]].resources[parts[1]].data, {
-          set: (arr, index, val) => {
-            if (!isNaN(parseInt(index))) {
-              arr[index] = val;
-              ws.send(JSON.stringify(val));
-            }
-            return true;
-          }
-        });
+      switch (parts[0]) {
+        case 'properties':
+          break;
+        case 'actions':
+          break;
       }
+
+      // if (parts[0] && parts[1]) {
+      //   model.links[parts[0]].resources[parts[1]].data = new Proxy(model.links[parts[0]]
+      //     .resources[parts[1]].data, {
+      //       set: (arr, index, val) => {
+      //         if (!isNaN(parseInt(index))) {
+      //           arr[index] = val;
+      //           ws.send(JSON.stringify(val));
+      //         }
+      //         return true;
+      //       }
+      //     });
+      // }
     } catch (err) {
       console.info(`[Error] Unable to observe ${req.url} resource.`);
     }

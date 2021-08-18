@@ -46,7 +46,6 @@ async function startPlugin(mode) {
         .subscribe({
           next: (data) => {
             console.info(`[Action] plugin action detected: ledState`);
-            console.info(data.data.newLedStateAction);
             switchOnOff(data.data.newLedStateAction);
           },
           error: (err) => console.info(`[Error] Error Occurred: ${err}`)

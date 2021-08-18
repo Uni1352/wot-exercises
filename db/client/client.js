@@ -23,19 +23,4 @@ const link = split(
 const cache = new InMemoryCache({ addTypename: false });
 const client = new ApolloClient({ link, cache });
 
-client.subscribe({
-  query: gql(`subscription Subscription {
-    newLedStateAction {
-      _id
-      status
-      ledId
-      state
-      timestamp
-    }
-  }`),
-  variables: {}
-}).subscribe({
-  next: (result) => console.info(result.data.newLedStateAction)
-});
-
 module.exports = client;
