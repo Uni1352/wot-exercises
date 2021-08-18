@@ -46,7 +46,7 @@ async function addValue(val) {
 }
 
 function simulator() {
-  let currentState = false;
+  let currentState = true;
 
   for (let i = 0; i < 10; i++) {
     setTimeout(() => {
