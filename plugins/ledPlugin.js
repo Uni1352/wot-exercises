@@ -5,29 +5,52 @@ const client = require('../db/client/client');
 
 let model = require('../resources/model');
 let leds = model.links.properties.resources.leds;
+let currentVal = [false, false];
 
 module.exports = {
   startPlugin
 };
 
-function startPlugin(mode) {
+async function startPlugin(mode) {
   switch (mode) {
     case 'simulate':
       simulator();
       break;
     default:
-      model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources.ledState
-        .data, {
-          set: (arr, index, val) => {
-            if (!isNaN(parseInt(index))) {
-              console.info(`[Proxy] plugin action detected: ledState`);
-              switchOnOff(val);
-              arr[index] = val;
+      // model.links.actions.resources.ledState.data = new Proxy(model.links.actions.resources
+      //   .ledState
+      //   .data, {
+      //     set: (arr, index, val) => {
+      //       if (!isNaN(parseInt(index))) {
+      //         console.info(`[Proxy] plugin action detected: ledState`);
+      //         switchOnOff(val);
+      //         arr[index] = val;
+      //       }
+      //       return true;
+      //     }
+      //   })
+      // console.info(`[Proxy] ledState proxy created!`);
+      await client
+        .subscribe({
+          query: gql(`subscription Subscription {
+            newLedStateAction {
+              _id
+              status
+              ledId
+              state
+              timestamp
             }
-            return true;
-          }
+          }`),
+          variables: {}
         })
-      console.info(`[Proxy] ledState proxy created!`);
+        .subscribe({
+          next: (data) => {
+            console.info(`[Action] plugin action detected: ledState`);
+            console.info(data.data.newLedStateAction);
+            switchOnOff(data.data.newLedStateAction);
+          },
+          error: (err) => console.info(`[Error] Error Occurred: ${err}`)
+        });
   }
 }
 
@@ -58,22 +81,23 @@ async function addValue(val) {
 }
 
 async function switchOnOff(obj) {
-  const target = leds.data[leds.data.length - 1];
-  const latestVal = [target['1'], target['2']];
   const publishData = {}
 
-  publishData[obj.values.ledId] = obj.values.state;
+  publishData[obj.ledId] = obj.state;
   mqtt.publishTopic('/actions/ledState', JSON.stringify(publishData));
 
-  latestVal[parseInt(obj.values.ledId) - 1] = obj.values.state;
-  addValue(latestVal);
+  currentVal[parseInt(obj.ledId) - 1] = obj.state;
+  addValue(currentVal);
   obj.status = 'completed';
 
   await client
     .mutate({
       mutation: gql(`mutation Mutation{
-        updateLedStateActionStatus(_id:"${obj._id}",status:"${obj.status}"){
-          _id
+        updateLedStateActionStatus(
+          _id:"${obj._id}"
+          status:"${obj.status}"
+          timestamp:"${new Date().toISOString()}"){
+            _id
         }
       }`)
     })
@@ -82,8 +106,7 @@ async function switchOnOff(obj) {
       console.info(`[MongoDB] Action ID: ${result.data.updateLedStateActionStatus._id}`);
     });
 
-  console.info(
-    `[Info] Change value of LED ${obj.values.ledId} to ${obj.values.state}`);
+  console.info(`[Info] Change value of LED ${obj.ledId} to ${obj.state}`);
 }
 
 function simulator() {
