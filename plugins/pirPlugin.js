@@ -52,6 +52,6 @@ function simulator() {
     setTimeout(() => {
       addValue(currentState);
       currentState = !currentState;
-    }, i * 2000);
+    }, i * 3000);
   }
 }
