@@ -1,4 +1,4 @@
-const { ApolloClient, InMemoryCache, HttpLink, split, gql } = require('@apollo/client');
+const { ApolloClient, InMemoryCache, HttpLink, split } = require('@apollo/client');
 const { getMainDefinition } = require('@apollo/client/utilities');
 const { SubscriptionClient } = require('subscriptions-transport-ws');
 const fetch = require('cross-fetch');

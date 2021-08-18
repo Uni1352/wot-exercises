@@ -45,7 +45,8 @@ async function startPlugin(mode) {
         })
         .subscribe({
           next: (data) => {
-            console.info(`[Action] plugin action detected: ledState`);
+            console.info(`[Info] plugin action detected: ledState`);
+            console.info('[MongoDB] Insert Action Data Successfully');
             switchOnOff(data.data.newLedStateAction);
           },
           error: (err) => console.info(`[Error] Error Occurred: ${err}`)
@@ -74,7 +75,6 @@ async function addValue(val) {
     })
     .then(result => {
         console.info('[MongoDB] Insert Led Data Successfully!')
-        console.info(`[MongoDB] Insert Time: ${result.data.addLedValue.timestamp}`);
       },
       err => console.info(`[MongoDB] Error ocurred: ${err}`));
 }
@@ -102,7 +102,6 @@ async function switchOnOff(obj) {
     })
     .then(result => {
       console.info('[MongoDB] Update Action Data Successfully!');
-      console.info(`[MongoDB] Action ID: ${result.data.updateLedStateActionStatus._id}`);
     });
 
   console.info(`[Info] Change value of LED ${obj.ledId} to ${obj.state}`);

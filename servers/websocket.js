@@ -1,5 +1,7 @@
 const Server = require('ws').Server;
+const { gql } = require('@apollo/client');
 
+const client = require('../db/client/client');
 let model = require('../resources/model');
 
 function createSocketServer(server) {
@@ -9,14 +11,68 @@ function createSocketServer(server) {
 
   console.info('[Server] WebSocket server started...');
 
-  wss.on('connection', (ws, req) => {
+  wss.on('connection', async (ws, req) => {
     try {
       let parts = getPathnameParts(req.url);
 
       switch (parts[0]) {
         case 'properties':
+          switch (parts[1]) {
+            case 'pir':
+              await client
+                .subscribe({
+                  query: gql(`subscription Subscription{
+                    newPirValue{
+                      presence
+                      timestamp
+                    }
+                  }`),
+                  variables: {}
+                })
+                .subscribe({
+                  next: (data) => ws.send(JSON.stringify(data.data.newPirValue)),
+                  error: (err) => console.info(`[Error] Error Occurred: ${err}`)
+                });
+              break;
+            case 'leds':
+              await client
+                .subscribe({
+                  query: gql(`subscription Subscription{
+                    newLedValue{
+                      one
+                      two
+                      timestamp
+                    }
+                  }`),
+                  variables: {}
+                })
+                .subscribe({
+                  next: (data) => ws.send(JSON.stringify(data.data.newLedValue)),
+                  error: (err) => console.info(`[Error] Error Occurred: ${err}`)
+                });
+          }
           break;
         case 'actions':
+          switch (parts[1]) {
+            case 'ledState':
+              await client
+                .subscribe({
+                  query: gql(`subscription Subscription{
+                    newLedStateAction{
+                      _id
+                      status
+                      ledId
+                      state
+                      timestamp
+                    }
+                  }`),
+                  variables: {}
+                })
+                .subscribe({
+                  next: (data) => ws.send(JSON.stringify(data.data.newLedStateAction)),
+                  error: (err) => console.info(`[Error] Error Occurred: ${err}`)
+                });
+          }
           break;
       }
 
