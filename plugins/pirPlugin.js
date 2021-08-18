@@ -46,12 +46,12 @@ async function addValue(val) {
 }
 
 function simulator() {
-  let currentState = true;
+  let currentState = false;
 
   for (let i = 0; i < 10; i++) {
     setTimeout(() => {
-      addValue(currentState);
       currentState = !currentState;
+      addValue(currentState);
     }, i * 3000);
   }
 }
